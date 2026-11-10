@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/io_client.dart';
 import 'package:my_ledger/data/ledger_repository.dart';
 import 'package:my_ledger/sync/sync_engine.dart';
 import 'package:my_ledger/sync/webdav.dart';
@@ -98,15 +97,14 @@ void main() {
           endpoint: 'https://127.0.0.1:${server.port}/dav/',
           username: 'test-user',
           password: 'test-password',
+          certificateOrigin: 'https://127.0.0.1:${server.port}',
+          certificatePem: await File(cert).readAsString(),
         );
-        IOClient trustedClient() => IOClient(
-          HttpClient(
-            context: SecurityContext(withTrustedRoots: false)
-              ..setTrustedCertificates(cert),
-          ),
+        davA = WebDavStore(config, await a.ledgerId);
+        davB = WebDavStore(
+          DavConfig.fromJson(config.toJson()),
+          await b.ledgerId,
         );
-        davA = WebDavStore(config, await a.ledgerId, client: trustedClient());
-        davB = WebDavStore(config, await b.ledgerId, client: trustedClient());
         await davA.testConnection();
         final cat = await category(a);
         final op = await entry(a, cat);

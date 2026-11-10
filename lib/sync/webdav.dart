@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 import 'package:xml/xml.dart';
 import '../domain/operation.dart';
+import 'webdav_client.dart';
 
 class DavException extends LedgerException {
   const DavException(super.message, {this.retryable = false});
@@ -16,6 +17,8 @@ class DavConfig {
     required String endpoint,
     required this.username,
     required this.password,
+    this.certificatePem,
+    this.certificateOrigin,
   }) : endpoint = Uri.parse(endpoint.endsWith('/') ? endpoint : '$endpoint/') {
     if (this.endpoint.scheme != 'https' ||
         this.endpoint.host.isEmpty ||
@@ -27,18 +30,51 @@ class DavConfig {
         password.contains('\n')) {
       throw const LedgerException('WebDAV 必须使用 HTTPS，地址不能包含凭据、查询或片段');
     }
+    if ((certificatePem == null) != (certificateOrigin == null)) {
+      throw const LedgerException('服务证书与地址必须成对提供');
+    }
+    if (certificatePem != null) {
+      try {
+        final origin = Uri.parse(certificateOrigin!);
+        if (origin.origin != this.endpoint.origin ||
+            origin.scheme != 'https' ||
+            origin.host.isEmpty ||
+            origin.userInfo.isNotEmpty ||
+            origin.hasQuery ||
+            origin.hasFragment ||
+            origin.port < 1 ||
+            origin.port > 65535 ||
+            (origin.path.isNotEmpty && origin.path != '/') ||
+            certificatePem!.length > 16384 ||
+            !RegExp(
+              r'^-----BEGIN CERTIFICATE-----\s+[A-Za-z0-9+/=\s]+-----END CERTIFICATE-----\s*$',
+            ).hasMatch(certificatePem!)) {
+          throw const FormatException();
+        }
+        SecurityContext(
+          withTrustedRoots: true,
+        ).setTrustedCertificatesBytes(utf8.encode(certificatePem!));
+      } catch (_) {
+        throw const LedgerException('服务公共证书或限定地址无效');
+      }
+    }
   }
   final Uri endpoint;
   final String username, password;
+  final String? certificatePem, certificateOrigin;
   Map<String, dynamic> toJson() => {
     'endpoint': endpoint.toString(),
     'username': username,
     'password': password,
+    if (certificatePem != null) 'certificatePem': certificatePem,
+    if (certificateOrigin != null) 'certificateOrigin': certificateOrigin,
   };
   static DavConfig fromJson(Map<String, dynamic> json) => DavConfig(
     endpoint: json['endpoint'] as String,
     username: json['username'] as String,
     password: json['password'] as String,
+    certificatePem: json['certificatePem'] as String?,
+    certificateOrigin: json['certificateOrigin'] as String?,
   );
 }
 
@@ -51,7 +87,17 @@ abstract interface class OperationStore {
 
 class WebDavStore implements OperationStore {
   WebDavStore(this.config, String ledgerId, {http.Client? client})
-    : client = client ?? http.Client(),
+    : client =
+          client ??
+          (config.certificatePem == null
+              ? createWebDavClient(config.endpoint)
+              : createWebDavClient(
+                  config.endpoint,
+                  localOrigin: config.certificateOrigin!,
+                  certificateBase64: base64Encode(
+                    utf8.encode(config.certificatePem!),
+                  ),
+                )),
       root = config.endpoint.resolve(
         'myledger/v1/${requireUuid(ledgerId)}/ops/',
       );

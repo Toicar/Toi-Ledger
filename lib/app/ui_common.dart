@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import '../domain/operation.dart';
 
+String ledgerMoney(int minor) {
+  final parts = formatAmount(minor).split('.');
+  final whole = parts[0].replaceAllMapped(
+    RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
+    (match) => '${match[1]},',
+  );
+  return '¥$whole.${parts[1]}';
+}
+
 String safeError(Object error) =>
     error is LedgerException ? error.message : '操作失败，数据未提交；请重试';
 void notify(BuildContext context, String message) => ScaffoldMessenger.of(

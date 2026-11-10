@@ -12,3 +12,5 @@ final credentialProvider = Provider<CredentialStore>(
 final entitiesProvider = StreamProvider<List<EntityView>>(
   (ref) => ref.watch(repositoryProvider).watch(),
 );
+
+final syncRequestProvider = StateProvider<int>((ref) => 0);

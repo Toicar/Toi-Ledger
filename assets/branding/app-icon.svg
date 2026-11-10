@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>MyLedger · living ink</title>
+  <desc>A curved, sprouting fountain pen with a split nib overlaps a ledger and rests in an open ink bottle. Warm white on terracotta; no text, gradients or shadows.</desc>
+  <defs>
+    <clipPath id="ledger-visible">
+      <!-- The foreground silhouette also hides the ledger inside the open bottle. -->
+      <path clip-rule="evenodd" d="M0 0 L1024 0 L1024 1024 L0 1024 Z M686 226 C700 206 736 208 752 238 C704 320 650 422 650 500 C650 526 658 548 668 566 L702 608 L690 640 L742 640 L742 678 C772 698 790 726 790 752 L790 782 C790 804 772 820 750 820 L618 820 C594 820 578 802 578 780 L578 752 C578 720 600 690 626 676 L626 640 L612 636 L604 590 C580 548 578 502 590 450 C606 378 646 294 686 226 Z"/>
+    </clipPath>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="#B75B3E"/>
+  <path fill="#FAF8F3" fill-rule="evenodd" clip-path="url(#ledger-visible)" d="M234 386 C231 366 244 350 264 347 L542 302 C562 299 579 312 582 332 L640 698 C643 718 630 735 610 738 L332 783 C312 786 295 773 292 753 Z M272 382 L330 745 L602 701 L544 338 Z"/>
+  <path fill="#FAF8F3" clip-path="url(#ledger-visible)" d="M304 341 L328 337 L398 771 L374 775 Z"/>
+  <path fill="#FAF8F3" clip-path="url(#ledger-visible)" data-min-size="32" d="M370 444 L514 421 L519 449 L375 472 Z M383 526 L531 502 L536 530 L388 554 Z M396 608 L507 590 L512 618 L401 636 Z"/>
+  <path fill="#FAF8F3" d="M736 250 C682 338 638 426 638 506 C638 532 644 550 652 568 L618 584 C594 542 592 502 604 454 C619 385 654 306 702 236 C709 224 727 223 736 232 C741 237 741 244 736 250 Z"/>
+  <path fill="#FAF8F3" d="M680 354 C636 350 612 316 624 292 C658 294 678 316 680 354 Z"/>
+  <path fill="#FAF8F3" d="M658 416 C694 370 746 354 770 372 C760 408 716 430 658 416 Z"/>
+  <path fill="#FAF8F3" d="M709 292 C728 250 764 234 786 252 C772 286 742 302 709 292 Z"/>
+  <path fill="#FAF8F3" fill-rule="evenodd" d="M619 586 L653 570 L687 612 L673 665 L626 638 Z M650 617 L670 661 L674 659 L656 616 C658 615 659 613 659 610 C659 606 656 603 652 603 C648 603 645 606 645 610 C645 613 647 616 650 617 Z"/>
+  <path fill="#FAF8F3" d="M640 654 L664 654 L664 690 C634 705 616 730 616 754 L616 778 L752 778 L752 754 C752 730 734 705 704 690 L704 654 L728 654 L728 684 C756 700 776 727 776 752 L776 780 C776 795 764 806 748 806 L620 806 C604 806 592 795 592 780 L592 752 C592 727 612 700 640 684 Z"/>
+</svg>

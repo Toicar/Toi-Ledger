@@ -89,7 +89,13 @@ class Operation {
     required Map<String, dynamic> data,
     required this.deleted,
     required this.createdAt,
+    int? protocolVersion,
   }) : parents = List.unmodifiable(parents.toList()..sort()),
+       protocolVersion =
+           protocolVersion ??
+           (entityType == EntityType.entry && data['categoryId'] == null
+               ? 2
+               : 1),
        data = Map.unmodifiable(data) {
     validate();
   }
@@ -99,8 +105,15 @@ class Operation {
   final Map<String, dynamic> data;
   final bool deleted;
   final String createdAt;
+  final int protocolVersion;
 
   void validate() {
+    if (protocolVersion != 1 && protocolVersion != 2 && protocolVersion != 3) {
+      throw const LedgerException('不支持的操作协议版本，请更新应用');
+    }
+    if (protocolVersion == 3 && (entityType != EntityType.category || parents.isEmpty)) {
+      throw const LedgerException('分类类型变更须引用已有分类版本');
+    }
     for (final value in [id, ledgerId, deviceId, entityId, ...parents]) {
       requireUuid(value);
     }
@@ -132,14 +145,16 @@ class Operation {
       if (amount is! int || amount <= 0 || amount > maxAmountMinor) {
         throw const LedgerException('金额须为整数分且在范围内');
       }
-      requireUuid(data['categoryId']);
+      if (data['categoryId'] != null || protocolVersion == 1) {
+        requireUuid(data['categoryId']);
+      }
       requireDate(data['date']);
       requireText(data['note'], max: 500, empty: true);
     }
   }
 
   Map<String, dynamic> toJson() => {
-    'version': 1,
+    'version': protocolVersion,
     'id': id,
     'ledgerId': ledgerId,
     'deviceId': deviceId,
@@ -159,7 +174,9 @@ class Operation {
       final envelope = jsonDecode(source) as Map<String, dynamic>;
       if (envelope.length != 2) throw const FormatException();
       final map = envelope['operation'] as Map<String, dynamic>;
-      if (map.length != 10 || map['version'] != 1) {
+      if (map.length != 10 ||
+          map['version'] is! int ||
+          (map['version'] != 1 && map['version'] != 2 && map['version'] != 3)) {
         throw const FormatException();
       }
       final op = Operation(
@@ -172,6 +189,7 @@ class Operation {
         data: map['data'] as Map<String, dynamic>,
         deleted: map['deleted'] as bool,
         createdAt: map['createdAt'] as String,
+        protocolVersion: map['version'] as int,
       );
       if (envelope['sha256'] != op.digest) {
         throw const LedgerException('日志校验失败');

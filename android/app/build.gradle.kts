@@ -32,6 +32,15 @@ android {
 
     buildTypes {
         release {
+            // Flutter's non-split default also packages other ABIs from plugins.
+            // Respect an explicit ARM64 target while retaining the base versionCode.
+            if (project.findProperty("target-platform") == "android-arm64" &&
+                project.findProperty("split-per-abi") != "true") {
+                ndk {
+                    abiFilters.clear()
+                    abiFilters.add("arm64-v8a")
+                }
+            }
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")

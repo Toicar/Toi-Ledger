@@ -5,7 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../../app/ui_common.dart';
 import '../../domain/operation.dart';
+import '../../app/design_components.dart';
 import '../../sync/webdav.dart';
+import 'sync_guide_page.dart';
+import 'service_import_dialog.dart';
+import '../../sync/service_setup.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -19,7 +23,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       password = TextEditingController(),
       ledger = TextEditingController();
   String currentId = '', message = '加载中…';
-  bool busy = true;
+  String? savedEndpoint, savedUsername;
+  String? certificatePem, certificateOrigin, savedCertificatePem;
+  bool busy = true, showPassword = false;
   @override
   void initState() {
     super.initState();
@@ -34,6 +40,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       currentId = id;
       ledger.text = id;
       if (config != null) {
+        savedEndpoint = config.endpoint.toString();
+        savedUsername = config.username;
+        certificatePem = savedCertificatePem = config.certificatePem;
+        certificateOrigin = config.certificateOrigin;
         endpoint.text = config.endpoint.toString();
         username.text = config.username;
         password.text = config.password;
@@ -73,6 +83,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         endpoint: endpoint.text.trim(),
         username: username.text,
         password: password.text,
+        certificatePem: certificatePem,
+        certificateOrigin: certificateOrigin,
       );
       remote = WebDavStore(config, id);
       await remote.testConnection();
@@ -82,6 +94,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         }
         await ref.read(credentialProvider).write(config);
         currentId = id;
+        savedEndpoint = config.endpoint.toString();
+        savedUsername = config.username;
+        savedCertificatePem = config.certificatePem;
       }
       if (mounted) {
         setState(
@@ -105,6 +120,99 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
+            const PageHeading(
+              eyebrow: 'YOUR LEDGER, WITH YOU',
+              title: '让账本，随设备同行。',
+              description: '连接自己的 WebDAV，在设备之间同步记录。',
+            ),
+            PaperPanel(
+              padding: const EdgeInsets.all(18),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.devices_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 22,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('第一次连接手机与电脑？'),
+                        const SizedBox(height: 6),
+                        const Text(
+                          '按照三步指引准备同步空间、连接设备并核对记录。离线时，也可以继续记账。',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        const SizedBox(height: 8),
+                        OutlinedButton.icon(
+                          key: const ValueKey('open-sync-guide'),
+                          onPressed: busy
+                              ? null
+                              : () => Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    settings: const RouteSettings(
+                                      name: '/settings/guide',
+                                    ),
+                                    builder: (_) => SyncGuidePage(
+                                      ledgerId: currentId,
+                                      savedEndpoint: savedEndpoint,
+                                      savedUsername: savedUsername,
+                                      savedCertificatePem: savedCertificatePem,
+                                    ),
+                                  ),
+                                ),
+                          icon: const Icon(Icons.route_outlined, size: 18),
+                          label: const Text('多设备连接指引'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            OutlinedButton.icon(
+              onPressed: busy
+                  ? null
+                  : () async {
+                      final setup = await showDialog<ServiceSetup>(
+                        context: context,
+                        builder: (_) => const ServiceImportDialog(),
+                      );
+                      if (setup == null || !mounted) return;
+                      setState(() {
+                        endpoint.text = setup.endpoint.toString();
+                        username.text = setup.username;
+                        certificatePem = setup.certificatePem;
+                        certificateOrigin = setup.endpoint.origin;
+                        message = '服务配置已填入，账本 ID 未改变。请输入应用专用密码，再验证并保存。';
+                      });
+                    },
+              icon: const Icon(Icons.file_download_outlined, size: 18),
+              label: const Text('导入 WebDAV 服务配置'),
+            ),
+            if (certificateOrigin != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  '公共证书仅用于 $certificateOrigin；配置验证并保存后生效。',
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+            if (certificateOrigin != null)
+              TextButton(
+                onPressed: busy
+                    ? null
+                    : () => setState(() {
+                        certificatePem = null;
+                        certificateOrigin = null;
+                      }),
+                child: const Text('移除此公共证书'),
+              ),
+            const SizedBox(height: 14),
             TextField(
               controller: endpoint,
               enabled: !busy,
@@ -113,20 +221,36 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 hintText: 'https://dav.example.invalid/dav/',
               ),
             ),
+            const SizedBox(height: 14),
             TextField(
               controller: username,
               enabled: !busy,
               decoration: const InputDecoration(labelText: '用户名'),
               autocorrect: false,
             ),
+            const SizedBox(height: 14),
             TextField(
               controller: password,
               enabled: !busy,
-              obscureText: true,
+              obscureText: !showPassword,
               enableSuggestions: false,
               autocorrect: false,
-              decoration: const InputDecoration(labelText: '应用专用密码'),
+              decoration: InputDecoration(
+                labelText: '应用专用密码',
+                suffixIcon: IconButton(
+                  tooltip: showPassword ? '隐藏密码' : '显示密码',
+                  onPressed: busy
+                      ? null
+                      : () => setState(() => showPassword = !showPassword),
+                  icon: Icon(
+                    showPassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                  ),
+                ),
+              ),
             ),
+            const SizedBox(height: 14),
             TextField(
               controller: ledger,
               enabled: !busy,
@@ -165,6 +289,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           try {
                             await ref.read(credentialProvider).clear();
                             password.clear();
+                            savedEndpoint = null;
+                            savedUsername = null;
+                            savedCertificatePem = certificatePem =
+                                certificateOrigin = null;
+                            showPassword = false;
                             if (mounted) {
                               setState(() => message = '已断开同步，本地数据保留');
                             }

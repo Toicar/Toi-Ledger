@@ -1,4 +1,5 @@
 .dart_tool/
+.dartServer/
 .flutter-plugins*
 .packages
 build/
@@ -29,3 +30,21 @@ android/gradle/wrapper/gradle-wrapper.jar
 reports/raw/
 
 **/.kotlin/
+__pycache__/
+*.pyc
+
+# Local tool state, device records and handoff notes stay on this computer.
+.flutter
+.flutter_tool_state
+Microsoft/
+.local-webdav/
+*.dpapi
+service-setup.json
+password-reset-*.json
+docs/LOCAL_HANDOFF.md
+docs/LOCAL_WEBDAV.md
+docs/TEST_RESULTS.md
+docs/*_2026-11-10.md
+docs/superpowers/
+reports/
+tool/local_webdav/Set-LocalWebDavPassword.ps1
