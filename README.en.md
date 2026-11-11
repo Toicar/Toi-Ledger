@@ -1,3 +1,5 @@
+![Toi-Ledger project cover with a ledger, fountain pen, and plant](docs/images/project-cover.svg)
+
 # Toi-Ledger
 
 **Every little entry is part of everyday life.**
@@ -155,7 +157,7 @@ flutter build apk --release --target-platform android-arm64 --target lib/main.da
 flutter build windows --release --target lib/main.dart
 ```
 
-Default outputs are `build/app/outputs/flutter-apk/app-release.apk` and `build/windows/x64/runner/Release/`. A complete distribution also needs the WebDAV tools folder; a normal Flutter build does not automatically package those scripts.
+Default outputs are `build/app/outputs/flutter-apk/app-release.apk` and `build/windows/x64/runner/Release/`. The Windows build copies the WebDAV tools into `webdav-setup/`; keep the entire output directory when distributing it.
 
 The current Android Release configuration uses debug signing. Configure and retain a stable release key before distributing your own production builds. A build signed with another key cannot directly replace an installed version with a different signature.
 

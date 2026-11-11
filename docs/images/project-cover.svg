@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
+  <title id="title">Toi-Ledger</title>
+  <desc id="desc">A warm terracotta ledger, fountain pen and sprouting plant, with a small spending chart.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5e8df"/><stop offset=".58" stop-color="#f7f3eb"/><stop offset="1" stop-color="#e8e9d8"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffdfa" stop-opacity=".93"/><stop offset="1" stop-color="#fffaf3" stop-opacity=".55"/></linearGradient>
+    <filter id="shadow" x="-.3" y="-.3" width="1.6" height="1.8"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1440" height="520" rx="28" fill="url(#paper)"/>
+  <circle cx="70" cy="490" r="230" fill="#e5b5a1" opacity=".13"/>
+  <circle cx="1398" cy="30" r="205" fill="#b8c59d" opacity=".15"/>
+  <path d="M0 393 C250 343 353 451 595 398 S1070 331 1440 419 V520 H0Z" fill="#fff" opacity=".18"/>
+  <g transform="translate(105 100)">
+    <rect width="58" height="58" rx="16" fill="#b75b3e"/>
+    <g transform="translate(6 6) scale(.045)">
+      <path fill="#faf8f3" fill-rule="evenodd" d="M234 386 C231 366 244 350 264 347 L542 302 C562 299 579 312 582 332 L640 698 C643 718 630 735 610 738 L332 783 C312 786 295 773 292 753 Z M272 382 L330 745 L602 701 L544 338 Z"/>
+      <path fill="#faf8f3" d="M304 341 L328 337 L398 771 L374 775 Z M370 444 L514 421 L519 449 L375 472 Z M383 526 L531 502 L536 530 L388 554 Z M396 608 L507 590 L512 618 L401 636 Z M736 250 C682 338 638 426 638 506 C638 532 644 550 652 568 L618 584 C594 542 592 502 604 454 C619 385 654 306 702 236 C709 224 727 223 736 232 C741 237 741 244 736 250 Z M680 354 C636 350 612 316 624 292 C658 294 678 316 680 354 Z M658 416 C694 370 746 354 770 372 C760 408 716 430 658 416 Z M619 586 L653 570 L687 612 L673 665 L626 638 Z M640 654 L664 654 L664 690 C634 705 616 730 616 754 L616 778 L752 778 L752 754 C752 730 734 705 704 690 L704 654 L728 654 L728 684 C756 700 776 727 776 752 L776 780 C776 795 764 806 748 806 L620 806 C604 806 592 795 592 780 L592 752 C592 727 612 700 640 684 Z"/>
+    </g>
+    <text x="76" y="40" fill="#a7553d" font-family="Georgia, serif" font-size="20" letter-spacing="4">A LITTLE EVERY DAY</text>
+    <text x="-4" y="154" fill="#292a25" font-family="Georgia, 'Times New Roman', serif" font-size="85" letter-spacing="-2">Toi-Ledger</text>
+    <path d="M0 192 H60" stroke="#b75b3e" stroke-width="3" stroke-linecap="round"/>
+    <text x="0" y="244" fill="#57594e" font-family="Georgia, serif" font-size="25">A little more room for life.</text>
+    <text x="0" y="292" fill="#8b897d" font-family="Arial, sans-serif" font-size="14" letter-spacing="3">LOCAL FIRST  ·  MADE FOR EVERYDAY</text>
+  </g>
+  <g transform="translate(808 55)">
+    <ellipse cx="260" cy="395" rx="252" ry="28" fill="#62483d" opacity=".14" filter="url(#shadow)"/>
+    <rect x="16" y="48" width="396" height="294" rx="26" fill="url(#card)" stroke="#fff" stroke-opacity=".8"/>
+    <circle cx="50" cy="82" r="4" fill="#bb715d"/><circle cx="66" cy="82" r="4" fill="#d5b4a2"/><circle cx="82" cy="82" r="4" fill="#bac4ae"/>
+    <path d="M51 123 H230 M51 153 H158" stroke="#d7d0c4" stroke-width="8" stroke-linecap="round"/>
+    <path d="M51 202 H280 M51 236 H253 M51 270 H221" stroke="#ded9cf" stroke-width="6" stroke-linecap="round"/>
+    <path d="M323 204 A44 44 0 1 1 280 259" fill="none" stroke="#e4ded3" stroke-width="12" stroke-linecap="round"/>
+    <path d="M323 204 A44 44 0 0 1 366 248" fill="none" stroke="#b75b3e" stroke-width="12" stroke-linecap="round"/>
+    <g transform="translate(265 65) rotate(10 120 180)">
+      <rect x="30" y="47" width="234" height="294" rx="16" fill="#f4e5d9" stroke="#b75b3e" stroke-width="3"/>
+      <path d="M63 48 V340" stroke="#cf9c87" stroke-width="3"/>
+      <path d="M92 133 H217 M92 165 H199 M92 197 H212 M92 229 H174" stroke="#c99a87" stroke-width="4" stroke-linecap="round"/>
+      <path d="M186 35 C168 97 161 142 174 209" fill="none" stroke="#78917b" stroke-width="5" stroke-linecap="round"/>
+      <path d="M174 114 C139 105 135 78 139 71 C162 75 175 91 174 114 Z M172 146 C189 112 215 105 225 110 C222 130 204 144 172 146 Z" fill="#8ba38b"/>
+      <path d="M210 9 C191 66 184 111 188 163 L201 205 L212 162 C208 109 214 65 232 17 Z" fill="#b75b3e"/>
+      <path d="M188 163 L212 162 L201 211 Z" fill="#663e34"/><path d="M200 174 L201 197" stroke="#f2dacc" stroke-width="2"/>
+    </g>
+    <circle cx="60" cy="364" r="7" fill="#bd795f" opacity=".6"/><circle cx="454" cy="45" r="5" fill="#9cae91" opacity=".65"/>
+  </g>
+</svg>

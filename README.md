@@ -1,3 +1,5 @@
+![Toi-Ledger：账本、钢笔与绿植组成的项目封面](docs/images/project-cover.svg)
+
 # Toi-Ledger
 
 **一点一滴，皆是生活。**
@@ -157,7 +159,7 @@ flutter build apk --release --target-platform android-arm64 --target lib/main.da
 flutter build windows --release --target lib/main.dart
 ```
 
-默认输出为 `build/app/outputs/flutter-apk/app-release.apk` 与 `build/windows/x64/runner/Release/`。完整分发包还需附带 WebDAV 工具目录；普通 Flutter 构建不会自动打包这些脚本。
+默认输出为 `build/app/outputs/flutter-apk/app-release.apk` 与 `build/windows/x64/runner/Release/`。Windows 构建会将 WebDAV 工具复制到输出目录的 `webdav-setup/`；分发时请保留完整目录。
 
 当前 Android Release 配置沿用调试签名。自行正式分发前应配置稳定的发布密钥，妥善保留签名材料；换用其他密钥的构建不能直接覆盖现有签名不同的安装。
 
