@@ -25,13 +25,13 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 
 ## Preview
 
-Screenshots and demonstrations will be added later.
+These interfaces are rendered with fictional ledger data. Mobile images show a mobile-sized preview.
 
-| Records and transactions | Statistics and details | Appearance and themes | Sync setup |
-| --- | --- | --- | --- |
-| Screenshot pending | Screenshot pending | Screenshot pending | Screenshot pending |
+![Desktop home: balances and transactions](docs/images/en/home-desktop.png)
 
-<!-- Add actual application screenshots here later. Use demonstration data and hide personal transactions, passwords, and device information. -->
+| Category breakdown | Appearance and accent colors | Language and sync settings |
+| --- | --- | --- |
+| ![Category breakdown](docs/images/en/statistics-other-mobile.png) | ![Appearance and accent colors](docs/images/en/appearance-mobile-colors.png) | ![Language and sync settings](docs/images/en/sync-settings-mobile.png) |
 
 ## Features
 
@@ -222,4 +222,4 @@ Use [Issues](https://github.com/Toicar/Toi-Ledger/issues) to report problems or 
 
 Describe the scope and validation of proposed changes. A license and fuller contribution guidelines will be added later; no particular open-source license is currently declared.
 
-More product details, actual screenshots, demonstrations, and usage examples will follow.
+More product details, demonstrations, and usage examples will follow.

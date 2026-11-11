@@ -53,6 +53,24 @@ void main() {
       });
       for (final (name, style, accent, mode, size, scale, destination) in [
         (
+          'home-desktop',
+          LedgerStyle.satin,
+          LedgerAccent.clay,
+          ThemeMode.light,
+          const Size(1280, 900),
+          1.0,
+          '首页',
+        ),
+        (
+          'home-mobile',
+          LedgerStyle.satin,
+          LedgerAccent.clay,
+          ThemeMode.light,
+          const Size(390, 844),
+          1.0,
+          '首页',
+        ),
+        (
           'appearance-satin-bamboo',
           LedgerStyle.satin,
           LedgerAccent.bamboo,
@@ -136,15 +154,35 @@ void main() {
       ]) {
         final repo = memoryRepository();
         await tester.runAsync(() async {
-          final meal = await category(repo, name: '餐饮美食');
-          final income = await category(repo, kind: 'income', name: '工资收入');
+          final meal = await category(
+            repo,
+            name: english ? 'Food & dining' : '餐饮美食',
+          );
+          final income = await category(
+            repo,
+            kind: 'income',
+            name: english ? 'Salary' : '工资收入',
+          );
           final date = DateTime.now().toIso8601String().substring(0, 10);
-          await entry(repo, meal, amount: 6800, date: date);
-          await entry(repo, income, amount: 1800000, date: date);
+          for (final (cat, amount, note) in [
+            (meal, 6800, english ? 'Lunch with friends' : '朋友聚餐'),
+            (income, 1800000, english ? 'Monthly salary' : '本月工资'),
+          ]) {
+            await repo.save(
+              type: EntityType.entry,
+              data: {
+                'kind': cat.data['kind'],
+                'categoryId': cat.entityId,
+                'amountMinor': amount,
+                'date': date,
+                'note': note,
+              },
+            );
+          }
           for (final (amount, note) in [
-            (280000, '房租 · 一处安稳的角落'),
-            (3500, '咖啡与早餐'),
-            (1800, '交通零用'),
+            (280000, english ? 'Rent · A place to call home' : '房租 · 一处安稳的角落'),
+            (3500, english ? 'Coffee and breakfast' : '咖啡与早餐'),
+            (1800, english ? 'Local transport' : '交通零用'),
           ]) {
             await repo.save(
               type: EntityType.entry,
@@ -180,7 +218,9 @@ void main() {
           ),
         );
         await settle(tester);
-        if (size.width >= 1000) {
+        if (destination == '首页') {
+          // Capture the starting page without navigating away.
+        } else if (size.width >= 1000) {
           await tester.tap(find.text(localized(destination)).first);
         } else if (destination == '外观') {
           await tester.tap(find.byTooltip(localized('外观')));
@@ -255,7 +295,7 @@ void main() {
         }
         if (name.contains('other-mobile')) {
           await tester.scrollUntilVisible(
-            find.text('咖啡与早餐'),
+            find.text(english ? 'Coffee and breakfast' : '咖啡与早餐'),
             240,
             scrollable: find
                 .byWidgetPredicate(
