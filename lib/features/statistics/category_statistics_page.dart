@@ -1,3 +1,5 @@
+import '../../l10n/statistics_labels.dart';
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
@@ -47,10 +49,12 @@ class _CategoryStatisticsPageState
     return Scaffold(
       key: const ValueKey('category-statistics-page'),
       appBar: AppBar(
-        title: const Text('分类明细统计'),
+        title: Text(context.l10n.categoryBreakdown),
         actions: [
           IconButton(
-            tooltip: hidden ? '显示金额' : '隐藏金额',
+            tooltip: hidden
+                ? context.l10n.showAmounts
+                : context.l10n.hideAmounts,
             icon: Icon(
               hidden
                   ? Icons.visibility_outlined
@@ -62,13 +66,13 @@ class _CategoryStatisticsPageState
                     .read(presentationProvider.notifier)
                     .setHideAmounts(!hidden);
               } catch (error) {
-                if (context.mounted) notify(context, safeError(error));
+                if (context.mounted) notify(context, safeError(error, context));
               }
             },
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('关闭'),
+            child: Text(context.l10n.close),
           ),
         ],
       ),
@@ -76,7 +80,7 @@ class _CategoryStatisticsPageState
           .watch(entitiesProvider)
           .when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Center(child: Text(safeError(error))),
+            error: (error, _) => Center(child: Text(safeError(error, context))),
             data: (views) {
               final all = LedgerStatistics.forPeriod(
                 views,
@@ -148,9 +152,13 @@ class _CategoryStatisticsPageState
                           children: [
                             PageHeading(
                               eyebrow: 'A CLOSER LOOK',
-                              title: group?.label ?? widget.label,
+                              title: group != null
+                                  ? groupLabel(context, group)
+                                  : widget.groupId == 'uncategorized:other'
+                                  ? context.l10n.other
+                                  : widget.label,
                               description:
-                                  '${widget.range.label} · ${widget.income ? '收入' : '支出'}',
+                                  '${rangeLabel(context, widget.range)} · ${widget.income ? context.l10n.income : context.l10n.expense}',
                             ),
                             LayoutBuilder(
                               builder: (context, constraints) => Wrap(
@@ -158,10 +166,13 @@ class _CategoryStatisticsPageState
                                 runSpacing: 12,
                                 children: [
                                   for (final metric in <(String, String)>[
-                                    ('本期合计', money(amount)),
-                                    ('账单笔数', '${entries.length} 笔'),
+                                    (context.l10n.periodTotal, money(amount)),
                                     (
-                                      '平均每笔',
+                                      context.l10n.transactions2,
+                                      context.l10n.entries(entries.length),
+                                    ),
+                                    (
+                                      context.l10n.averageEntry,
                                       money(
                                         entries.isEmpty
                                             ? 0
@@ -169,7 +180,7 @@ class _CategoryStatisticsPageState
                                                   entries.length,
                                       ),
                                     ),
-                                    ('最大单笔', money(maximum)),
+                                    (context.l10n.largestEntry, money(maximum)),
                                   ])
                                     SizedBox(
                                       width: constraints.maxWidth < 600
@@ -205,7 +216,7 @@ class _CategoryStatisticsPageState
                             ),
                             const SizedBox(height: 20),
                             if (hidden)
-                              const Text('金额已隐藏')
+                              Text(context.l10n.amountsHidden)
                             else if (entries.isNotEmpty)
                               PaperPanel(
                                 padding: const EdgeInsets.all(16),
@@ -219,8 +230,8 @@ class _CategoryStatisticsPageState
                             const SizedBox(height: 20),
                             TextField(
                               controller: search,
-                              decoration: const InputDecoration(
-                                labelText: '搜索明细备注或日期',
+                              decoration: InputDecoration(
+                                labelText: context.l10n.searchNotesOrDates,
                                 prefixIcon: Icon(Icons.search),
                               ),
                               onChanged: (value) =>
@@ -233,8 +244,16 @@ class _CategoryStatisticsPageState
                               children: [
                                 Text(
                                   query.isEmpty
-                                      ? '共 ${entries.length} 笔${widget.income ? '收入' : '支出'}'
-                                      : '匹配 ${filtered.length} / ${entries.length} 笔',
+                                      ? context.l10n.entries2(
+                                          entries.length,
+                                          widget.income
+                                              ? context.l10n.income
+                                              : context.l10n.expense,
+                                        )
+                                      : context.l10n.ofEntriesMatch(
+                                          filtered.length,
+                                          entries.length,
+                                        ),
                                 ),
                                 TextButton.icon(
                                   key: const ValueKey('detail-sort'),
@@ -243,15 +262,19 @@ class _CategoryStatisticsPageState
                                   ),
                                   icon: const Icon(Icons.sort, size: 18),
                                   label: Text(
-                                    largestFirst ? '按金额从大到小' : '按日期从新到旧',
+                                    largestFirst
+                                        ? context.l10n.amountHighToLow
+                                        : context.l10n.dateNewestFirst,
                                   ),
                                 ),
                               ],
                             ),
                             if (filtered.isEmpty)
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.symmetric(vertical: 24),
-                                child: Text('本期没有符合条件的账目'),
+                                child: Text(
+                                  context.l10n.noMatchingEntriesInThisPeriod,
+                                ),
                               ),
                           ],
                         );
@@ -295,7 +318,7 @@ class _CategoryStatisticsPageState
                                   ).number(size: 22),
                                 ),
                                 const SizedBox(height: 5),
-                                Text(note.isEmpty ? '未填写备注' : note),
+                                Text(note.isEmpty ? context.l10n.noNote : note),
                               ],
                             ),
                           ),

@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/app_theme.dart';
@@ -36,11 +37,16 @@ class LedgerOverview extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const Expanded(
-                  child: Text('本月结余', style: TextStyle(fontSize: 13)),
+                Expanded(
+                  child: Text(
+                    context.l10n.balanceThisMonth,
+                    style: TextStyle(fontSize: 13),
+                  ),
                 ),
                 IconButton(
-                  tooltip: hidden ? '显示金额' : '隐藏金额',
+                  tooltip: hidden
+                      ? context.l10n.showAmounts
+                      : context.l10n.hideAmounts,
                   icon: Icon(
                     hidden
                         ? Icons.visibility_off_outlined
@@ -54,7 +60,12 @@ class LedgerOverview extends ConsumerWidget {
                           .read(presentationProvider.notifier)
                           .setHideAmounts(!hidden);
                     } catch (_) {
-                      if (context.mounted) notify(context, '金额显示设置保存失败，请重试');
+                      if (context.mounted) {
+                        notify(
+                          context,
+                          context.l10n.couldNotSaveAmountVisibilityTry,
+                        );
+                      }
                     }
                   },
                 ),
@@ -73,7 +84,7 @@ class LedgerOverview extends ConsumerWidget {
             ),
             const SizedBox(height: 18),
             Text(
-              '收入与支出之间，是生活的余地。',
+              context.l10n.roomForLifeBetweenEarningAnd,
               style: TextStyle(
                 fontSize: 11,
                 color: dark ? const Color(0xff65665a) : const Color(0xffb8b8a9),
@@ -82,7 +93,7 @@ class LedgerOverview extends ConsumerWidget {
             if (conflicts > 0) ...[
               const SizedBox(height: 10),
               Text(
-                '$conflicts 笔冲突未计入合计',
+                context.l10n.conflictedEntriesExcludedFromTotals(conflicts),
                 style: TextStyle(
                   fontSize: 12,
                   color: dark
@@ -109,8 +120,8 @@ class LedgerOverview extends ConsumerWidget {
                           fit: BoxFit.scaleDown,
                           child: Text(
                             hidden
-                                ? '${isIncome ? '收入' : '支出'} ••••'
-                                : '${isIncome ? '收入' : '支出'} ${ledgerMoney(isIncome ? income : expense)}',
+                                ? '${isIncome ? context.l10n.income : context.l10n.expense} ••••'
+                                : '${isIncome ? context.l10n.income : context.l10n.expense} ${ledgerMoney(isIncome ? income : expense)}',
                             style: const TextStyle(fontSize: 14),
                           ),
                         ),
@@ -140,7 +151,9 @@ class LedgerOverview extends ConsumerWidget {
               const SizedBox(width: 7),
               Expanded(
                 child: Text(
-                  isIncome ? '本月收入' : '本月支出',
+                  isIncome
+                      ? context.l10n.incomeThisMonth
+                      : context.l10n.expensesThisMonth,
                   style: TextStyle(
                     fontSize: 12,
                     color: theme.colorScheme.onSurfaceVariant,
@@ -162,7 +175,9 @@ class LedgerOverview extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            isIncome ? '每一份努力，都有回响' : '花在值得的地方',
+            isIncome
+                ? context.l10n.everyEffortFindsItsEcho
+                : context.l10n.spendOnWhatMatters,
             style: theme.textTheme.bodySmall?.copyWith(fontSize: 11),
           ),
         ],
@@ -237,30 +252,35 @@ class LedgerEmptyState extends StatelessWidget {
           const LedgerStillLife(size: 120),
         const SizedBox(height: 12),
         Text(
-          filtered ? '还没有找到这笔记录' : '把生活，记在这里。',
+          filtered
+              ? context.l10n.noMatchingEntryYet
+              : context.l10n.keepALittleRecordOfLife,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 10),
         Text(
           filtered
-              ? '试试其他关键词，或切换收支类型。'
+              ? context.l10n.tryAnotherKeywordOrSwitchThe
               : MediaQuery.sizeOf(context).width >= 1000
-              ? '暂无记录，点击左侧记一笔'
-              : '暂无记录，点击右下角记一笔',
+              ? context.l10n.noEntriesYetSelectNewEntry
+              : context.l10n.noEntriesYetUseTheAdd,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         if (filtered && onReset != null) ...[
           const SizedBox(height: 14),
-          TextButton(onPressed: onReset, child: const Text('清除筛选')),
+          TextButton(
+            onPressed: onReset,
+            child: Text(context.l10n.clearFilters),
+          ),
         ],
         if (!filtered && onCreate != null) ...[
           const SizedBox(height: 16),
           OutlinedButton.icon(
             onPressed: onCreate,
             icon: const Icon(Icons.add, size: 17),
-            label: const Text('开始记录'),
+            label: Text(context.l10n.startRecording),
           ),
         ],
       ],

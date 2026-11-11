@@ -1,0 +1,2032 @@
+[
+  {
+    "key": "newEntry",
+    "zh": "记一笔",
+    "en": "New entry"
+  },
+  {
+    "key": "mySpace",
+    "zh": "我的空间",
+    "en": "My space"
+  },
+  {
+    "key": "myLedger",
+    "zh": "我的账本",
+    "en": "My ledger"
+  },
+  {
+    "key": "statistics",
+    "zh": "统计分析",
+    "en": "Statistics"
+  },
+  {
+    "key": "quickTemplates",
+    "zh": "快捷模板",
+    "en": "Quick templates"
+  },
+  {
+    "key": "categories",
+    "zh": "分类管理",
+    "en": "Categories"
+  },
+  {
+    "key": "syncSettings",
+    "zh": "同步设置",
+    "en": "Sync settings"
+  },
+  {
+    "key": "appearance",
+    "zh": "外观",
+    "en": "Appearance"
+  },
+  {
+    "key": "localFirstSafelyRecorded",
+    "zh": "本地优先，安心记录",
+    "en": "Local first, safely recorded"
+  },
+  {
+    "key": "everyLittleEntryIsPartOf",
+    "zh": "一点一滴，皆是生活。",
+    "en": "Every little entry is part of life."
+  },
+  {
+    "key": "enterAValidPositiveThresholdAmount",
+    "zh": "大额门槛须为有效的正数金额",
+    "en": "Enter a valid positive threshold amount"
+  },
+  {
+    "key": "clay",
+    "zh": "陶土",
+    "en": "Clay"
+  },
+  {
+    "key": "bamboo",
+    "zh": "竹绿",
+    "en": "Bamboo"
+  },
+  {
+    "key": "azure",
+    "zh": "群青",
+    "en": "Azure"
+  },
+  {
+    "key": "vermilion",
+    "zh": "胭脂红",
+    "en": "Vermilion"
+  },
+  {
+    "key": "gardenia",
+    "zh": "栀子黄",
+    "en": "Gardenia"
+  },
+  {
+    "key": "lotus",
+    "zh": "藕荷",
+    "en": "Lotus"
+  },
+  {
+    "key": "couldNotCompleteTheOperationYour",
+    "zh": "操作失败，数据未提交；请重试",
+    "en": "Could not complete the operation. Your changes were not saved; try again."
+  },
+  {
+    "key": "deleteThisItem",
+    "zh": "确认删除？",
+    "en": "Delete this item?"
+  },
+  {
+    "key": "deletionSyncsToOtherDevicesHistorical",
+    "zh": "删除会同步到其他设备，历史版本仍会保留。",
+    "en": "Deletion syncs to other devices. Historical versions are retained."
+  },
+  {
+    "key": "cancel",
+    "zh": "取消",
+    "en": "Cancel"
+  },
+  {
+    "key": "delete",
+    "zh": "删除",
+    "en": "Delete"
+  },
+  {
+    "key": "invalidIncomeExpenseType",
+    "zh": "收支类型无效",
+    "en": "Invalid income/expense type"
+  },
+  {
+    "key": "invalidTemplateFields",
+    "zh": "快捷模板字段无效",
+    "en": "Invalid template fields"
+  },
+  {
+    "key": "theCategoryIsMissingEditThe",
+    "zh": "分类已缺失，请编辑模板重新选择",
+    "en": "The category is missing. Edit the template and select another category."
+  },
+  {
+    "key": "theCategoryHasAConflictResolve",
+    "zh": "分类存在冲突，请处理冲突或编辑模板重新选择",
+    "en": "The category has a conflict. Resolve it or edit the template to choose another."
+  },
+  {
+    "key": "theCategoryIsArchivedEditThe",
+    "zh": "分类已归档，请编辑模板重新选择",
+    "en": "The category is archived. Edit the template and select another category."
+  },
+  {
+    "key": "theCategoryTypeHasChangedEdit",
+    "zh": "分类收支类型已变化，请编辑模板重新选择",
+    "en": "The category type has changed. Edit the template and select its category again."
+  },
+  {
+    "key": "youCanSaveUpToQuick",
+    "zh": "快捷模板最多保存 50 个",
+    "en": "You can save up to 50 quick templates"
+  },
+  {
+    "key": "duplicateTemplateId",
+    "zh": "快捷模板 ID 重复",
+    "en": "Duplicate template ID"
+  },
+  {
+    "key": "invalidTemplateDataOrUnsupportedVersion",
+    "zh": "快捷模板数据格式或版本无效",
+    "en": "Invalid template data or unsupported version"
+  },
+  {
+    "key": "onlyAnEmptyLedgerCanJoin",
+    "zh": "只有空账本可以加入其他账本，请勿清空现有数据",
+    "en": "Only an empty ledger can join another ledger. Keep your existing data."
+  },
+  {
+    "key": "thisOperationBelongsToAnotherLedger",
+    "zh": "日志属于其他账本",
+    "en": "This operation belongs to another ledger"
+  },
+  {
+    "key": "theSameOperationIdHasDifferent",
+    "zh": "相同操作 ID 对应不同内容，已停止同步",
+    "en": "The same operation ID has different contents. Sync stopped."
+  },
+  {
+    "key": "operationsHaveMissingParentsOrA",
+    "zh": "日志缺少父版本或包含循环，请稍后重试",
+    "en": "Operations have missing parents or a cycle. Try again later."
+  },
+  {
+    "key": "theParentEntityOrIncomeExpense",
+    "zh": "父版本的实体或收支类型不一致",
+    "en": "The parent entity or income/expense type does not match"
+  },
+  {
+    "key": "entityTypeOrTransactionDirectionCannot",
+    "zh": "实体类型或收支类型不可变",
+    "en": "Entity type or transaction direction cannot be changed"
+  },
+  {
+    "key": "editingRequiresTheOriginalVersionRefresh",
+    "zh": "编辑需要原始版本，请刷新后重试",
+    "en": "Editing requires the original version. Refresh and try again."
+  },
+  {
+    "key": "thisEntryHasChangedRefreshAnd",
+    "zh": "账目已发生变化，请刷新后重试",
+    "en": "This entry has changed. Refresh and try again."
+  },
+  {
+    "key": "resolveTheConflictFirst",
+    "zh": "请先处理冲突",
+    "en": "Resolve the conflict first"
+  },
+  {
+    "key": "theIncomeExpenseTypeOfAn",
+    "zh": "已有记录的收支类型不可修改",
+    "en": "The income/expense type of an existing transaction cannot be changed"
+  },
+  {
+    "key": "chooseAnAvailableConflictFreeCategory",
+    "zh": "请选择有效且无冲突的同类型分类",
+    "en": "Choose an available, conflict-free category of the matching type"
+  },
+  {
+    "key": "to",
+    "zh": "{arg0} 至 {arg1}",
+    "en": "{arg0} to {arg1}"
+  },
+  {
+    "key": "label",
+    "zh": "{arg0}年",
+    "en": "{arg0}"
+  },
+  {
+    "key": "invalidUncategorizedTransactionThreshold",
+    "zh": "未分类大额门槛无效",
+    "en": "Invalid uncategorized transaction threshold"
+  },
+  {
+    "key": "other",
+    "zh": "其他",
+    "en": "Other"
+  },
+  {
+    "key": "uncategorized",
+    "zh": "未分类 · {arg0}",
+    "en": "Uncategorized · {arg0}"
+  },
+  {
+    "key": "categoryAwaitingSync",
+    "zh": "分类待同步",
+    "en": "Category awaiting sync"
+  },
+  {
+    "key": "categoryConflict",
+    "zh": "分类有冲突",
+    "en": "Category conflict"
+  },
+  {
+    "key": "invalidUuid",
+    "zh": "无效的 UUID",
+    "en": "Invalid UUID"
+  },
+  {
+    "key": "textIsEmptyOrExceedsThe",
+    "zh": "文字为空或超出长度限制",
+    "en": "Text is empty or exceeds the length limit"
+  },
+  {
+    "key": "useTheDateFormatYyyyMm",
+    "zh": "日期格式应为 YYYY-MM-DD",
+    "en": "Use the date format YYYY-MM-DD"
+  },
+  {
+    "key": "invalidDateSupportedYears",
+    "zh": "日期无效（支持 1900–2200 年）",
+    "en": "Invalid date (supported years: 1900–2200)"
+  },
+  {
+    "key": "enterAPositiveAmountWithNo",
+    "zh": "金额须为正数，最多两位小数",
+    "en": "Enter a positive amount with no more than two decimal places"
+  },
+  {
+    "key": "amountIsOutsideTheAllowedRange",
+    "zh": "金额超出允许范围",
+    "en": "Amount is outside the allowed range"
+  },
+  {
+    "key": "unsupportedOperationVersionUpdateTheApp",
+    "zh": "不支持的操作协议版本，请更新应用",
+    "en": "Unsupported operation version. Update the app."
+  },
+  {
+    "key": "aCategoryTypeChangeMustReference",
+    "zh": "分类类型变更须引用已有分类版本",
+    "en": "A category type change must reference an existing category version"
+  },
+  {
+    "key": "invalidOrTooManyParentVersions",
+    "zh": "操作父版本无效或过多",
+    "en": "Invalid or too many parent versions"
+  },
+  {
+    "key": "operationTimeMustUseCanonicalUtc",
+    "zh": "操作时间须为标准 UTC 时间",
+    "en": "Operation time must use canonical UTC format"
+  },
+  {
+    "key": "operationFieldsDoNotMatchThe",
+    "zh": "操作字段不符合协议",
+    "en": "Operation fields do not match the protocol"
+  },
+  {
+    "key": "amountMustBeIntegerCentsWithin",
+    "zh": "金额须为整数分且在范围内",
+    "en": "Amount must be integer cents within the allowed range"
+  },
+  {
+    "key": "operationChecksumFailed",
+    "zh": "日志校验失败",
+    "en": "Operation checksum failed"
+  },
+  {
+    "key": "invalidOperationFormatOrUnsupportedProtocol",
+    "zh": "日志格式或协议版本无效",
+    "en": "Invalid operation format or unsupported protocol version"
+  },
+  {
+    "key": "couldNotSaveAppearanceSettingsTry",
+    "zh": "外观设置保存失败，请重试",
+    "en": "Could not save appearance settings. Try again."
+  },
+  {
+    "key": "makeYourselfAtHome",
+    "zh": "舒适，随你选择。",
+    "en": "Make yourself at home."
+  },
+  {
+    "key": "chooseATextureAndAColor",
+    "zh": "选一种触感，留一抹喜欢的颜色。",
+    "en": "Choose a texture and a color you love."
+  },
+  {
+    "key": "surfaceMaterial",
+    "zh": "界面材质",
+    "en": "Surface material"
+  },
+  {
+    "key": "theQuietOfPaperOrThe",
+    "zh": "纸面的安静，或光线的流动。",
+    "en": "The quiet of paper, or the movement of light."
+  },
+  {
+    "key": "softMatte",
+    "zh": "细腻磨砂",
+    "en": "Soft matte"
+  },
+  {
+    "key": "clearGlass",
+    "zh": "通透玻璃",
+    "en": "Clear glass"
+  },
+  {
+    "key": "paperTextureOpaqueSurfacesSoftShadows",
+    "zh": "温润纸纹 · 不透明表面 · 柔和阴影",
+    "en": "Paper texture · Opaque surfaces · Soft shadows"
+  },
+  {
+    "key": "ambientColorsTranslucentLayersBrightEdges",
+    "zh": "流动底色 · 半透明叠层 · 细亮边缘",
+    "en": "Ambient colors · Translucent layers · Bright edges"
+  },
+  {
+    "key": "accentColor",
+    "zh": "主题色",
+    "en": "Accent color"
+  },
+  {
+    "key": "inspiredByChineseColorsAdaptedTo",
+    "zh": "取意中国色，随明暗模式呈现不同色阶。",
+    "en": "Inspired by Chinese colors, adapted to light and dark modes."
+  },
+  {
+    "key": "colorMode",
+    "zh": "明暗模式",
+    "en": "Color mode"
+  },
+  {
+    "key": "followSystem",
+    "zh": "跟随系统",
+    "en": "Follow system"
+  },
+  {
+    "key": "light",
+    "zh": "浅色",
+    "en": "Light"
+  },
+  {
+    "key": "dark",
+    "zh": "深色",
+    "en": "Dark"
+  },
+  {
+    "key": "matchYourDeviceAppearanceAutomatically",
+    "zh": "随设备的外观自动切换",
+    "en": "Match your device appearance automatically"
+  },
+  {
+    "key": "savedOnThisDeviceForYour",
+    "zh": "仅应用于这台设备，下次打开时保留。",
+    "en": "Saved on this device for your next visit."
+  },
+  {
+    "key": "aPlaceForEverything",
+    "zh": "生活，自有分类。",
+    "en": "A place for everything."
+  },
+  {
+    "key": "startWithFoodTransportOrSalary",
+    "zh": "从餐饮、交通或工资开始。\n点击右下角添加收入或支出分类。",
+    "en": "Start with food, transport, or salary.\nUse the add button to create an income or expense category."
+  },
+  {
+    "key": "categoriesSelectACategoryOrIts",
+    "zh": "已设置 {arg0} 个分类。点击分类或编辑按钮修改名称，历史账目随之更新；归档仍保留历史记录。",
+    "en": "{arg0} categories. Select a category or its edit button to rename it; historical entries follow the new name. Archiving keeps history."
+  },
+  {
+    "key": "categoryConflictSelectToResolve",
+    "zh": "分类冲突 · 点击处理",
+    "en": "Category conflict · Select to resolve"
+  },
+  {
+    "key": "income",
+    "zh": "收入",
+    "en": "Income"
+  },
+  {
+    "key": "expense",
+    "zh": "支出",
+    "en": "Expense"
+  },
+  {
+    "key": "editCategory",
+    "zh": "编辑分类",
+    "en": "Edit category"
+  },
+  {
+    "key": "archiveCategory",
+    "zh": "归档分类",
+    "en": "Archive category"
+  },
+  {
+    "key": "addCategory",
+    "zh": "添加分类",
+    "en": "Add category"
+  },
+  {
+    "key": "name",
+    "zh": "名称",
+    "en": "Name"
+  },
+  {
+    "key": "youCanChangeThisCategoryBetween",
+    "zh": "可修改分类的收入／支出类型。已有账单保留原收支类型，新类型用于后续记账。",
+    "en": "You can change this category between income and expense. Existing transactions keep their direction; the new type applies to future entries."
+  },
+  {
+    "key": "save",
+    "zh": "保存",
+    "en": "Save"
+  },
+  {
+    "key": "chooseTheVersionToKeep",
+    "zh": "选择要保留的版本",
+    "en": "Choose the version to keep"
+  },
+  {
+    "key": "allOriginalVersionsRemainInHistory",
+    "zh": "全部原始版本仍保留在历史中。处理结果会作为新版本同步；并发处理可能再次产生冲突。",
+    "en": "All original versions remain in history. Your choice syncs as a new version; concurrent resolutions may create another conflict."
+  },
+  {
+    "key": "device",
+    "zh": "{arg0}\n{arg1}设备 {arg2} · {arg3}",
+    "en": "{arg0}\n{arg1}Device {arg2} · {arg3}"
+  },
+  {
+    "key": "later",
+    "zh": "稍后处理",
+    "en": "Later"
+  },
+  {
+    "key": "editEntry",
+    "zh": "编辑账目",
+    "en": "Edit entry"
+  },
+  {
+    "key": "aSmallNoteOfEverydayLife",
+    "zh": "认真记下，平常生活里的这一笔。",
+    "en": "A small note of everyday life."
+  },
+  {
+    "key": "templateAppliedConfirmToAddThis",
+    "zh": "已填入模板，确认后才会记入账本。",
+    "en": "Template applied. Confirm to add this entry to your ledger."
+  },
+  {
+    "key": "amountCny",
+    "zh": "金额（元）",
+    "en": "Amount (CNY)"
+  },
+  {
+    "key": "categoryOptional",
+    "zh": "分类（可选）",
+    "en": "Category (optional)"
+  },
+  {
+    "key": "uncategorized2",
+    "zh": "未分类",
+    "en": "Uncategorized"
+  },
+  {
+    "key": "originalCategoryUnavailableChooseAnotherOr",
+    "zh": "原分类不可用，请重新选择或留空",
+    "en": "Original category unavailable. Choose another or leave it blank."
+  },
+  {
+    "key": "chooseAnAvailableCategoryOrUncategorized",
+    "zh": "请选择有效分类或未分类",
+    "en": "Choose an available category or Uncategorized"
+  },
+  {
+    "key": "addCategoryOptional",
+    "zh": "添加分类（可选）",
+    "en": "Add category (optional)"
+  },
+  {
+    "key": "dateYyyyMmDd",
+    "zh": "日期 YYYY-MM-DD",
+    "en": "Date YYYY-MM-DD"
+  },
+  {
+    "key": "chooseDate",
+    "zh": "选择日期",
+    "en": "Choose date"
+  },
+  {
+    "key": "noteOptional",
+    "zh": "备注（可选）",
+    "en": "Note (optional)"
+  },
+  {
+    "key": "saving",
+    "zh": "保存中…",
+    "en": "Saving…"
+  },
+  {
+    "key": "availableOfflineNotSyncedYet",
+    "zh": "离线可用 · 尚未同步",
+    "en": "Available offline · Not synced yet"
+  },
+  {
+    "key": "configureWebdavInSyncSettingsFirst",
+    "zh": "请先在同步设置中配置 WebDAV",
+    "en": "Configure WebDAV in Sync settings first"
+  },
+  {
+    "key": "syncedDownloadedUploadedConflicts",
+    "zh": "同步完成 · 下载 {arg0} / 上传 {arg1} · 冲突 {arg2}",
+    "en": "Synced · Downloaded {arg0} / Uploaded {arg1} · Conflicts {arg2}"
+  },
+  {
+    "key": "syncIncomplete",
+    "zh": "同步未完成 · {arg0}",
+    "en": "Sync incomplete · {arg0}"
+  },
+  {
+    "key": "mySpaceMyLedger",
+    "zh": "个人空间  /  我的账本",
+    "en": "MY SPACE  /  MY LEDGER"
+  },
+  {
+    "key": "syncNow",
+    "zh": "立即同步",
+    "en": "Sync now"
+  },
+  {
+    "key": "reload",
+    "zh": "重新加载",
+    "en": "Reload"
+  },
+  {
+    "key": "everyEntryTellsAStory",
+    "zh": "每一笔，都是生活。",
+    "en": "Every entry tells a story."
+  },
+  {
+    "key": "aClearerViewOfYourEveryday",
+    "zh": "把收支理清，让日子从容。",
+    "en": "A clearer view of your everyday finances."
+  },
+  {
+    "key": "previousMonth",
+    "zh": "上个月",
+    "en": "Previous month"
+  },
+  {
+    "key": "label2",
+    "zh": "{arg0} 年 {arg1} 月",
+    "en": "{arg0}-{arg1}"
+  },
+  {
+    "key": "nextMonth",
+    "zh": "下个月",
+    "en": "Next month"
+  },
+  {
+    "key": "syncIncomplete2",
+    "zh": "同步未完成",
+    "en": "Sync incomplete"
+  },
+  {
+    "key": "pendingUploads",
+    "zh": "本地待上传：{arg0} 条",
+    "en": "Pending uploads: {arg0}"
+  },
+  {
+    "key": "resolveAllConflicts",
+    "zh": "处理全部冲突（{arg0}）",
+    "en": "Resolve all conflicts ({arg0})"
+  },
+  {
+    "key": "transactions",
+    "zh": "收支明细",
+    "en": "Transactions"
+  },
+  {
+    "key": "entries",
+    "zh": "{arg0} 笔",
+    "en": "{arg0} entries"
+  },
+  {
+    "key": "searchNotesOrCategories",
+    "zh": "搜索备注或分类",
+    "en": "Search notes or categories"
+  },
+  {
+    "key": "clearSearch",
+    "zh": "清除搜索",
+    "en": "Clear search"
+  },
+  {
+    "key": "all",
+    "zh": "全部",
+    "en": "All"
+  },
+  {
+    "key": "today",
+    "zh": "今天 · ",
+    "en": "Today · "
+  },
+  {
+    "key": "yesterday",
+    "zh": "昨天 · ",
+    "en": "Yesterday · "
+  },
+  {
+    "key": "mon",
+    "zh": "一",
+    "en": "Mon"
+  },
+  {
+    "key": "tue",
+    "zh": "二",
+    "en": "Tue"
+  },
+  {
+    "key": "wed",
+    "zh": "三",
+    "en": "Wed"
+  },
+  {
+    "key": "thu",
+    "zh": "四",
+    "en": "Thu"
+  },
+  {
+    "key": "fri",
+    "zh": "五",
+    "en": "Fri"
+  },
+  {
+    "key": "sat",
+    "zh": "六",
+    "en": "Sat"
+  },
+  {
+    "key": "sun",
+    "zh": "日",
+    "en": "Sun"
+  },
+  {
+    "key": "label3",
+    "zh": "{arg0}{arg1} 月 {arg2} 日  星期{arg3}",
+    "en": "{arg0}{arg1}/{arg2} · {arg3}"
+  },
+  {
+    "key": "conflictPendingVersions",
+    "zh": "待处理冲突 · {arg0} 个版本",
+    "en": "Conflict pending · {arg0} versions"
+  },
+  {
+    "key": "ledgerNotes",
+    "zh": "账本手记",
+    "en": "Ledger notes"
+  },
+  {
+    "key": "whereItWent",
+    "zh": "支出去向",
+    "en": "Where it went"
+  },
+  {
+    "key": "seeTheMeaningInEveryEntry",
+    "zh": "看见每一笔的分量",
+    "en": "See the meaning in every entry"
+  },
+  {
+    "key": "amountsHidden",
+    "zh": "金额已隐藏",
+    "en": "Amounts hidden"
+  },
+  {
+    "key": "yourSpendingStoryBeginsWithThe",
+    "zh": "第一笔支出之后，\n这里会慢慢有了故事。",
+    "en": "Your spending story begins\nwith the first expense."
+  },
+  {
+    "key": "viewFullReport",
+    "zh": "查看完整报告",
+    "en": "View full report"
+  },
+  {
+    "key": "makeTheEverydayALittleEasier",
+    "zh": "让日常，再简单一点。",
+    "en": "Make the everyday a little easier."
+  },
+  {
+    "key": "breakfastCommutingMonthlyRentSaveFrequent",
+    "zh": "早餐、通勤、每月房租。\n常用收支，存成快捷模板。",
+    "en": "Breakfast, commuting, monthly rent.\nSave frequent entries as quick templates."
+  },
+  {
+    "key": "manageTemplates",
+    "zh": "管理快捷模板",
+    "en": "Manage templates"
+  },
+  {
+    "key": "balanceThisMonth",
+    "zh": "本月结余",
+    "en": "Balance this month"
+  },
+  {
+    "key": "showAmounts",
+    "zh": "显示金额",
+    "en": "Show amounts"
+  },
+  {
+    "key": "hideAmounts",
+    "zh": "隐藏金额",
+    "en": "Hide amounts"
+  },
+  {
+    "key": "couldNotSaveAmountVisibilityTry",
+    "zh": "金额显示设置保存失败，请重试",
+    "en": "Could not save amount visibility. Try again."
+  },
+  {
+    "key": "roomForLifeBetweenEarningAnd",
+    "zh": "收入与支出之间，是生活的余地。",
+    "en": "Room for life, between earning and spending."
+  },
+  {
+    "key": "conflictedEntriesExcludedFromTotals",
+    "zh": "{arg0} 笔冲突未计入合计",
+    "en": "{arg0} conflicted entries excluded from totals"
+  },
+  {
+    "key": "incomeThisMonth",
+    "zh": "本月收入",
+    "en": "Income this month"
+  },
+  {
+    "key": "expensesThisMonth",
+    "zh": "本月支出",
+    "en": "Expenses this month"
+  },
+  {
+    "key": "everyEffortFindsItsEcho",
+    "zh": "每一份努力，都有回响",
+    "en": "Every effort finds its echo"
+  },
+  {
+    "key": "spendOnWhatMatters",
+    "zh": "花在值得的地方",
+    "en": "Spend on what matters"
+  },
+  {
+    "key": "noMatchingEntryYet",
+    "zh": "还没有找到这笔记录",
+    "en": "No matching entry yet"
+  },
+  {
+    "key": "keepALittleRecordOfLife",
+    "zh": "把生活，记在这里。",
+    "en": "Keep a little record of life."
+  },
+  {
+    "key": "tryAnotherKeywordOrSwitchThe",
+    "zh": "试试其他关键词，或切换收支类型。",
+    "en": "Try another keyword or switch the income/expense filter."
+  },
+  {
+    "key": "noEntriesYetSelectNewEntry",
+    "zh": "暂无记录，点击左侧记一笔",
+    "en": "No entries yet. Select New entry in the sidebar."
+  },
+  {
+    "key": "noEntriesYetUseTheAdd",
+    "zh": "暂无记录，点击右下角记一笔",
+    "en": "No entries yet. Use the add button at the bottom right."
+  },
+  {
+    "key": "clearFilters",
+    "zh": "清除筛选",
+    "en": "Clear filters"
+  },
+  {
+    "key": "startRecording",
+    "zh": "开始记录",
+    "en": "Start recording"
+  },
+  {
+    "key": "incomeByCategory",
+    "zh": "分类收入",
+    "en": "Income by category"
+  },
+  {
+    "key": "expensesByCategory",
+    "zh": "分类支出",
+    "en": "Expenses by category"
+  },
+  {
+    "key": "selectACategoryOrTransactionFor",
+    "zh": "点击分类或账单查看统计与明细",
+    "en": "Select a category or transaction for statistics and details"
+  },
+  {
+    "key": "pieChart",
+    "zh": "饼状图",
+    "en": "Pie chart"
+  },
+  {
+    "key": "columnChart",
+    "zh": "柱状图",
+    "en": "Column chart"
+  },
+  {
+    "key": "shareBars",
+    "zh": "横向占比条",
+    "en": "Share bars"
+  },
+  {
+    "key": "noIncomeInThisPeriod",
+    "zh": "本期暂无收入",
+    "en": "No income in this period"
+  },
+  {
+    "key": "noExpensesInThisPeriod",
+    "zh": "本期暂无支出",
+    "en": "No expenses in this period"
+  },
+  {
+    "key": "categoriesTheListProvidesAmountsShares",
+    "zh": "{arg0}，{arg1} 个分类。分类列表提供金额、占比和明细。",
+    "en": "{arg0}, {arg1} categories. The list provides amounts, shares, and details."
+  },
+  {
+    "key": "smallUncategorizedEntries",
+    "zh": "未分类小额 · {arg0} 笔",
+    "en": "Small uncategorized · {arg0} entries"
+  },
+  {
+    "key": "m",
+    "zh": "¥{arg0}亿",
+    "en": "¥{arg0} × 100M"
+  },
+  {
+    "key": "k",
+    "zh": "¥{arg0}万",
+    "en": "¥{arg0} × 10K"
+  },
+  {
+    "key": "categoryBreakdown",
+    "zh": "分类明细统计",
+    "en": "Category breakdown"
+  },
+  {
+    "key": "close",
+    "zh": "关闭",
+    "en": "Close"
+  },
+  {
+    "key": "periodTotal",
+    "zh": "本期合计",
+    "en": "Period total"
+  },
+  {
+    "key": "transactions2",
+    "zh": "账单笔数",
+    "en": "Transactions"
+  },
+  {
+    "key": "averageEntry",
+    "zh": "平均每笔",
+    "en": "Average entry"
+  },
+  {
+    "key": "largestEntry",
+    "zh": "最大单笔",
+    "en": "Largest entry"
+  },
+  {
+    "key": "searchNotesOrDates",
+    "zh": "搜索明细备注或日期",
+    "en": "Search notes or dates"
+  },
+  {
+    "key": "entries2",
+    "zh": "共 {arg0} 笔{arg1}",
+    "en": "{arg0} {arg1} entries"
+  },
+  {
+    "key": "ofEntriesMatch",
+    "zh": "匹配 {arg0} / {arg1} 笔",
+    "en": "{arg0} of {arg1} entries match"
+  },
+  {
+    "key": "amountHighToLow",
+    "zh": "按金额从大到小",
+    "en": "Amount: high to low"
+  },
+  {
+    "key": "dateNewestFirst",
+    "zh": "按日期从新到旧",
+    "en": "Date: newest first"
+  },
+  {
+    "key": "noMatchingEntriesInThisPeriod",
+    "zh": "本期没有符合条件的账目",
+    "en": "No matching entries in this period"
+  },
+  {
+    "key": "noNote",
+    "zh": "未填写备注",
+    "en": "No note"
+  },
+  {
+    "key": "week",
+    "zh": "周",
+    "en": "week"
+  },
+  {
+    "key": "month",
+    "zh": "月",
+    "en": "month"
+  },
+  {
+    "key": "year",
+    "zh": "年",
+    "en": "year"
+  },
+  {
+    "key": "compare",
+    "zh": "对比",
+    "en": "Compare"
+  },
+  {
+    "key": "letTheNumbersTellYourStory",
+    "zh": "让数字，说说生活。",
+    "en": "Let the numbers tell your story."
+  },
+  {
+    "key": "findYourRhythmInTheRise",
+    "zh": "从收支的起伏里，发现自己的节奏。",
+    "en": "Find your rhythm in the rise and fall of everyday finances."
+  },
+  {
+    "key": "previous",
+    "zh": "上个{arg0}",
+    "en": "Previous {arg0}"
+  },
+  {
+    "key": "label4",
+    "zh": "{arg0}年{arg1}月",
+    "en": "{arg0}-{arg1}"
+  },
+  {
+    "key": "next",
+    "zh": "下个{arg0}",
+    "en": "Next {arg0}"
+  },
+  {
+    "key": "entriesIncludedThis",
+    "zh": "本{arg0}已计入 {arg1} 笔账目",
+    "en": "{arg1} entries included this {arg0}"
+  },
+  {
+    "key": "noEntriesThis",
+    "zh": "本{arg0}暂无账目",
+    "en": "No entries this {arg0}"
+  },
+  {
+    "key": "comparedWithLast",
+    "zh": "与上{arg0}对比",
+    "en": "Compared with last {arg0}"
+  },
+  {
+    "key": "previous2",
+    "zh": "上{arg0}：{arg1}",
+    "en": "Previous {arg0}: {arg1}"
+  },
+  {
+    "key": "balance",
+    "zh": "结余",
+    "en": "Balance"
+  },
+  {
+    "key": "conflictedEntriesExcludedThis",
+    "zh": "本{arg0}有 {arg1} 条冲突账目，未计入统计。",
+    "en": "{arg1} conflicted entries excluded this {arg0}."
+  },
+  {
+    "key": "incomeAndExpensesThis",
+    "zh": "本{arg0}收支",
+    "en": "Income and expenses this {arg0}"
+  },
+  {
+    "key": "thisPeriod",
+    "zh": "本周期",
+    "en": "This period"
+  },
+  {
+    "key": "incomeExpenses",
+    "zh": "收入 − 支出",
+    "en": "Income − Expenses"
+  },
+  {
+    "key": "entriesIncluded",
+    "zh": "已计入 {arg0} 笔账目",
+    "en": "{arg0} entries included"
+  },
+  {
+    "key": "previousPeriodWasZero",
+    "zh": "上期为零",
+    "en": "Previous period was zero"
+  },
+  {
+    "key": "vsLast",
+    "zh": "较上{arg0}{arg1} {arg2}",
+    "en": "{arg1} vs. last {arg0}: {arg2}"
+  },
+  {
+    "key": "increase",
+    "zh": "增加",
+    "en": "Increase"
+  },
+  {
+    "key": "decrease",
+    "zh": "减少",
+    "en": "Decrease"
+  },
+  {
+    "key": "unchanged",
+    "zh": "持平",
+    "en": "Unchanged"
+  },
+  {
+    "key": "previousWasZeroPercentageIsNot",
+    "zh": "上{arg0}为零，不计算百分比",
+    "en": "Previous {arg0} was zero; percentage is not calculated"
+  },
+  {
+    "key": "periodChange",
+    "zh": "环比 {arg0}{arg1}%",
+    "en": "Period change {arg0}{arg1}%"
+  },
+  {
+    "key": "k2",
+    "zh": "9999.9万",
+    "en": "9999.9 × 10K"
+  },
+  {
+    "key": "m2",
+    "zh": "9999.9亿",
+    "en": "9999.9 × 100M"
+  },
+  {
+    "key": "incomeAndExpenseTrend",
+    "zh": "收支趋势",
+    "en": "Income and expense trend"
+  },
+  {
+    "key": "chineseYuanCny",
+    "zh": "人民币（元） · {arg0}",
+    "en": "Chinese yuan (CNY) · {arg0}"
+  },
+  {
+    "key": "incomeAndExpenseChart",
+    "zh": "收支趋势图，{arg0}",
+    "en": "Income and expense chart, {arg0}"
+  },
+  {
+    "key": "dragToPanPinchOrScroll",
+    "zh": "左右拖动平移，双指捏合或滚轮缩放。方向键平移，加减键缩放，回车查看中央日期金额。",
+    "en": "Drag to pan; pinch or scroll to zoom. Arrow keys pan, plus/minus zoom, and Enter shows the center date and amount."
+  },
+  {
+    "key": "m3",
+    "zh": "{arg0}亿",
+    "en": "{arg0} × 100M"
+  },
+  {
+    "key": "k3",
+    "zh": "{arg0}万",
+    "en": "{arg0} × 10K"
+  },
+  {
+    "key": "uncategorizedDisplayRule",
+    "zh": "未分类展示规则",
+    "en": "Uncategorized display rule"
+  },
+  {
+    "key": "largeUncategorized",
+    "zh": "大额未分类 ≥ ¥{arg0}",
+    "en": "Large uncategorized ≥ ¥{arg0}"
+  },
+  {
+    "key": "eachUncategorizedTransactionMeetingTheThreshold",
+    "zh": "达到门槛的每笔未分类账单单独展示，其余未分类账单合并为“其他”。收入与支出使用相同规则。",
+    "en": "Each uncategorized transaction meeting the threshold appears separately. Smaller entries are grouped as Other. The rule applies to both income and expenses."
+  },
+  {
+    "key": "largeEntryThresholdCny",
+    "zh": "大额门槛（元）",
+    "en": "Large-entry threshold (CNY)"
+  },
+  {
+    "key": "saveRule",
+    "zh": "保存规则",
+    "en": "Save rule"
+  },
+  {
+    "key": "importWebdavServiceConfig",
+    "zh": "导入 WebDAV 服务配置",
+    "en": "Import WebDAV service config"
+  },
+  {
+    "key": "runTheWebdavSetupWizardOn",
+    "zh": "在自己的电脑运行 WebDAV 设置向导，再用记事本打开 service-setup.json，复制全文粘贴到这里。此文件只含公共服务配置。",
+    "en": "Run the WebDAV setup wizard on your own computer. Open service-setup.json in a text editor and paste its entire contents here. This file contains only public service configuration."
+  },
+  {
+    "key": "publicServiceConfigJson",
+    "zh": "公共服务配置 JSON",
+    "en": "Public service config JSON"
+  },
+  {
+    "key": "serviceUrlUsername",
+    "zh": "服务地址：{arg0}\n用户名：{arg1}",
+    "en": "Service URL: {arg0}\nUsername: {arg1}"
+  },
+  {
+    "key": "publicCertificateShaFileContents",
+    "zh": "公共证书 SHA-256（按文件内容计算）",
+    "en": "Public certificate SHA-256 (file contents)"
+  },
+  {
+    "key": "compareThisFingerprintWithTheComputer",
+    "zh": "请与电脑向导显示的指纹核对。确认后仅为此 HTTPS 地址信任该证书，不修改系统信任；密码仍需单独输入，账本 ID 保持原值。",
+    "en": "Compare this fingerprint with the computer wizard. Confirmation trusts this certificate only for this HTTPS origin, without changing system trust. Enter the password separately; the ledger ID stays unchanged."
+  },
+  {
+    "key": "reviewConfig",
+    "zh": "检查配置",
+    "en": "Review config"
+  },
+  {
+    "key": "trustServiceAndFillIn",
+    "zh": "信任此服务并填入",
+    "en": "Trust service and fill in"
+  },
+  {
+    "key": "loading",
+    "zh": "加载中…",
+    "en": "Loading…"
+  },
+  {
+    "key": "useTheSameLedgerIdAnd",
+    "zh": "在另一台空设备中填入相同账本 ID 和 WebDAV 配置。",
+    "en": "Use the same ledger ID and WebDAV configuration on another empty device."
+  },
+  {
+    "key": "couldNotReadSecureCredentialsCheck",
+    "zh": "安全凭据存储读取失败，请检查系统解锁状态",
+    "en": "Could not read secure credentials. Check that your device is unlocked."
+  },
+  {
+    "key": "checkingHttpsReadWriteAccessAnd",
+    "zh": "正在检查 HTTPS、读写权限和条件写入…",
+    "en": "Checking HTTPS, read/write access, and conditional creation…"
+  },
+  {
+    "key": "verifiedAndSecurelySavedReturnHome",
+    "zh": "已验证并安全保存。返回首页后开始同步。",
+    "en": "Verified and securely saved. Return home to sync."
+  },
+  {
+    "key": "connectionTestPassedConfigurationHasNot",
+    "zh": "连接测试通过；尚未保存配置。",
+    "en": "Connection test passed. Configuration has not been saved."
+  },
+  {
+    "key": "webdavSyncSettings",
+    "zh": "WebDAV 同步设置",
+    "en": "WebDAV sync settings"
+  },
+  {
+    "key": "yourLedgerWhereverYouAre",
+    "zh": "让账本，随设备同行。",
+    "en": "Your ledger, wherever you are."
+  },
+  {
+    "key": "connectYourOwnWebdavServiceTo",
+    "zh": "连接自己的 WebDAV，在设备之间同步记录。",
+    "en": "Connect your own WebDAV service to sync records between devices."
+  },
+  {
+    "key": "connectingYourPhoneAndComputerFor",
+    "zh": "第一次连接手机与电脑？",
+    "en": "Connecting your phone and computer for the first time?"
+  },
+  {
+    "key": "followThreeStepsToPrepareStorage",
+    "zh": "按照三步指引准备同步空间、连接设备并核对记录。离线时，也可以继续记账。",
+    "en": "Follow three steps to prepare storage, connect devices, and compare records. You can keep recording offline."
+  },
+  {
+    "key": "multiDeviceSetupGuide",
+    "zh": "多设备连接指引",
+    "en": "Multi-device setup guide"
+  },
+  {
+    "key": "serviceDetailsFilledInLedgerId",
+    "zh": "服务配置已填入，账本 ID 未改变。请输入应用专用密码，再验证并保存。",
+    "en": "Service details filled in; ledger ID unchanged. Enter the app password, then verify and save."
+  },
+  {
+    "key": "publicCertificateAppliesOnlyToVerify",
+    "zh": "公共证书仅用于 {arg0}；配置验证并保存后生效。",
+    "en": "Public certificate applies only to {arg0}; verify and save to retain the configuration."
+  },
+  {
+    "key": "removePublicCertificate",
+    "zh": "移除此公共证书",
+    "en": "Remove public certificate"
+  },
+  {
+    "key": "httpsWebdavRootMustExist",
+    "zh": "HTTPS WebDAV 根目录（必须已存在）",
+    "en": "HTTPS WebDAV root (must exist)"
+  },
+  {
+    "key": "username",
+    "zh": "用户名",
+    "en": "Username"
+  },
+  {
+    "key": "appSpecificPassword",
+    "zh": "应用专用密码",
+    "en": "App-specific password"
+  },
+  {
+    "key": "hidePassword",
+    "zh": "隐藏密码",
+    "en": "Hide password"
+  },
+  {
+    "key": "showPassword",
+    "zh": "显示密码",
+    "en": "Show password"
+  },
+  {
+    "key": "ledgerIdEditableOnlyForAn",
+    "zh": "账本 ID（只有空账本可以修改）",
+    "en": "Ledger ID (editable only for an empty ledger)"
+  },
+  {
+    "key": "ledgerIdCopied",
+    "zh": "账本 ID 已复制",
+    "en": "Ledger ID copied"
+  },
+  {
+    "key": "copyCurrentLedgerId",
+    "zh": "复制当前账本 ID",
+    "en": "Copy current ledger ID"
+  },
+  {
+    "key": "testConnection",
+    "zh": "测试连接",
+    "en": "Test connection"
+  },
+  {
+    "key": "verifyAndSave",
+    "zh": "验证并保存",
+    "en": "Verify and save"
+  },
+  {
+    "key": "syncDisconnectedLocalDataIsRetained",
+    "zh": "已断开同步，本地数据保留",
+    "en": "Sync disconnected. Local data is retained."
+  },
+  {
+    "key": "couldNotRemoveCredentialsTryAgain",
+    "zh": "凭据删除失败，请重试",
+    "en": "Could not remove credentials. Try again."
+  },
+  {
+    "key": "disconnectSync",
+    "zh": "断开同步",
+    "en": "Disconnect sync"
+  },
+  {
+    "key": "credentialsUseSystemSecureStorageWebdav",
+    "zh": "凭据保存在系统安全存储中。账目日志以明文 JSON 存放在 WebDAV，HTTPS 保护传输；第一阶段没有端到端加密。\n\n自动同步仅在应用运行时每 60 秒及恢复前台时执行，离线操作会留在本地，等待下次同步。不要删除或修改远端日志。",
+    "en": "Credentials use system secure storage. WebDAV stores plaintext JSON; HTTPS protects transport, with no end-to-end encryption.\n\nAutomatic sync runs while the app is active, approximately every 60 seconds and on returning to the foreground. Offline changes stay local until the next sync. Do not edit or delete remote logs."
+  },
+  {
+    "key": "myledgerConnectionDetailsNoPassword",
+    "zh": "MyLedger 多设备连接信息（不含密码）",
+    "en": "MyLedger connection details (no password)"
+  },
+  {
+    "key": "webdavRoot",
+    "zh": "WebDAV 根目录：{arg0}",
+    "en": "WebDAV root: {arg0}"
+  },
+  {
+    "key": "username2",
+    "zh": "用户名：{arg0}",
+    "en": "Username: {arg0}"
+  },
+  {
+    "key": "ledgerId",
+    "zh": "账本 ID：{arg0}",
+    "en": "Ledger ID: {arg0}"
+  },
+  {
+    "key": "enterTheAppSpecificPasswordSeparately",
+    "zh": "请在另一台设备单独输入应用专用密码。",
+    "en": "Enter the app-specific password separately on the other device."
+  },
+  {
+    "key": "copyFailedSelectAndCopyThe",
+    "zh": "复制失败，请手动选择并复制连接信息",
+    "en": "Copy failed. Select and copy the connection details manually."
+  },
+  {
+    "key": "threeStepsOneConnectedLedger",
+    "zh": "三步，让记录相连。",
+    "en": "Three steps. One connected ledger."
+  },
+  {
+    "key": "useThisGuideOnYourPhone",
+    "zh": "手机与电脑使用同一份指引。先选这台设备的角色，再依次完成设置。导入服务配置需要所有设备更新至 0.4.1 或以上。",
+    "en": "Use this guide on your phone and computer. Choose this device's role, then follow the steps. Service config import requires version 0.4.1 or later on every device."
+  },
+  {
+    "key": "firstDevice",
+    "zh": "首台设备",
+    "en": "First device"
+  },
+  {
+    "key": "joinALedger",
+    "zh": "加入现有账本",
+    "en": "Join a ledger"
+  },
+  {
+    "key": "thisDeviceHasNoEntriesYet",
+    "zh": "这台设备尚未记账，准备连接另一台设备上的账本。",
+    "en": "This device has no entries yet and will join a ledger on another device."
+  },
+  {
+    "key": "keepThePrimaryLedgerOnThis",
+    "zh": "这台设备保留主账本；如果已有记录，请从这台开始。",
+    "en": "Keep the primary ledger on this device. Start here if it already has records."
+  },
+  {
+    "key": "getTheOtherDeviceSConnection",
+    "zh": "拿到另一台设备的连接信息",
+    "en": "Get the other device's connection details"
+  },
+  {
+    "key": "prepareWebdavStorage",
+    "zh": "准备一个 WebDAV 同步空间",
+    "en": "Prepare WebDAV storage"
+  },
+  {
+    "key": "onTheExistingDeviceOpenSync",
+    "zh": "在已有账本的设备打开“同步设置 → 多设备连接指引”，复制连接信息。你需要同一个 HTTPS 根目录、账本 ID，以及有该目录读写权限的用户名和应用专用密码。",
+    "en": "On the existing device, open Sync settings → Multi-device setup guide and copy its connection details. You need the same HTTPS root, ledger ID, and credentials with read/write access."
+  },
+  {
+    "key": "sameWiFi",
+    "zh": "同一 Wi-Fi",
+    "en": "Same Wi-Fi"
+  },
+  {
+    "key": "acrossNetworks",
+    "zh": "跨网络",
+    "en": "Across networks"
+  },
+  {
+    "key": "hostHttpsWebdavOnAComputer",
+    "zh": "让电脑或 NAS 提供 HTTPS WebDAV 服务，并让手机与电脑连接同一局域网。同步期间服务主机须开机、不休眠，服务须运行；MyLedger 本身不会自动开启 WebDAV 服务。",
+    "en": "Host HTTPS WebDAV on a computer or NAS, with both devices on the same LAN. Keep the host awake and the service running. MyLedger does not start a WebDAV server automatically."
+  },
+  {
+    "key": "prepareAnHttpsWebdavServiceReachable",
+    "zh": "准备可从外网访问的 HTTPS WebDAV 服务，向服务提供方取得最终连接地址、账号和应用专用密码。局域网 IP 无法在换网络后直接访问。",
+    "en": "Prepare an HTTPS WebDAV service reachable from outside your network. Get its final URL, account, and app-specific password from the provider. A LAN IP is not directly reachable after changing networks."
+  },
+  {
+    "key": "noWebdavYetSetOneUp",
+    "zh": "还没有 WebDAV？从零搭建",
+    "en": "No WebDAV yet? Set one up"
+  },
+  {
+    "key": "windowsSetupWizardNoServerNeeded",
+    "zh": "Windows 设置向导 · 手机无需搭服务器",
+    "en": "Windows setup wizard · No server needed on the phone"
+  },
+  {
+    "key": "extractTheCompleteWindowsArchiveAnd",
+    "zh": "① 在电脑解压完整 Windows 安装包，找到 webdav-setup 文件夹。先从 https://www.python.org/downloads/windows/ 安装 Python 3.12 或以上，安装后在终端运行 py --version，确认能显示版本。",
+    "en": "1. Extract the complete Windows archive and find webdav-setup. Install Python 3.12+ from https://www.python.org/downloads/windows/ and confirm that py --version prints a version in a terminal."
+  },
+  {
+    "key": "officialPythonDownloadUrlCopied",
+    "zh": "Python官方下载地址已复制",
+    "en": "Official Python download URL copied"
+  },
+  {
+    "key": "copyPythonDownloadUrl",
+    "zh": "复制 Python 下载地址",
+    "en": "Copy Python download URL"
+  },
+  {
+    "key": "openWebdavSetupAndDoubleClick",
+    "zh": "② 打开 webdav-setup，双击 Setup-WebDAV.cmd。首次会联网安装固定服务依赖。向导列出本机 IPv4，选择电脑连接 Wi-Fi 的地址；再填写手机“设置 → WLAN → 已连接网络详情”里的 IP。",
+    "en": "2. Open webdav-setup and double-click Setup-WebDAV.cmd. The first run downloads pinned dependencies. Choose the computer's Wi-Fi IPv4 from the list, then enter the phone's IP from Settings → Wi-Fi → Connected network details."
+  },
+  {
+    "key": "enterADedicatedCharacterAsciiPassword",
+    "zh": "③ 在向导中隐藏输入两次专用密码（20～128位半角字符），自己妥善保留。向导生成 HTTPS 证书和私有数据目录，启动服务，并显示连接地址与证书指纹；不替换已有部署，不改变 MyLedger 账本。",
+    "en": "3. Enter a dedicated 20–128-character ASCII password twice with hidden input and keep it safe. The wizard creates HTTPS certificates and private storage, starts the service, and shows its URL and certificate fingerprint. It does not replace an existing deployment or change the application ledger."
+  },
+  {
+    "key": "ifThePhoneCannotConnectOpen",
+    "zh": "④ 若手机连不上，在该文件夹按住 Shift 点右键，选择“在终端中打开”，运行 powershell -NoProfile -File .\\Enable-LocalWebDavFirewall.ps1 -StateDirectory \"$env:LOCALAPPDATA\\MyLedger-WebDAV\"。此命令需要管理员终端，只开放当前手机到该服务的端口，不要关闭整个防火墙。",
+    "en": "4. If the phone cannot connect, open an administrator terminal in that folder and run powershell -NoProfile -File .\\Enable-LocalWebDavFirewall.ps1 -StateDirectory \"$env:LOCALAPPDATA\\MyLedger-WebDAV\". This allows only the configured phone to access the service port. Do not disable the whole firewall."
+  },
+  {
+    "key": "openServiceSetupJsonCopyEverything",
+    "zh": "⑤ 用记事本打开向导显示的 service-setup.json，复制全部内容；在电脑和手机的“同步设置 → 导入 WebDAV 服务配置”粘贴、检查，核对向导显示的证书 SHA-256 后点击“信任此服务并填入”。公共配置不含密码；在两端单独输入刚设置的密码，再按第2步连接同一账本。",
+    "en": "5. Open service-setup.json, copy everything, and paste it into Sync settings → Import WebDAV service config on both devices. Review it, compare the SHA-256 fingerprint with the wizard, and choose Trust service and fill in. The public config has no password. Enter your chosen password separately and join the same ledger in step 2."
+  },
+  {
+    "key": "afterRestartingTheComputerUseStart",
+    "zh": "⑥ 重启电脑后双击 Start-WebDAV.cmd，停止用 Stop-WebDAV.cmd。不需要一直打开终端，但电脑不能休眠。IP或证书变化时需更新配置；先保留旧目录内的数据和密钥，不要重装覆盖。具体恢复方式见文件夹 README.md。",
+    "en": "6. After restarting the computer, use Start-WebDAV.cmd; use Stop-WebDAV.cmd to stop it. The terminal can close, but the host must stay awake. IP or certificate changes require an updated config. Preserve old data and keys before migrating; see the folder's README.md."
+  },
+  {
+    "key": "useTheServiceHostSLan",
+    "zh": "地址使用服务主机的局域网 IP 或主机名与端口，不填手机 IP、localhost 或 127.0.0.1。路由器固定主机地址，并允许手机访问服务端口；访客网络或设备隔离会阻止互连。",
+    "en": "Use the service host's LAN IP or hostname and port, not the phone's IP, localhost, or 127.0.0.1. Reserve the host address on your router and allow the phone to reach the port. Guest networks and device isolation can block access."
+  },
+  {
+    "key": "checkAccessFromBothThePhone",
+    "zh": "先分别用手机移动网络和电脑网络确认能访问服务。使用服务提供方给出的 WebDAV 目录地址，不填网页登录或分享链接。",
+    "en": "Check access from both the phone's mobile network and the computer network. Use the provider's WebDAV directory URL, not a web login or sharing link."
+  },
+  {
+    "key": "theRootMustExistAndAllow",
+    "zh": "根目录须已存在并允许读取、创建目录、写入及删除测试文件；“测试连接”还会检查防止覆盖日志的条件写入。地址必须使用 HTTPS 与受信任证书。使用本向导搭建时，通过“导入 WebDAV 服务配置”核对并信任专用公共证书；不要跳过证书验证。",
+    "en": "The root must exist and allow reading, directory creation, writing, and probe-file deletion. Test connection also verifies conditional creation to prevent log replacement. Use HTTPS and trusted certificates. For this wizard, import the service config and review its public certificate; do not bypass TLS validation."
+  },
+  {
+    "key": "fillTheSameDetailsOnThis",
+    "zh": "在这台空设备填写相同配置",
+    "en": "Fill the same details on this empty device"
+  },
+  {
+    "key": "keepThisLedgerAndSaveThe",
+    "zh": "保留当前账本并保存配置",
+    "en": "Keep this ledger and save the config"
+  },
+  {
+    "key": "returnToSyncSettingsEnterThe",
+    "zh": "返回“同步设置”，填写另一台设备提供的 HTTPS 根目录、用户名与应用专用密码，再将“账本 ID”替换为对方复制的 ID。ID 必须完全一致，不能用这台新设备自动生成的 ID。",
+    "en": "Return to Sync settings. Enter the other device's HTTPS root and credentials, then replace Ledger ID with its copied ID. The IDs must match exactly; do not keep the new ID generated on this device."
+  },
+  {
+    "key": "returnToSyncSettingsAndEnter",
+    "zh": "返回“同步设置”，填写 HTTPS 根目录、用户名与应用专用密码。保留本机当前账本 ID，点击“验证并保存”，再回首页点击“立即同步”，先把已有记录上传。",
+    "en": "Return to Sync settings and enter the HTTPS root, username, and app password. Keep this device's ledger ID, verify and save, then return home and sync now to upload existing records first."
+  },
+  {
+    "key": "everyDeviceSharingALedgerMust",
+    "zh": "同一账本的所有设备必须使用相同根目录和账本 ID。只填写 WebDAV 根目录，应用会自动创建其下的账本日志目录；不要手工追加 myledger/v1 或 ops。",
+    "en": "Every device sharing a ledger must use the same root and ledger ID. Enter only the WebDAV root; the app creates its log directories. Do not manually append myledger/v1 or ops."
+  },
+  {
+    "key": "anEmptyDeviceHasNeverCreated",
+    "zh": "“空设备”是从未创建过账目或分类的账本；删除全部账单后仍有历史记录，也不能直接加入。两台设备各自已有数据时，当前版本不支持自动合并，请先保留各自数据，不要清空或卸载来强行连接。",
+    "en": "An empty device has never created transactions or categories. Deleting all visible bills leaves history, so it still cannot join. Two populated ledgers cannot be merged automatically; keep both sets of data and do not clear or uninstall to force a connection."
+  },
+  {
+    "key": "chooseVerifyAndSaveTestConnection",
+    "zh": "点击“验证并保存”。“测试连接”只验证服务，不保存配置，也不会把本机加入对方账本。",
+    "en": "Choose Verify and save. Test connection checks the service but does not save settings or join the other ledger."
+  },
+  {
+    "key": "completeATwoWaySync",
+    "zh": "完成一次双向同步",
+    "en": "Complete a two-way sync"
+  },
+  {
+    "key": "firstSyncThePrimaryLedgerDevice",
+    "zh": "先在保留主账本的设备回首页点击“立即同步”，看到“同步完成”；再在加入的设备保存配置、回首页点击“立即同步”，核对同一月份的账单与合计。",
+    "en": "First sync the primary ledger device from home and wait for Synced. Then save settings on the joining device, return home, sync, and compare the same month's entries and totals."
+  },
+  {
+    "key": "addARealEntrySyncIt",
+    "zh": "之后新增一笔真实记录，在该设备同步，再在另一台同步，确认能看到；反方向也检查一次。遇到“冲突”时，在首页选择需要保留的版本。",
+    "en": "Add a real entry, sync it, then sync the other device to confirm it appears. Check the reverse direction too. If a conflict appears, choose the version to retain on the home screen."
+  },
+  {
+    "key": "syncIsAttemptedAboutEverySeconds",
+    "zh": "应用运行时每 60 秒及恢复前台时尝试同步，不是后台常驻服务。同 Wi-Fi 方案换网络后须回到该局域网才能同步；离线记账会保留，待重新连接。",
+    "en": "Sync is attempted about every 60 seconds while the app runs and on returning to the foreground; it is not a persistent background service. A same-Wi-Fi setup needs that LAN to sync after a network change. Offline entries are retained until reconnecting."
+  },
+  {
+    "key": "onlyTransactionsAndCategoriesSyncTemplates",
+    "zh": "只同步账目与分类；快捷模板、主题色、材质、隐藏金额和统计门槛分别保存在各台设备。",
+    "en": "Only transactions and categories sync. Templates, accent colors, surfaces, hidden amounts, and statistics thresholds are local to each device."
+  },
+  {
+    "key": "thisDeviceSConnectionDetails",
+    "zh": "本机连接信息",
+    "en": "This device's connection details"
+  },
+  {
+    "key": "noServiceConfigurationHasBeenSaved",
+    "zh": "本机尚未保存服务配置。请先返回填写并验证；这里不会复制未保存的表单内容。",
+    "en": "No service configuration has been saved here. Return to fill in and verify it first. Unsaved form values are never copied here."
+  },
+  {
+    "key": "connectionDetailsCopiedWithoutPassword",
+    "zh": "连接信息已复制，不含密码",
+    "en": "Connection details copied without password"
+  },
+  {
+    "key": "copyDetailsNoPassword",
+    "zh": "复制连接信息（不含密码）",
+    "en": "Copy details (no password)"
+  },
+  {
+    "key": "copyLedgerIdOnly",
+    "zh": "仅复制账本 ID",
+    "en": "Copy ledger ID only"
+  },
+  {
+    "key": "publicServiceConfigCopiedWithoutPassword",
+    "zh": "公共服务配置已复制，不含密码",
+    "en": "Public service config copied without password"
+  },
+  {
+    "key": "copyPublicServiceConfig",
+    "zh": "复制公共服务配置",
+    "en": "Copy public service config"
+  },
+  {
+    "key": "theseDetailsIncludeAUsernameAnd",
+    "zh": "连接信息包含用户名与账本 ID，仅提供给自己的设备。密码需在另一台设备单独输入。",
+    "en": "These details include a username and ledger ID. Share them only with your own devices; enter the password separately."
+  },
+  {
+    "key": "havingTroubleConnecting",
+    "zh": "连接遇到问题？",
+    "en": "Having trouble connecting?"
+  },
+  {
+    "key": "authenticationFailedOrAccessDenied",
+    "zh": "身份验证失败或权限不足",
+    "en": "Authentication failed or access denied"
+  },
+  {
+    "key": "checkTheServiceUsernameAndApp",
+    "zh": "逐字核对服务用户名与应用专用密码，留意首尾空格及中英文字符；确认该账号能读写这个目录。网页登录密码可能与 WebDAV 专用密码不同。不要把密码发给他人或粘贴到错误反馈中。",
+    "en": "Check the service username and app-specific password character by character, including spaces and character variants. Confirm directory read/write access. A website password may differ from the WebDAV password. Never send passwords to others or include them in error reports."
+  },
+  {
+    "key": "requestTimedOutOrConnectionFailed",
+    "zh": "请求超时或网络连接失败",
+    "en": "Request timed out or connection failed"
+  },
+  {
+    "key": "onTheSameWiFiCheck",
+    "zh": "同 Wi-Fi：确认服务主机开机、服务运行、IP 与端口未变，手机可访问且防火墙允许；关闭访客网络或设备隔离。跨网络：确认外部 HTTPS 地址可达。检查地址和完整目录，避免填写网页登录地址。",
+    "en": "On the same Wi-Fi, check that the host is awake, the service is running, IP and port are unchanged, and the firewall allows the phone. Avoid guest networks and device isolation. Across networks, check the external HTTPS URL and full directory; do not use a login page URL."
+  },
+  {
+    "key": "httpsCertificateValidationFailed",
+    "zh": "HTTPS 证书验证失败",
+    "en": "HTTPS certificate validation failed"
+  },
+  {
+    "key": "checkTheUrlAgainstTheCertificate",
+    "zh": "核对服务地址与证书域名／IP、有效期和设备时间。自建 CA 必须被当前客户端信任；可重新导入新服务的公共配置并核对指纹，无需重新打包。已有安装包内置的专用 CA 仍仅适用于其指定服务，不能用 HTTP 替代。",
+    "en": "Check the URL against the certificate hostname/IP, its validity dates, and the device clock. The client must trust a private CA. Import and review the new public service config without rebuilding the app. Any bundled private CA still applies only to its specified origin; do not replace HTTPS with HTTP."
+  },
+  {
+    "key": "onlyEmptyLedgersCanJoinOr",
+    "zh": "只能空账本加入，或同步后账单不同",
+    "en": "Only empty ledgers can join, or records differ after sync"
+  },
+  {
+    "key": "aDeviceWithTransactionOrCategory",
+    "zh": "有任何账目／分类历史的设备不能直接换账本。不要清库；保留数据后再处理迁移。若两端都显示同步完成却账单不同，核对根目录与账本 ID 完全一致、筛选月份一致，并确认所有设备已更新至 0.4.0 或以上。",
+    "en": "A device with transaction or category history cannot switch directly to another ledger. Keep the data and plan a migration. If both devices say Synced but show different records, compare the root, ledger ID, month filter, and client versions (0.4.0+)."
+  },
+  {
+    "key": "directoryOrConditionalWriteCheckFailed",
+    "zh": "目录或条件写入检查失败",
+    "en": "Directory or conditional-write check failed"
+  },
+  {
+    "key": "ensureTheRootExistsAndAllows",
+    "zh": "确认根目录已存在且有创建、读取、写入和删除权限，使用最终 HTTPS 地址避免重定向。服务必须支持 WebDAV 和 If-None-Match 条件创建；不要修改或删除远端的日志 JSON。",
+    "en": "Ensure the root exists and allows directory creation, reading, writing, and deletion. Use the final HTTPS URL without redirects. The service must support WebDAV and If-None-Match conditional creation. Do not change or delete remote JSON logs."
+  },
+  {
+    "key": "credentialsUseEachDeviceSSecure",
+    "zh": "凭据保存在各设备的系统安全存储中。账目在 WebDAV 上是明文 JSON，HTTPS 保护传输，当前没有端到端加密。",
+    "en": "Credentials use each device's secure storage. WebDAV stores plaintext JSON; HTTPS protects transport, with no end-to-end encryption."
+  },
+  {
+    "key": "backToConfiguration",
+    "zh": "返回填写配置",
+    "en": "Back to configuration"
+  },
+  {
+    "key": "deleteThisQuickTemplate",
+    "zh": "删除快捷模板？",
+    "en": "Delete this quick template?"
+  },
+  {
+    "key": "deletingKeepsEntriesAlreadyRecorded",
+    "zh": "删除“{arg0}”后，已记录的账目仍会保留。",
+    "en": "Deleting “{arg0}” keeps entries already recorded."
+  },
+  {
+    "key": "couldNotLoadQuickTemplates",
+    "zh": "无法读取快捷模板",
+    "en": "Could not load quick templates"
+  },
+  {
+    "key": "retry",
+    "zh": "重试",
+    "en": "Retry"
+  },
+  {
+    "key": "aSimplerEveryday",
+    "zh": "日常，轻松记。",
+    "en": "A simpler everyday."
+  },
+  {
+    "key": "noQuickTemplatesYet",
+    "zh": "还没有快捷模板",
+    "en": "No quick templates yet"
+  },
+  {
+    "key": "saveFrequentIncomeOrExpensesAs",
+    "zh": "将常用收支保存为模板，下次记账时快速填入。",
+    "en": "Save frequent income or expenses as a template to fill your next entry faster."
+  },
+  {
+    "key": "quickTemplatesApplyOneReviewIt",
+    "zh": "{arg0} 个常用收支模板。轻点填入，确认后记账。",
+    "en": "{arg0} quick templates. Apply one, review it, and confirm your entry."
+  },
+  {
+    "key": "noPresetCategory",
+    "zh": "未预设分类",
+    "en": "No preset category"
+  },
+  {
+    "key": "missingCategory",
+    "zh": "分类缺失",
+    "en": "Missing category"
+  },
+  {
+    "key": "enterAnAmountWhenRecording",
+    "zh": "记账时填写金额",
+    "en": "Enter an amount when recording"
+  },
+  {
+    "key": "useTemplate",
+    "zh": "使用模板",
+    "en": "Use template"
+  },
+  {
+    "key": "editTemplate",
+    "zh": "编辑模板",
+    "en": "Edit template"
+  },
+  {
+    "key": "deleteTemplate",
+    "zh": "删除模板",
+    "en": "Delete template"
+  },
+  {
+    "key": "limitOfQuickTemplatesReached",
+    "zh": "快捷模板已达 50 个上限",
+    "en": "Limit of 50 quick templates reached"
+  },
+  {
+    "key": "addTemplate",
+    "zh": "添加模板",
+    "en": "Add template"
+  },
+  {
+    "key": "addQuickTemplate",
+    "zh": "添加快捷模板",
+    "en": "Add quick template"
+  },
+  {
+    "key": "editQuickTemplate",
+    "zh": "编辑快捷模板",
+    "en": "Edit quick template"
+  },
+  {
+    "key": "templateName",
+    "zh": "模板名称",
+    "en": "Template name"
+  },
+  {
+    "key": "selectingACategorySetsIncomeOr",
+    "zh": "选择分类后自动匹配收入或支出",
+    "en": "Selecting a category sets income or expense automatically"
+  },
+  {
+    "key": "noPresetCategory2",
+    "zh": "不预设分类",
+    "en": "No preset category"
+  },
+  {
+    "key": "chooseAnAvailableCategoryOrLeave",
+    "zh": "请选择有效分类或不预设分类",
+    "en": "Choose an available category or leave it unset"
+  },
+  {
+    "key": "type",
+    "zh": "类型",
+    "en": "Type"
+  },
+  {
+    "key": "leaveBlankToEnterAnAmount",
+    "zh": "可留空，使用模板时再填写",
+    "en": "Leave blank to enter an amount when using the template"
+  },
+  {
+    "key": "saveTemplate",
+    "zh": "保存模板",
+    "en": "Save template"
+  },
+  {
+    "key": "couldNotOpenTheLocalDatabase",
+    "zh": "本地数据库打开失败，请检查磁盘空间或权限；请保留现有数据，勿卸载应用。",
+    "en": "Could not open the local database. Check disk space and permissions. Keep existing data and do not uninstall the app."
+  },
+  {
+    "key": "invalidServiceConfigPasteTheComplete",
+    "zh": "服务配置无效，请粘贴向导生成的完整 service-setup.json；不要粘贴密码或私钥。",
+    "en": "Invalid service config. Paste the complete service-setup.json generated by the wizard, not a password or private key."
+  },
+  {
+    "key": "theOperationFilenameDoesNotMatch",
+    "zh": "日志文件名与内容 ID 不一致",
+    "en": "The operation filename does not match its ID"
+  },
+  {
+    "key": "localOperationDependenciesAreIncomplete",
+    "zh": "本地日志依赖不完整",
+    "en": "Local operation dependencies are incomplete"
+  },
+  {
+    "key": "webdavRequiresHttpsTheUrlMust",
+    "zh": "WebDAV 必须使用 HTTPS，地址不能包含凭据、查询或片段",
+    "en": "WebDAV requires HTTPS; the URL must not contain credentials, a query, or a fragment"
+  },
+  {
+    "key": "aServiceCertificateAndItsOrigin",
+    "zh": "服务证书与地址必须成对提供",
+    "en": "A service certificate and its origin must be provided together"
+  },
+  {
+    "key": "invalidPublicServiceCertificateOrRestricted",
+    "zh": "服务公共证书或限定地址无效",
+    "en": "Invalid public service certificate or restricted origin"
+  },
+  {
+    "key": "accessOutsideTheWebdavDirectoryWas",
+    "zh": "拒绝访问 WebDAV 目录以外的地址",
+    "en": "Access outside the WebDAV directory was refused"
+  },
+  {
+    "key": "serverResponseExceedsTheSizeLimit",
+    "zh": "服务器响应超出大小限制",
+    "en": "Server response exceeds the size limit"
+  },
+  {
+    "key": "redirectsAreNotSupportedEnterThe",
+    "zh": "WebDAV 不支持重定向，请填写最终 HTTPS 地址",
+    "en": "Redirects are not supported. Enter the final HTTPS WebDAV URL."
+  },
+  {
+    "key": "webdavAuthenticationFailedOrAccessDenied",
+    "zh": "WebDAV 身份验证失败或权限不足",
+    "en": "WebDAV authentication failed or access denied"
+  },
+  {
+    "key": "webdavTemporarilyUnavailableHttp",
+    "zh": "WebDAV 暂时不可用（HTTP {arg0}）",
+    "en": "WebDAV temporarily unavailable (HTTP {arg0})"
+  },
+  {
+    "key": "webdavRequestTimedOut",
+    "zh": "WebDAV 请求超时",
+    "en": "WebDAV request timed out"
+  },
+  {
+    "key": "networkUnavailableLocalEntriesAreRetained",
+    "zh": "网络不可用，本地记录已保留",
+    "en": "Network unavailable. Local entries are retained."
+  },
+  {
+    "key": "webdavNetworkConnectionFailed",
+    "zh": "WebDAV 网络连接失败",
+    "en": "WebDAV network connection failed"
+  },
+  {
+    "key": "serverResponseIsNotValidUtf",
+    "zh": "服务器响应不是有效 UTF-8",
+    "en": "Server response is not valid UTF-8"
+  },
+  {
+    "key": "couldNotCreateTheSyncDirectory",
+    "zh": "创建同步目录失败（HTTP {arg0}）",
+    "en": "Could not create the sync directory (HTTP {arg0})"
+  },
+  {
+    "key": "couldNotListTheWebdavDirectory",
+    "zh": "读取 WebDAV 目录失败（HTTP {arg0}）",
+    "en": "Could not list the WebDAV directory (HTTP {arg0})"
+  },
+  {
+    "key": "theDirectoryContainsAnUnsupportedXml",
+    "zh": "目录包含不支持的 XML 声明",
+    "en": "The directory contains an unsupported XML declaration"
+  },
+  {
+    "key": "invalidWebdavDirectoryOrFilenameSync",
+    "zh": "WebDAV 目录格式或文件名无效，已停止同步",
+    "en": "Invalid WebDAV directory or filename. Sync stopped."
+  },
+  {
+    "key": "remoteOperationIsNotVisibleYet",
+    "zh": "远端日志暂不可见，请稍后重试",
+    "en": "Remote operation is not visible yet. Try again later."
+  },
+  {
+    "key": "couldNotReadTheOperationHttp",
+    "zh": "读取日志失败（HTTP {arg0}）",
+    "en": "Could not read the operation (HTTP {arg0})"
+  },
+  {
+    "key": "couldNotUploadTheOperationHttp",
+    "zh": "上传日志失败（HTTP {arg0}）",
+    "en": "Could not upload the operation (HTTP {arg0})"
+  },
+  {
+    "key": "remoteOperationWithTheSameName",
+    "zh": "远端同名日志内容不同，禁止覆盖",
+    "en": "Remote operation with the same name has different contents. Overwrite refused."
+  },
+  {
+    "key": "theServerFailedTheFileCreation",
+    "zh": "服务器未通过创建文件测试",
+    "en": "The server failed the file-creation test"
+  },
+  {
+    "key": "theServerIgnoredIfNoneMatch",
+    "zh": "服务器未遵守 If-None-Match，不能安全同步",
+    "en": "The server ignored If-None-Match; safe sync is unavailable"
+  },
+  {
+    "key": "serverReadBackVerificationFailed",
+    "zh": "服务器读回校验失败",
+    "en": "Server read-back verification failed"
+  },
+  {
+    "key": "couldNotRemoveTheTestFile",
+    "zh": "测试文件清理失败，可手动删除 .probe 文件",
+    "en": "Could not remove the test file. You may remove the .probe file manually."
+  },
+  {
+    "key": "invalidLocalWebdavHttpsConfigCheck",
+    "zh": "本地 WebDAV HTTPS 配置无效，请检查 origin 和 CA 证书",
+    "en": "Invalid local WebDAV HTTPS config. Check the origin and CA certificate."
+  },
+  {
+    "key": "archivedSuffix",
+    "zh": "（已归档）",
+    "en": " (archived)"
+  },
+  {
+    "key": "language",
+    "zh": "语言",
+    "en": "Language"
+  },
+  {
+    "key": "languageDescription",
+    "zh": "选择界面语言，默认跟随系统。仅保存在本机。",
+    "en": "Choose the interface language. The default follows your system; this preference stays on this device."
+  },
+  {
+    "key": "languageSaveFailed",
+    "zh": "语言设置保存失败，请重试",
+    "en": "Could not save your language preference. Try again."
+  },
+  {
+    "key": "systemLanguage",
+    "zh": "跟随系统语言",
+    "en": "Follow system language"
+  },
+  {
+    "key": "simplifiedChinese",
+    "zh": "简体中文",
+    "en": "简体中文"
+  },
+  {
+    "key": "englishLanguage",
+    "zh": "English",
+    "en": "English"
+  },
+  {
+    "key": "languageSaved",
+    "zh": "语言设置已保存",
+    "en": "Language preference saved"
+  },
+  {
+    "key": "permanentDeleted",
+    "zh": "（已删除）",
+    "en": " (deleted)"
+  },
+  {
+    "key": "archivedShort",
+    "zh": "（归档）",
+    "en": " (archived)"
+  },
+  {
+    "key": "deletedShort",
+    "zh": "（删除）",
+    "en": " (deleted)"
+  },
+  {
+    "key": "categoryIdLine",
+    "zh": "分类 ID：{arg0}\n",
+    "en": "Category ID: {arg0}\n"
+  },
+  {
+    "key": "categoryPieChart",
+    "zh": "分类饼图",
+    "en": "Category pie chart"
+  },
+  {
+    "key": "categoryColumnChart",
+    "zh": "分类柱状图",
+    "en": "Category column chart"
+  },
+  {
+    "key": "categoryShareChart",
+    "zh": "分类比例条",
+    "en": "Category share chart"
+  },
+  {
+    "key": "byCalendarMonth",
+    "zh": "按自然月汇总",
+    "en": "Grouped by calendar month"
+  },
+  {
+    "key": "byCalendarWeek",
+    "zh": "按自然周汇总",
+    "en": "Grouped by calendar week"
+  },
+  {
+    "key": "byDay",
+    "zh": "按日汇总",
+    "en": "Grouped by day"
+  },
+  {
+    "key": "incomeAmountLine",
+    "zh": "\n收入 ¥{arg0}",
+    "en": "\nIncome ¥{arg0}"
+  },
+  {
+    "key": "expenseAmountLine",
+    "zh": "\n支出 ¥{arg0}",
+    "en": "\nExpense ¥{arg0}"
+  }
+]

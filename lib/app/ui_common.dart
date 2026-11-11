@@ -1,3 +1,4 @@
+import '../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import '../domain/operation.dart';
 
@@ -10,26 +11,33 @@ String ledgerMoney(int minor) {
   return '¥$whole.${parts[1]}';
 }
 
-String safeError(Object error) =>
-    error is LedgerException ? error.message : '操作失败，数据未提交；请重试';
+String safeError(Object error, [BuildContext? context]) {
+  final strings = context == null
+      ? const AppStrings(Locale('zh', 'CN'))
+      : context.l10n;
+  return strings.message(
+    error is LedgerException ? error.message : '操作失败，数据未提交；请重试',
+  );
+}
+
 void notify(BuildContext context, String message) => ScaffoldMessenger.of(
   context,
-).showSnackBar(SnackBar(content: Text(message)));
+).showSnackBar(SnackBar(content: Text(context.l10n.message(message))));
 
 Future<bool> confirmDelete(BuildContext context) async =>
     await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('确认删除？'),
-        content: const Text('删除会同步到其他设备，历史版本仍会保留。'),
+        title: Text(context.l10n.deleteThisItem),
+        content: Text(context.l10n.deletionSyncsToOtherDevicesHistorical),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('取消'),
+            child: Text(context.l10n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('删除'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),

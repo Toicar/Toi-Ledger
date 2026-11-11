@@ -128,7 +128,11 @@ void main() {
       );
       await settle(tester);
       final field = find.widgetWithText(TextField, '应用专用密码');
-      await tester.ensureVisible(field);
+      await tester.scrollUntilVisible(
+        field,
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       await settle(tester);
       await tester.enterText(field, 'synthetic-password');
       expect(tester.widget<TextField>(field).obscureText, isTrue);

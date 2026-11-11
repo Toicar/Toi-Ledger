@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
@@ -25,12 +26,12 @@ class CategoriesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-    appBar: AppBar(title: const Text('分类管理')),
+    appBar: AppBar(title: Text(context.l10n.categories)),
     body: ref
         .watch(entitiesProvider)
         .when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => Center(child: Text(safeError(e))),
+          error: (e, _) => Center(child: Text(safeError(e, context))),
           data: (views) {
             final categories =
                 views
@@ -51,7 +52,7 @@ class CategoriesPage extends ConsumerWidget {
                           );
                   });
             return categories.isEmpty
-                ? const Center(
+                ? Center(
                     child: SingleChildScrollView(
                       child: Padding(
                         padding: EdgeInsets.all(32),
@@ -60,8 +61,9 @@ class CategoriesPage extends ConsumerWidget {
                             LedgerStillLife(),
                             PageHeading(
                               eyebrow: 'MAKE ROOM FOR LIFE',
-                              title: '生活，自有分类。',
-                              description: '从餐饮、交通或工资开始。\n点击右下角添加收入或支出分类。',
+                              title: context.l10n.aPlaceForEverything,
+                              description:
+                                  context.l10n.startWithFoodTransportOrSalary,
                             ),
                           ],
                         ),
@@ -78,9 +80,11 @@ class CategoriesPage extends ConsumerWidget {
                           if (i == 0) {
                             return PageHeading(
                               eyebrow: 'A PLACE FOR EVERYTHING',
-                              title: '生活，自有分类。',
-                              description:
-                                  '已设置 ${categories.length} 个分类。点击分类或编辑按钮修改名称，历史账目随之更新；归档仍保留历史记录。',
+                              title: context.l10n.aPlaceForEverything,
+                              description: context.l10n
+                                  .categoriesSelectACategoryOrIts(
+                                    categories.length,
+                                  ),
                             );
                           }
                           final v = categories[i - 1];
@@ -116,13 +120,15 @@ class CategoriesPage extends ConsumerWidget {
                               ),
                               title: Text(
                                 v.hasConflict
-                                    ? '分类冲突 · 点击处理'
+                                    ? context
+                                          .l10n
+                                          .categoryConflictSelectToResolve
                                     : v.current.data['name'] as String,
                               ),
                               subtitle: Text(
                                 v.current.data['kind'] == 'income'
-                                    ? '收入'
-                                    : '支出',
+                                    ? context.l10n.income
+                                    : context.l10n.expense,
                               ),
                               onTap: () => edit(context, ref, v),
                               trailing: v.hasConflict
@@ -131,13 +137,13 @@ class CategoriesPage extends ConsumerWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         IconButton(
-                                          tooltip: '编辑分类',
+                                          tooltip: context.l10n.editCategory,
                                           onPressed: () =>
                                               edit(context, ref, v),
                                           icon: const Icon(Icons.edit_outlined),
                                         ),
                                         IconButton(
-                                          tooltip: '归档分类',
+                                          tooltip: context.l10n.archiveCategory,
                                           icon: const Icon(
                                             Icons.archive_outlined,
                                           ),
@@ -149,7 +155,10 @@ class CategoriesPage extends ConsumerWidget {
                                                     .remove(v);
                                               } catch (e) {
                                                 if (context.mounted) {
-                                                  notify(context, safeError(e));
+                                                  notify(
+                                                    context,
+                                                    safeError(e, context),
+                                                  );
                                                 }
                                               }
                                             }
@@ -166,7 +175,7 @@ class CategoriesPage extends ConsumerWidget {
           },
         ),
     floatingActionButton: FloatingActionButton(
-      tooltip: '添加分类',
+      tooltip: context.l10n.addCategory,
       onPressed: () => edit(context, ref),
       child: const Icon(Icons.add),
     ),
@@ -202,7 +211,11 @@ class _CategoryEditorState extends ConsumerState<CategoryEditor> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: Text(widget.existing == null ? '添加分类' : '编辑分类'),
+    title: Text(
+      widget.existing == null
+          ? context.l10n.addCategory
+          : context.l10n.editCategory,
+    ),
     content: SizedBox(
       width: 360,
       child: SingleChildScrollView(
@@ -215,30 +228,34 @@ class _CategoryEditorState extends ConsumerState<CategoryEditor> {
                 controller: name,
                 enabled: !saving,
                 maxLength: 40,
-                decoration: const InputDecoration(labelText: '名称'),
+                decoration: InputDecoration(labelText: context.l10n.name),
                 validator: (value) {
                   try {
                     requireText(value?.trim(), max: 40);
                     return null;
                   } catch (error) {
-                    return safeError(error);
+                    return safeError(error, context);
                   }
                 },
               ),
               if (widget.existing != null)
-                const Text(
-                  '可修改分类的收入／支出类型。已有账单保留原收支类型，新类型用于后续记账。',
+                Text(
+                  context.l10n.youCanChangeThisCategoryBetween,
                   style: TextStyle(fontSize: 12),
                 ),
               DropdownButton<String>(
                 value: kind,
-                items: const [
-                  DropdownMenuItem(value: 'expense', child: Text('支出')),
-                  DropdownMenuItem(value: 'income', child: Text('收入')),
+                items: [
+                  DropdownMenuItem(
+                    value: 'expense',
+                    child: Text(context.l10n.expense),
+                  ),
+                  DropdownMenuItem(
+                    value: 'income',
+                    child: Text(context.l10n.income),
+                  ),
                 ],
-                onChanged: saving
-                    ? null
-                    : (v) => setState(() => kind = v!),
+                onChanged: saving ? null : (v) => setState(() => kind = v!),
               ),
             ],
           ),
@@ -248,7 +265,7 @@ class _CategoryEditorState extends ConsumerState<CategoryEditor> {
     actions: [
       TextButton(
         onPressed: saving ? null : () => Navigator.pop(context),
-        child: const Text('取消'),
+        child: Text(context.l10n.cancel),
       ),
       FilledButton(
         onPressed: saving
@@ -271,11 +288,11 @@ class _CategoryEditorState extends ConsumerState<CategoryEditor> {
                 } catch (e) {
                   if (mounted) {
                     setState(() => saving = false);
-                    if (context.mounted) notify(context, safeError(e));
+                    if (context.mounted) notify(context, safeError(e, context));
                   }
                 }
               },
-        child: const Text('保存'),
+        child: Text(context.l10n.save),
       ),
     ],
   );

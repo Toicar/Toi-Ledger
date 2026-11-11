@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import '../../app/ui_common.dart';
 import '../../sync/service_setup.dart';
@@ -20,7 +21,7 @@ class _ServiceImportDialogState extends State<ServiceImportDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: const Text('导入 WebDAV 服务配置'),
+    title: Text(context.l10n.importWebdavServiceConfig),
     content: SizedBox(
       width: 480,
       child: SingleChildScrollView(
@@ -28,9 +29,7 @@ class _ServiceImportDialogState extends State<ServiceImportDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              '在自己的电脑运行 WebDAV 设置向导，再用记事本打开 service-setup.json，复制全文粘贴到这里。此文件只含公共服务配置。',
-            ),
+            Text(context.l10n.runTheWebdavSetupWizardOn),
             const SizedBox(height: 16),
             TextField(
               controller: input,
@@ -39,7 +38,7 @@ class _ServiceImportDialogState extends State<ServiceImportDialog> {
               autocorrect: false,
               enableSuggestions: false,
               decoration: InputDecoration(
-                labelText: '公共服务配置 JSON',
+                labelText: context.l10n.publicServiceConfigJson,
                 errorText: error,
                 errorMaxLines: 4,
               ),
@@ -50,14 +49,14 @@ class _ServiceImportDialogState extends State<ServiceImportDialog> {
             ),
             if (preview case final setup?) ...[
               const SizedBox(height: 12),
-              Text('服务地址：${setup.endpoint}\n用户名：${setup.username}'),
+              Text(
+                context.l10n.serviceUrlUsername(setup.endpoint, setup.username),
+              ),
               const SizedBox(height: 10),
-              const Text('公共证书 SHA-256（按文件内容计算）'),
+              Text(context.l10n.publicCertificateShaFileContents),
               SelectableText(setup.fingerprint),
               const SizedBox(height: 10),
-              const Text(
-                '请与电脑向导显示的指纹核对。确认后仅为此 HTTPS 地址信任该证书，不修改系统信任；密码仍需单独输入，账本 ID 保持原值。',
-              ),
+              Text(context.l10n.compareThisFingerprintWithTheComputer),
             ],
           ],
         ),
@@ -66,7 +65,7 @@ class _ServiceImportDialogState extends State<ServiceImportDialog> {
     actions: [
       TextButton(
         onPressed: () => Navigator.pop(context),
-        child: const Text('取消'),
+        child: Text(context.l10n.cancel),
       ),
       if (preview == null)
         FilledButton(
@@ -77,15 +76,15 @@ class _ServiceImportDialogState extends State<ServiceImportDialog> {
                 error = null;
               });
             } catch (e) {
-              setState(() => error = safeError(e));
+              setState(() => error = safeError(e, context));
             }
           },
-          child: const Text('检查配置'),
+          child: Text(context.l10n.reviewConfig),
         )
       else
         FilledButton(
           onPressed: () => Navigator.pop(context, preview),
-          child: const Text('信任此服务并填入'),
+          child: Text(context.l10n.trustServiceAndFillIn),
         ),
     ],
   );

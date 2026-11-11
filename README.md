@@ -8,7 +8,7 @@
 
 [English](README.en.md) · [下载安装](https://github.com/Toicar/Toi-Ledger/releases) · [反馈问题](https://github.com/Toicar/Toi-Ledger/issues)
 
-> 当前版本：**0.4.2+10 · 预发布**。仓库名为 Toi-Ledger，当前安装包、应用名称和部分源码仍沿用 **MyLedger**。本 README 提供中英双语说明，应用界面目前以中文为主。
+> 当前版本：**0.5.0+11 · 预发布**。仓库名为 Toi-Ledger，应用显示名称、可执行文件和部分源码仍沿用 **MyLedger**。应用支持简体中文与 English，默认跟随系统语言，可在同步设置中即时切换。
 
 ## 目录
 
@@ -42,6 +42,7 @@
 | 快捷模板 | 保存常用收支；金额和分类可留空。选择分类时自动匹配收支类型，使用后仍需确认才记入账本。 |
 | 统计分析 | 自然周／月／年趋势、上一周期对比、分类占比与二级明细，支持搜索、排序和进入账单编辑。 |
 | 未分类统计 | 默认单笔 **≥ ¥500** 独立展示，其余合并为“其他”；门槛可自行调整。 |
+| 界面语言 | 简体中文／English／跟随系统（默认），即时切换并在重启后保留；日期选择器与提示同步切换。 |
 | 外观设置 | 跟随系统／浅色／深色，纸纹磨砂与透明玻璃两种材质，六套主题色，支持隐藏金额。 |
 | 多设备同步 | HTTPS WebDAV 增量操作日志、离线记录、冲突处理、连接测试与配置指引。 |
 
@@ -49,13 +50,13 @@
 
 ## 下载安装
 
-从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。当前 [v0.4.2](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.4.2) 提供：
+从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。当前 [v0.5.0](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.5.0) 提供：
 
 | 平台／用途 | 文件 | 使用方式 |
 | --- | --- | --- |
-| Android ARM64 | `MyLedger-0.4.2-android-arm64-lan.apk` | 传到手机安装；按系统提示允许相应来源安装应用。 |
-| Windows x64 | `MyLedger-0.4.2-windows-x64-lan.zip` | 完整解压，运行 `my_ledger.exe`。保留同目录 DLL、`data` 和其他运行文件。 |
-| 局域网 WebDAV 工具 | `Toi-Ledger-0.4.2-webdav-setup.zip` | 需要自己搭建服务时使用；Windows 完整包也包含 `webdav-setup` 文件夹。 |
+| Android ARM64 | `Toi-Ledger-0.5.0-android-arm64.apk` | 传到手机安装；按系统提示允许相应来源安装应用。 |
+| Windows x64 | `Toi-Ledger-0.5.0-windows-x64.zip` | 完整解压，运行 `my_ledger.exe`。保留同目录 DLL、`data` 和其他运行文件。 |
+| 局域网 WebDAV 工具 | `Toi-Ledger-0.5.0-webdav-setup.zip` | 需要自己搭建服务时使用；Windows 完整包也包含 `webdav-setup` 文件夹。 |
 
 更新 Windows 版前先关闭应用，再完整覆盖运行文件。Android 覆盖安装需保留相同包名与签名；遇到签名不一致时，不要通过卸载唯一数据副本来解决。
 
@@ -69,6 +70,10 @@
 4. 常用内容可保存到“快捷模板”；分类管理与统计分析提供独立入口。
 
 在统计页点击分类、“其他”或独立展示的大额未分类账单，即可进入二级统计，查看合计、笔数、平均每笔、最大单笔、趋势与具体账单。
+
+### 切换语言
+
+打开“同步设置 → 语言”，选择“跟随系统语言”“简体中文”或“English”。首次使用默认跟随系统；选择仅保存在本机，不影响其他设备或账目内容。系统中文各地区使用简体中文，英文各地区使用英文；其余语言回退英文。
 
 Windows 首页支持 `Ctrl+N` 新建记录，记账弹窗支持 `Ctrl+Enter` 保存。
 
@@ -105,7 +110,7 @@ Windows 首页支持 `Ctrl+N` 新建记录，记账弹窗支持 `Ctrl+Enter` 保
 
 ### 同步行为
 
-- 同步账目与分类；快捷模板、主题、隐藏金额和统计门槛分别保存在各设备。
+- 同步账目与分类；语言、快捷模板、主题、隐藏金额和统计门槛分别保存在各设备。
 - 应用启动、恢复前台及运行期间约每 60 秒尝试同步，也可在首页手动触发；不提供 Android 常驻后台同步服务。
 - 并发修改可能产生冲突，需要选择保留的版本；冲突账目暂不计入汇总，历史操作仍保留。
 - 当前不支持自动合并两个各自已有记录的账本。请保留原数据，不要清库或卸载来强行连接。
@@ -176,6 +181,17 @@ python -m unittest discover -s tool/local_webdav -p "test_*.py" -v
 
 不要提交 `.env`、签名密钥、DPAPI 文件、服务私有状态或真实账本；本机报告与交接资料也不属于公开源码内容。
 
+### 本地化资源
+
+修改 `lib/l10n/messages.json` 中的中英文资源，保留相同的占位符，再生成类型化代码：
+
+```sh
+python tool/generate_localizations.py
+dart format lib/l10n/app_strings.dart
+```
+
+不要翻译用户内容或改变领域日志。语言行为和英文布局测试位于 `test/language_test.dart`。
+
 ## 项目结构
 
 ```text
@@ -183,6 +199,7 @@ lib/
   app/                    主题、工作区与全局状态
   data/                   SQLite、仓储、凭据与模板
   domain/                 账目操作与统计模型
+  l10n/                   中英文资源、类型化文案与显示标签
   features/               记账、分类、模板、统计和设置页面
   sync/                   WebDAV 与同步逻辑
 assets/branding/          图标与可编辑设计资源
@@ -194,9 +211,9 @@ docs/                     开发与协议说明
 
 ## 当前状态与限制
 
-- 当前为 **0.4.2 预发布版**。双端安装包已构建；该版本按要求未执行回归检查，手机安装与真实双向同步仍待验收，不承诺所有 WebDAV 提供方兼容。
+- 当前为 **0.5.0 预发布版**。应用完整测试与严格静态分析已通过；手机安装与真实双向同步仍待验收，不承诺所有 WebDAV 提供方兼容。
 - 当前支持单个人民币账本；多账户、转账、预算、多币种、账单导入与通知识别尚未实现。
-- UI 目前以中文为主；英文 README 不代表已实现英文应用界面。
+- 界面支持简体中文与 English；未匹配的系统语言回退英文，用户分类名和备注不自动翻译。
 - 大量长期日志仍有性能与存储优化空间；没有日志快照压缩或自动账本合并。
 
 ## 反馈与贡献

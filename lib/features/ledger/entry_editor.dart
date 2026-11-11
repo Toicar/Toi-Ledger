@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,7 +84,7 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
     } catch (e) {
       if (mounted) {
         setState(() => saving = false);
-        notify(context, safeError(e));
+        notify(context, safeError(e, context));
       }
     }
   }
@@ -99,7 +100,8 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
               !v.current.deleted &&
               (v.current.data['kind'] == kind ||
                   (widget.existing != null &&
-                      widget.existing!.current.data['categoryId'] == v.current.entityId)),
+                      widget.existing!.current.data['categoryId'] ==
+                          v.current.entityId)),
         )
         .toList();
     final selected = categories.any((v) => v.current.entityId == categoryId)
@@ -119,7 +121,9 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                widget.existing == null ? '记一笔' : '编辑账目',
+                widget.existing == null
+                    ? context.l10n.newEntry
+                    : context.l10n.editEntry,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
@@ -136,21 +140,21 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                 children: [
                   Text(
                     widget.template == null
-                        ? '认真记下，平常生活里的这一笔。'
-                        : '已填入模板，确认后才会记入账本。',
+                        ? context.l10n.aSmallNoteOfEverydayLife
+                        : context.l10n.templateAppliedConfirmToAddThis,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 22),
                   SegmentedButton<String>(
-                    segments: const [
+                    segments: [
                       ButtonSegment(
                         value: 'expense',
-                        label: Text('支出'),
+                        label: Text(context.l10n.expense),
                         icon: Icon(Icons.north_east_rounded, size: 16),
                       ),
                       ButtonSegment(
                         value: 'income',
-                        label: Text('收入'),
+                        label: Text(context.l10n.income),
                         icon: Icon(Icons.south_west_rounded, size: 16),
                       ),
                     ],
@@ -170,7 +174,7 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                     autofocus: widget.existing == null,
                     style: LedgerTypography.of(context).number(size: 32),
                     decoration: InputDecoration(
-                      labelText: '金额（元）',
+                      labelText: context.l10n.amountCny,
                       prefixText: '¥ ',
                       prefixStyle: LedgerTypography.of(
                         context,
@@ -195,7 +199,7 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                         parseAmount(v ?? '');
                         return null;
                       } catch (e) {
-                        return safeError(e);
+                        return safeError(e, context);
                       }
                     },
                   ),
@@ -204,14 +208,23 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                     key: ValueKey('$kind:$categoryId'),
                     initialValue: categoryId ?? '',
                     isExpanded: true,
-                    decoration: const InputDecoration(labelText: '分类（可选）'),
+                    decoration: InputDecoration(
+                      labelText: context.l10n.categoryOptional,
+                    ),
                     items: [
-                      const DropdownMenuItem(value: '', child: Text('未分类')),
+                      DropdownMenuItem(
+                        value: '',
+                        child: Text(context.l10n.uncategorized2),
+                      ),
                       if (categoryId != null && selected == null)
                         DropdownMenuItem(
                           value: categoryId,
                           enabled: false,
-                          child: const Text('原分类不可用，请重新选择或留空'),
+                          child: Text(
+                            context
+                                .l10n
+                                .originalCategoryUnavailableChooseAnotherOr,
+                          ),
                         ),
                       ...categories.map(
                         (v) => DropdownMenuItem(
@@ -232,7 +245,7 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                             v.isEmpty ||
                             categories.any((c) => c.current.entityId == v)
                         ? null
-                        : '请选择有效分类或未分类',
+                        : context.l10n.chooseAnAvailableCategoryOrUncategorized,
                     onChanged: saving
                         ? null
                         : (v) =>
@@ -249,7 +262,7 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                                 builder: (_) => const CategoryEditor(),
                               ),
                         icon: const Icon(Icons.add, size: 16),
-                        label: const Text('添加分类（可选）'),
+                        label: Text(context.l10n.addCategoryOptional),
                       ),
                     ),
                   const SizedBox(height: 14),
@@ -257,9 +270,9 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                     controller: date,
                     enabled: !saving,
                     decoration: InputDecoration(
-                      labelText: '日期 YYYY-MM-DD',
+                      labelText: context.l10n.dateYyyyMmDd,
                       suffixIcon: IconButton(
-                        tooltip: '选择日期',
+                        tooltip: context.l10n.chooseDate,
                         onPressed: saving
                             ? null
                             : () async {
@@ -293,7 +306,7 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                         requireDate(v);
                         return null;
                       } catch (e) {
-                        return safeError(e);
+                        return safeError(e, context);
                       }
                     },
                   ),
@@ -302,7 +315,9 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
                     controller: note,
                     enabled: !saving,
                     maxLength: 500,
-                    decoration: const InputDecoration(labelText: '备注（可选）'),
+                    decoration: InputDecoration(
+                      labelText: context.l10n.noteOptional,
+                    ),
                   ),
                 ],
               ),
@@ -313,11 +328,11 @@ class _EntryEditorState extends ConsumerState<EntryEditor> {
         actions: [
           TextButton(
             onPressed: saving ? null : () => Navigator.pop(context),
-            child: const Text('取消'),
+            child: Text(context.l10n.cancel),
           ),
           FilledButton(
             onPressed: saving ? null : save,
-            child: Text(saving ? '保存中…' : '保存'),
+            child: Text(saving ? context.l10n.saving : context.l10n.save),
           ),
         ],
       ),

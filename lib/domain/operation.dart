@@ -111,7 +111,8 @@ class Operation {
     if (protocolVersion != 1 && protocolVersion != 2 && protocolVersion != 3) {
       throw const LedgerException('不支持的操作协议版本，请更新应用');
     }
-    if (protocolVersion == 3 && (entityType != EntityType.category || parents.isEmpty)) {
+    if (protocolVersion == 3 &&
+        (entityType != EntityType.category || parents.isEmpty)) {
       throw const LedgerException('分类类型变更须引用已有分类版本');
     }
     for (final value in [id, ledgerId, deviceId, entityId, ...parents]) {

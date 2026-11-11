@@ -1,3 +1,5 @@
+import 'package:my_ledger/app/language_controller.dart';
+import 'package:my_ledger/l10n/app_strings.dart';
 // Opt-in visual acceptance captures of real widgets and synthetic memory data.
 // Local Windows fonts are read only for QA; they are never bundled in the app.
 import 'dart:io';
@@ -20,6 +22,9 @@ import 'widget_test.dart' show EmptyCredentials, settle;
 
 void main() {
   const directory = String.fromEnvironment('MYLEDGER_CAPTURE_DIR');
+  const english = bool.fromEnvironment('MYLEDGER_VISUAL_ENGLISH');
+  const strings = AppStrings(english ? Locale('en') : Locale('zh', 'CN'));
+  String localized(String value) => strings.message(value);
   testWidgets(
     'visual acceptance: materials, colors, optional categories and drill-down',
     (tester) async {
@@ -162,6 +167,9 @@ void main() {
             key: ValueKey(name),
             overrides: [
               repositoryProvider.overrideWithValue(repo),
+              initialLanguageProvider.overrideWithValue(
+                english ? LedgerLanguage.en : LedgerLanguage.zh,
+              ),
               credentialProvider.overrideWithValue(EmptyCredentials()),
               initialThemeModeProvider.overrideWithValue(mode),
               initialPresentationProvider.overrideWithValue(
@@ -173,23 +181,23 @@ void main() {
         );
         await settle(tester);
         if (size.width >= 1000) {
-          await tester.tap(find.text(destination).first);
+          await tester.tap(find.text(localized(destination)).first);
         } else if (destination == '外观') {
-          await tester.tap(find.byTooltip('外观'));
+          await tester.tap(find.byTooltip(localized('外观')));
         } else if (destination == '同步设置') {
-          await tester.tap(find.byTooltip('同步设置'));
+          await tester.tap(find.byTooltip(localized('同步设置')));
         } else {
-          await tester.ensureVisible(find.text('统计分析').first);
-          await tester.tap(find.text('统计分析').first);
+          await tester.ensureVisible(find.text(localized('统计分析')).first);
+          await tester.tap(find.text(localized('统计分析')).first);
         }
         await settle(tester);
         if (name.startsWith('sync-guide')) {
           await tester.tap(find.byKey(const ValueKey('open-sync-guide')));
           await settle(tester);
           if (name == 'sync-guide-mobile') {
-            await tester.ensureVisible(find.text('加入现有账本'));
+            await tester.ensureVisible(find.text(localized('加入现有账本')));
             await settle(tester);
-            await tester.tap(find.text('加入现有账本'));
+            await tester.tap(find.text(localized('加入现有账本')));
             await settle(tester);
           }
         }
@@ -217,10 +225,10 @@ void main() {
         }
 
         if (destination == '统计分析') {
-          await tester.ensureVisible(find.text('其他'));
+          await tester.ensureVisible(find.text(localized('其他')));
           await settle(tester);
           if (name.contains('other-mobile')) {
-            await tester.tap(find.text('其他'));
+            await tester.tap(find.text(localized('其他')));
             await settle(tester);
           }
         }
@@ -232,7 +240,7 @@ void main() {
             scrollable: find.byType(Scrollable).first,
           );
           await settle(tester);
-          await tester.tap(find.text('还没有 WebDAV？从零搭建'));
+          await tester.tap(find.text(localized('还没有 WebDAV？从零搭建')));
           await settle(tester);
           await tester.ensureVisible(find.textContaining('Setup-WebDAV.cmd'));
           await settle(tester);
@@ -258,6 +266,13 @@ void main() {
           );
           await settle(tester);
           await capture('statistics-other-mobile-bills');
+        }
+        if (english && name == 'sync-settings-mobile') {
+          await tester.ensureVisible(find.byKey(const ValueKey('language-zh')));
+          await settle(tester);
+          await tester.tap(find.byKey(const ValueKey('language-zh')));
+          await settle(tester);
+          await capture('sync-language-chinese');
         }
         await closeLedger(tester, repo);
       }

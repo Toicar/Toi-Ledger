@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -30,16 +31,18 @@ class TemplatesPage extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('删除快捷模板？'),
-        content: Text('删除“${template.name}”后，已记录的账目仍会保留。'),
+        title: Text(context.l10n.deleteThisQuickTemplate),
+        content: Text(
+          context.l10n.deletingKeepsEntriesAlreadyRecorded(template.name),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('取消'),
+            child: Text(context.l10n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('删除'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),
@@ -48,7 +51,7 @@ class TemplatesPage extends ConsumerWidget {
     try {
       await ref.read(entryTemplatesProvider.notifier).remove(template.id);
     } catch (error) {
-      if (context.mounted) notify(context, safeError(error));
+      if (context.mounted) notify(context, safeError(error, context));
     }
   }
 
@@ -62,7 +65,7 @@ class TemplatesPage extends ConsumerWidget {
         templates.requireValue.length < EntryTemplatePreferences.maxTemplates &&
         entities.asData != null;
     return Scaffold(
-      appBar: AppBar(title: const Text('快捷模板')),
+      appBar: AppBar(title: Text(context.l10n.quickTemplates)),
       body: templates.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
@@ -71,9 +74,9 @@ class TemplatesPage extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('无法读取快捷模板'),
+                Text(context.l10n.couldNotLoadQuickTemplates),
                 const SizedBox(height: 8),
-                Text(safeError(error)),
+                Text(safeError(error, context)),
                 const SizedBox(height: 16),
                 OutlinedButton(
                   onPressed: () async {
@@ -83,7 +86,7 @@ class TemplatesPage extends ConsumerWidget {
                       // The provider displays the read error and offers retry.
                     }
                   },
-                  child: const Text('重试'),
+                  child: Text(context.l10n.retry),
                 ),
               ],
             ),
@@ -91,9 +94,9 @@ class TemplatesPage extends ConsumerWidget {
         ),
         data: (values) => entities.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(child: Text(safeError(error))),
+          error: (error, _) => Center(child: Text(safeError(error, context))),
           data: (views) => values.isEmpty
-              ? const Center(
+              ? Center(
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.all(24),
@@ -104,12 +107,12 @@ class TemplatesPage extends ConsumerWidget {
                           SizedBox(height: 16),
                           PageHeading(
                             eyebrow: 'LESS TYPING, MORE LIVING',
-                            title: '日常，轻松记。',
-                            description: '还没有快捷模板',
+                            title: context.l10n.aSimplerEveryday,
+                            description: context.l10n.noQuickTemplatesYet,
                           ),
                           SizedBox(height: 8),
                           Text(
-                            '将常用收支保存为模板，下次记账时快速填入。',
+                            context.l10n.saveFrequentIncomeOrExpensesAs,
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -127,8 +130,9 @@ class TemplatesPage extends ConsumerWidget {
                         if (index == 0) {
                           return PageHeading(
                             eyebrow: 'LESS TYPING, MORE LIVING',
-                            title: '日常，轻松记。',
-                            description: '${values.length} 个常用收支模板。轻点填入，确认后记账。',
+                            title: context.l10n.aSimplerEveryday,
+                            description: context.l10n
+                                .quickTemplatesApplyOneReviewIt(values.length),
                           );
                         }
                         final template = values[index - 1];
@@ -139,9 +143,9 @@ class TemplatesPage extends ConsumerWidget {
                               view.current.entityType == EntityType.category,
                         );
                         final categoryName = template.categoryId == null
-                            ? '未预设分类'
+                            ? context.l10n.noPresetCategory
                             : categories.isEmpty
-                            ? '分类缺失'
+                            ? context.l10n.missingCategory
                             : categories.single.current.data['name'] as String;
                         return Card(
                           margin: const EdgeInsets.only(bottom: 14),
@@ -158,14 +162,14 @@ class TemplatesPage extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  '${template.kind == 'income' ? '收入' : '支出'} · $categoryName',
+                                  '${template.kind == 'income' ? context.l10n.income : context.l10n.expense} · $categoryName',
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   hideAmounts
-                                      ? '金额已隐藏'
+                                      ? context.l10n.amountsHidden
                                       : template.amountMinor == null
-                                      ? '记账时填写金额'
+                                      ? context.l10n.enterAnAmountWhenRecording
                                       : '¥${formatAmount(template.amountMinor!)}',
                                   style: LedgerTypography.of(
                                     context,
@@ -182,7 +186,7 @@ class TemplatesPage extends ConsumerWidget {
                                 if (issue != null) ...[
                                   const SizedBox(height: 8),
                                   Text(
-                                    issue,
+                                    context.l10n.message(issue),
                                     style: TextStyle(
                                       color: Theme.of(
                                         context,
@@ -206,16 +210,16 @@ class TemplatesPage extends ConsumerWidget {
                                               ),
                                             )
                                           : null,
-                                      child: const Text('使用模板'),
+                                      child: Text(context.l10n.useTemplate),
                                     ),
                                     IconButton(
-                                      tooltip: '编辑模板',
+                                      tooltip: context.l10n.editTemplate,
                                       onPressed: () =>
                                           _edit(context, views, template),
                                       icon: const Icon(Icons.edit_outlined),
                                     ),
                                     IconButton(
-                                      tooltip: '删除模板',
+                                      tooltip: context.l10n.deleteTemplate,
                                       onPressed: () =>
                                           _remove(context, ref, template),
                                       icon: const Icon(Icons.delete_outline),
@@ -237,8 +241,8 @@ class TemplatesPage extends ConsumerWidget {
             templates.asData != null &&
                 templates.requireValue.length >=
                     EntryTemplatePreferences.maxTemplates
-            ? '快捷模板已达 50 个上限'
-            : '添加模板',
+            ? context.l10n.limitOfQuickTemplatesReached
+            : context.l10n.addTemplate,
         onPressed: canAdd ? () => _edit(context, entities.requireValue) : null,
         child: const Icon(Icons.add),
       ),
@@ -306,7 +310,7 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
     } catch (error) {
       if (mounted) {
         setState(() => saving = false);
-        notify(context, safeError(error));
+        notify(context, safeError(error, context));
       }
     }
   }
@@ -316,7 +320,7 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
       requireText(value?.trim(), max: max, empty: empty);
       return null;
     } catch (error) {
-      return safeError(error);
+      return safeError(error, context);
     }
   }
 
@@ -341,7 +345,11 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
         ? null
         : templateCategoryIssue(widget.existing!, views);
     return AlertDialog(
-      title: Text(widget.existing == null ? '添加快捷模板' : '编辑快捷模板'),
+      title: Text(
+        widget.existing == null
+            ? context.l10n.addQuickTemplate
+            : context.l10n.editQuickTemplate,
+      ),
       content: SizedBox(
         width: 420,
         child: SingleChildScrollView(
@@ -355,13 +363,15 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
                   controller: name,
                   enabled: !saving,
                   maxLength: 40,
-                  decoration: const InputDecoration(labelText: '模板名称'),
+                  decoration: InputDecoration(
+                    labelText: context.l10n.templateName,
+                  ),
                   validator: (value) => _textError(value, max: 40),
                 ),
                 const SizedBox(height: 14),
                 if (issue != null) ...[
                   Text(
-                    issue,
+                    context.l10n.message(issue),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.error,
                     ),
@@ -372,17 +382,24 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
                   key: ValueKey('$kind:$categoryId'),
                   initialValue: categoryId ?? '',
                   isExpanded: true,
-                  decoration: const InputDecoration(
-                    labelText: '分类（可选）',
-                    helperText: '选择分类后自动匹配收入或支出',
+                  decoration: InputDecoration(
+                    labelText: context.l10n.categoryOptional,
+                    helperText: context.l10n.selectingACategorySetsIncomeOr,
                   ),
                   items: [
-                    const DropdownMenuItem(value: '', child: Text('不预设分类')),
+                    DropdownMenuItem(
+                      value: '',
+                      child: Text(context.l10n.noPresetCategory2),
+                    ),
                     if (categoryId != null && selected == null)
                       DropdownMenuItem(
                         value: categoryId,
                         enabled: false,
-                        child: const Text('原分类不可用，请重新选择或留空'),
+                        child: Text(
+                          context
+                              .l10n
+                              .originalCategoryUnavailableChooseAnotherOr,
+                        ),
                       ),
                     ...categories.map(
                       (view) => DropdownMenuItem(
@@ -403,7 +420,7 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
                           value.isEmpty ||
                           categories.any((c) => c.current.entityId == value)
                       ? null
-                      : '请选择有效分类或不预设分类',
+                      : context.l10n.chooseAnAvailableCategoryOrLeave,
                   onChanged: saving
                       ? null
                       : (value) => setState(() {
@@ -425,10 +442,16 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
                 DropdownButtonFormField<String>(
                   key: ValueKey('template-kind:$kind'),
                   initialValue: kind,
-                  decoration: const InputDecoration(labelText: '类型'),
-                  items: const [
-                    DropdownMenuItem(value: 'expense', child: Text('支出')),
-                    DropdownMenuItem(value: 'income', child: Text('收入')),
+                  decoration: InputDecoration(labelText: context.l10n.type),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'expense',
+                      child: Text(context.l10n.expense),
+                    ),
+                    DropdownMenuItem(
+                      value: 'income',
+                      child: Text(context.l10n.income),
+                    ),
                   ],
                   onChanged: saving
                       ? null
@@ -447,9 +470,9 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
                 TextFormField(
                   controller: amount,
                   enabled: !saving,
-                  decoration: const InputDecoration(
-                    labelText: '金额（元）',
-                    helperText: '可留空，使用模板时再填写',
+                  decoration: InputDecoration(
+                    labelText: context.l10n.amountCny,
+                    helperText: context.l10n.leaveBlankToEnterAnAmount,
                   ),
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -460,7 +483,7 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
                       parseAmount(value);
                       return null;
                     } catch (error) {
-                      return safeError(error);
+                      return safeError(error, context);
                     }
                   },
                 ),
@@ -469,7 +492,9 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
                   controller: note,
                   enabled: !saving,
                   maxLength: 500,
-                  decoration: const InputDecoration(labelText: '备注（可选）'),
+                  decoration: InputDecoration(
+                    labelText: context.l10n.noteOptional,
+                  ),
                   validator: (value) =>
                       _textError(value, max: 500, empty: true),
                 ),
@@ -481,11 +506,11 @@ class _TemplateEditorState extends ConsumerState<_TemplateEditor> {
       actions: [
         TextButton(
           onPressed: saving ? null : () => Navigator.pop(context),
-          child: const Text('取消'),
+          child: Text(context.l10n.cancel),
         ),
         FilledButton(
           onPressed: saving ? null : () => save(views),
-          child: Text(saving ? '保存中…' : '保存模板'),
+          child: Text(saving ? context.l10n.saving : context.l10n.saveTemplate),
         ),
       ],
     );

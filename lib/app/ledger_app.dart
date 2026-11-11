@@ -14,6 +14,8 @@ import '../features/appearance/appearance_page.dart';
 import '../features/sync/settings_page.dart';
 import 'ledger_workspace.dart';
 import 'providers.dart';
+import 'language_controller.dart';
+import '../l10n/app_strings.dart';
 
 class LedgerApp extends ConsumerStatefulWidget {
   const LedgerApp({super.key});
@@ -85,9 +87,18 @@ class _LedgerAppState extends ConsumerState<LedgerApp> {
       '/settings': (_) => const SettingsPage(),
       '/appearance': (_) => const AppearancePage(),
     },
-    locale: const Locale('zh', 'CN'),
-    supportedLocales: const [Locale('zh', 'CN')],
-    localizationsDelegates: GlobalMaterialLocalizations.delegates,
+    locale: switch (ref.watch(languageProvider)) {
+      LedgerLanguage.system => null,
+      LedgerLanguage.zh => const Locale('zh', 'CN'),
+      LedgerLanguage.en => const Locale('en'),
+    },
+    localeListResolutionCallback: (locales, supported) =>
+        resolveLedgerLocale(locales),
+    supportedLocales: const [Locale('zh', 'CN'), Locale('en')],
+    localizationsDelegates: const [
+      AppStrings.delegate,
+      ...GlobalMaterialLocalizations.delegates,
+    ],
     home: const LedgerHome(),
   );
 }

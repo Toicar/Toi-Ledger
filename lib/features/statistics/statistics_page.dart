@@ -1,3 +1,5 @@
+import '../../l10n/statistics_labels.dart';
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/presentation_controller.dart';
@@ -26,9 +28,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   StatisticsMeasure measure = StatisticsMeasure.expense;
   StatisticsRange get range => StatisticsRange.containing(anchor, period);
   String get periodName => switch (period) {
-    StatisticsPeriod.week => '周',
-    StatisticsPeriod.month => '月',
-    StatisticsPeriod.year => '年',
+    StatisticsPeriod.week => context.l10n.week,
+    StatisticsPeriod.month => context.l10n.month,
+    StatisticsPeriod.year => context.l10n.year,
   };
   @override
   void initState() {
@@ -56,7 +58,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           .read(presentationProvider.notifier)
           .setHideAmounts(!ref.read(presentationProvider).hideAmounts);
     } catch (error) {
-      if (mounted) notify(context, safeError(error));
+      if (mounted) notify(context, safeError(error, context));
     }
   }
 
@@ -70,8 +72,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              '统计分析',
+            Text(
+              context.l10n.statistics,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
             Text(
@@ -82,7 +84,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
         ),
         actions: [
           IconButton(
-            tooltip: hidden ? '显示金额' : '隐藏金额',
+            tooltip: hidden
+                ? context.l10n.showAmounts
+                : context.l10n.hideAmounts,
             onPressed: toggleAmounts,
             icon: Icon(
               hidden
@@ -97,7 +101,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           .watch(entitiesProvider)
           .when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Center(child: Text(safeError(error))),
+            error: (error, _) => Center(child: Text(safeError(error, context))),
             data: (views) {
               final statistics = LedgerStatistics.forPeriod(
                 views,
@@ -116,9 +120,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                 ],
                 selected: measure,
                 label: (value) => switch (value) {
-                  StatisticsMeasure.expense => '支出',
-                  StatisticsMeasure.income => '收入',
-                  StatisticsMeasure.both => '对比',
+                  StatisticsMeasure.expense => context.l10n.expense,
+                  StatisticsMeasure.income => context.l10n.income,
+                  StatisticsMeasure.both => context.l10n.compare,
                 },
                 itemKey: (value) => ValueKey('measure-${value.name}'),
                 onChanged: (value) => setState(() => measure = value),
@@ -136,10 +140,10 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           if (MediaQuery.sizeOf(context).width >= 700)
-                            const PageHeading(
+                            PageHeading(
                               eyebrow: 'THE BIGGER PICTURE',
-                              title: '让数字，说说生活。',
-                              description: '从收支的起伏里，发现自己的节奏。',
+                              title: context.l10n.letTheNumbersTellYourStory,
+                              description: context.l10n.findYourRhythmInTheRise,
                             ),
                           LayoutBuilder(
                             builder: (context, constraints) => Wrap(
@@ -152,9 +156,10 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                                   values: StatisticsPeriod.values,
                                   selected: period,
                                   label: (value) => switch (value) {
-                                    StatisticsPeriod.week => '周',
-                                    StatisticsPeriod.month => '月',
-                                    StatisticsPeriod.year => '年',
+                                    StatisticsPeriod.week => context.l10n.week,
+                                    StatisticsPeriod.month =>
+                                      context.l10n.month,
+                                    StatisticsPeriod.year => context.l10n.year,
                                   },
                                   onChanged: (value) =>
                                       setState(() => period = value),
@@ -169,7 +174,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       IconButton(
-                                        tooltip: '上个$periodName',
+                                        tooltip: context.l10n.previous(
+                                          periodName,
+                                        ),
                                         onPressed: canShift(-1)
                                             ? () => shift(-1)
                                             : null,
@@ -185,8 +192,11 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                                       Flexible(
                                         child: Text(
                                           period == StatisticsPeriod.month
-                                              ? '${range.start.year}年${range.start.month}月'
-                                              : range.label,
+                                              ? context.l10n.label4(
+                                                  range.start.year,
+                                                  range.start.month,
+                                                )
+                                              : rangeLabel(context, range),
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                             fontSize: 14,
@@ -195,7 +205,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                                         ),
                                       ),
                                       IconButton(
-                                        tooltip: '下个$periodName',
+                                        tooltip: context.l10n.next(periodName),
                                         onPressed: canShift(1)
                                             ? () => shift(1)
                                             : null,
@@ -223,14 +233,17 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                                   const Icon(Icons.visibility_off_outlined),
                                   const SizedBox(height: 12),
                                   Text(
-                                    '金额已隐藏',
+                                    context.l10n.amountsHidden,
                                     style: Theme.of(
                                       context,
                                     ).textTheme.titleLarge,
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    '本$periodName已计入 ${statistics.entryCount} 笔账目',
+                                    context.l10n.entriesIncludedThis(
+                                      periodName,
+                                      statistics.entryCount,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -243,7 +256,11 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                             ),
                             const SizedBox(height: 16),
                             if (statistics.entryCount == 0)
-                              _Section(child: Text('本$periodName暂无账目'))
+                              _Section(
+                                child: Text(
+                                  context.l10n.noEntriesThis(periodName),
+                                ),
+                              )
                             else ...[
                               _Section(
                                 child: Column(
@@ -306,7 +323,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                                 tilePadding: EdgeInsets.zero,
                                 key: const ValueKey('month-comparison'),
                                 title: Text(
-                                  '与上$periodName对比',
+                                  context.l10n.comparedWithLast(periodName),
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -314,21 +331,27 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                                 ),
                                 children: [
                                   Text(
-                                    '上$periodName：${statistics.range.previous.label}',
+                                    context.l10n.previous2(
+                                      periodName,
+                                      rangeLabel(
+                                        context,
+                                        statistics.range.previous,
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(height: 12),
                                   _ComparisonRow(
-                                    '收入',
+                                    context.l10n.income,
                                     statistics.incomeComparison,
                                     periodName,
                                   ),
                                   _ComparisonRow(
-                                    '支出',
+                                    context.l10n.expense,
                                     statistics.expenseComparison,
                                     periodName,
                                   ),
                                   _ComparisonRow(
-                                    '结余',
+                                    context.l10n.balance,
                                     statistics.balanceComparison,
                                     periodName,
                                   ),
@@ -339,7 +362,10 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                           if (statistics.totals.conflicts > 0) ...[
                             const SizedBox(height: 16),
                             Text(
-                              '本$periodName有 ${statistics.totals.conflicts} 条冲突账目，未计入统计。',
+                              context.l10n.conflictedEntriesExcludedThis(
+                                periodName,
+                                statistics.totals.conflicts,
+                              ),
                             ),
                           ],
                         ],
@@ -376,7 +402,7 @@ class _Summary extends StatelessWidget {
   final String periodName;
   @override
   Widget build(BuildContext context) => Semantics(
-    label: '本$periodName收支',
+    label: context.l10n.incomeAndExpensesThis(periodName),
     child: LayoutBuilder(
       builder: (context, constraints) {
         final style = LedgerTypography.of(
@@ -410,7 +436,7 @@ class _Summary extends StatelessWidget {
               Text(statisticsMoney(amount), style: style),
               const SizedBox(height: 4),
               Text(
-                '本周期',
+                context.l10n.thisPeriod,
                 style: TextStyle(
                   fontSize: 11,
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -423,16 +449,26 @@ class _Summary extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (stacked) ...[
-              metric('收入', statistics.totals.income),
+              metric(context.l10n.income, statistics.totals.income),
               const SizedBox(height: 8),
-              metric('支出', statistics.totals.expense),
+              metric(context.l10n.expense, statistics.totals.expense),
             ] else
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: metric('收入', statistics.totals.income)),
+                  Expanded(
+                    child: metric(
+                      context.l10n.income,
+                      statistics.totals.income,
+                    ),
+                  ),
                   const SizedBox(width: 10),
-                  Expanded(child: metric('支出', statistics.totals.expense)),
+                  Expanded(
+                    child: metric(
+                      context.l10n.expense,
+                      statistics.totals.expense,
+                    ),
+                  ),
                 ],
               ),
             const SizedBox(height: 8),
@@ -447,10 +483,13 @@ class _Summary extends StatelessWidget {
                   final label = Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('结余', style: TextStyle(fontSize: 12)),
+                      Text(
+                        context.l10n.balance,
+                        style: TextStyle(fontSize: 12),
+                      ),
                       const SizedBox(height: 2),
                       Text(
-                        '收入 − 支出',
+                        context.l10n.incomeExpenses,
                         style: TextStyle(
                           fontSize: 11,
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -476,7 +515,7 @@ class _Summary extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              '已计入 ${statistics.entryCount} 笔账目',
+              context.l10n.entriesIncluded(statistics.entryCount),
               style: TextStyle(
                 fontSize: 11,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -505,7 +544,7 @@ class _TrendComparison extends StatelessWidget {
         : statistics.expenseComparison;
     final percent = comparison.percentageChange;
     final change = percent == null
-        ? '上期为零'
+        ? context.l10n.previousPeriodWasZero
         : '${percent > 0 ? '+' : ''}${percent.toStringAsFixed(1)}%';
     final maximum = comparison.currentMinor > comparison.previousMinor
         ? comparison.currentMinor
@@ -540,7 +579,11 @@ class _TrendComparison extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: Text(
-            '较上$periodName${income ? '收入' : '支出'} $change',
+            context.l10n.vsLast(
+              periodName,
+              income ? context.l10n.income : context.l10n.expense,
+              change,
+            ),
             style: TextStyle(
               fontSize: 12,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -560,10 +603,10 @@ class _ComparisonRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final difference = comparison.differenceMinor;
     final direction = difference > 0
-        ? '增加'
+        ? context.l10n.increase
         : difference < 0
-        ? '减少'
-        : '持平';
+        ? context.l10n.decrease
+        : context.l10n.unchanged;
     final percentage = comparison.percentageChange;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -575,8 +618,11 @@ class _ComparisonRow extends StatelessWidget {
           ),
           Text(
             percentage == null
-                ? '上$periodName为零，不计算百分比'
-                : '环比 ${percentage > 0 ? '+' : ''}${percentage.toStringAsFixed(1)}%',
+                ? context.l10n.previousWasZeroPercentageIsNot(periodName)
+                : context.l10n.periodChange(
+                    percentage > 0 ? '+' : '',
+                    percentage.toStringAsFixed(1),
+                  ),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],

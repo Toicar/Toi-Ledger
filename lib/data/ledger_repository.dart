@@ -102,7 +102,8 @@ class LedgerRepository {
           if (parent.entityId != op.entityId ||
               parent.entityType != op.entityType ||
               (parent.data['kind'] != op.data['kind'] &&
-                  !(op.entityType == EntityType.category && op.protocolVersion == 3))) {
+                  !(op.entityType == EntityType.category &&
+                      op.protocolVersion == 3))) {
             throw const LedgerException('父版本的实体或收支类型不一致');
           }
         }
@@ -112,7 +113,8 @@ class LedgerRepository {
               (p) =>
                   p.entityType != op.entityType ||
                   (p.data['kind'] != op.data['kind'] &&
-                      (op.entityType == EntityType.entry || op.parents.isEmpty)),
+                      (op.entityType == EntityType.entry ||
+                          op.parents.isEmpty)),
             )) {
           throw const LedgerException('实体类型或收支类型不可变');
         }
@@ -166,7 +168,8 @@ class LedgerRepository {
     }
     if (heads.length > 1 && !resolve) throw const LedgerException('请先处理冲突');
     if (heads.any(
-      (h) => h.entityType != type ||
+      (h) =>
+          h.entityType != type ||
           (type == EntityType.entry && h.data['kind'] != data['kind']),
     )) {
       throw const LedgerException('已有记录的收支类型不可修改');
@@ -184,13 +187,16 @@ class LedgerRepository {
         data['categoryId'] != null) {
       final categories = await _heads(requireUuid(data['categoryId']));
       // Reclassifying a category does not rewrite historical bill directions.
-      final keepsHistoricalCategory = heads.any((head) =>
-          head.data['categoryId'] == data['categoryId'] &&
-          head.data['kind'] == data['kind']);
+      final keepsHistoricalCategory = heads.any(
+        (head) =>
+            head.data['categoryId'] == data['categoryId'] &&
+            head.data['kind'] == data['kind'],
+      );
       if (categories.length != 1 ||
           categories.single.deleted ||
           categories.single.entityType != EntityType.category ||
-          (categories.single.data['kind'] != data['kind'] && !keepsHistoricalCategory)) {
+          (categories.single.data['kind'] != data['kind'] &&
+              !keepsHistoricalCategory)) {
         throw const LedgerException('请选择有效且无冲突的同类型分类');
       }
     }
@@ -204,7 +210,8 @@ class LedgerRepository {
       data: data,
       deleted: deleted,
       createdAt: DateTime.now().toUtc().toIso8601String(),
-      protocolVersion: type == EntityType.category &&
+      protocolVersion:
+          type == EntityType.category &&
               heads.any((head) => head.data['kind'] != data['kind'])
           ? 3
           : null,

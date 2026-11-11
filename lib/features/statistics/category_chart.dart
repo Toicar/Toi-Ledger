@@ -1,3 +1,5 @@
+import '../../l10n/statistics_labels.dart';
+import '../../l10n/app_strings.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../../domain/ledger_statistics.dart';
@@ -83,7 +85,9 @@ class _CategoryChartPanelState extends State<CategoryChartPanel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.income ? '分类收入' : '分类支出',
+                  widget.income
+                      ? context.l10n.incomeByCategory
+                      : context.l10n.expensesByCategory,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
@@ -91,7 +95,7 @@ class _CategoryChartPanelState extends State<CategoryChartPanel> {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  '点击分类或账单查看统计与明细',
+                  context.l10n.selectACategoryOrTransactionFor,
                   style: TextStyle(
                     fontSize: 12,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -123,9 +127,11 @@ class _CategoryChartPanelState extends State<CategoryChartPanel> {
                           DropdownMenuItem(
                             value: value,
                             child: Text(switch (value) {
-                              CategoryChartMode.pie => '饼状图',
-                              CategoryChartMode.column => '柱状图',
-                              CategoryChartMode.proportion => '横向占比条',
+                              CategoryChartMode.pie => context.l10n.pieChart,
+                              CategoryChartMode.column =>
+                                context.l10n.columnChart,
+                              CategoryChartMode.proportion =>
+                                context.l10n.shareBars,
                             }),
                           ),
                       ],
@@ -141,7 +147,11 @@ class _CategoryChartPanelState extends State<CategoryChartPanel> {
         if (total == 0)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
-            child: Text(widget.income ? '本期暂无收入' : '本期暂无支出'),
+            child: Text(
+              widget.income
+                  ? context.l10n.noIncomeInThisPeriod
+                  : context.l10n.noExpensesInThisPeriod,
+            ),
           )
         else ...[
           const SizedBox(height: 16),
@@ -152,6 +162,8 @@ class _CategoryChartPanelState extends State<CategoryChartPanel> {
                 mode == CategoryChartMode.proportion ? 80 : 220,
               );
               final painter = CategoryPlotPainter(
+                strings: context.l10n,
+                displayLabel: (category) => groupLabel(context, category),
                 categories: categories,
                 mode: mode,
                 colors: colors,
@@ -161,12 +173,16 @@ class _CategoryChartPanelState extends State<CategoryChartPanel> {
                 labelStyle: LedgerTypography.of(context).body(size: 11),
               );
               return Semantics(
-                label:
-                    '${switch (mode) {
-                      CategoryChartMode.pie => '分类饼图',
-                      CategoryChartMode.column => '分类柱状图',
-                      CategoryChartMode.proportion => '分类比例条',
-                    }}，${categories.length} 个分类。分类列表提供金额、占比和明细。',
+                label: context.l10n.categoriesTheListProvidesAmountsShares(
+                  switch (mode) {
+                    CategoryChartMode.pie => context.l10n.categoryPieChart,
+                    CategoryChartMode.column =>
+                      context.l10n.categoryColumnChart,
+                    CategoryChartMode.proportion =>
+                      context.l10n.categoryShareChart,
+                  },
+                  categories.length,
+                ),
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTapUp: (details) {
@@ -227,13 +243,17 @@ class _CategoryChartPanelState extends State<CategoryChartPanel> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                category.label,
+                                groupLabel(context, category),
                                 style: const TextStyle(fontSize: 14),
                               ),
                               Text(
                                 category.groupKind == StatisticsGroupKind.other
-                                    ? '未分类小额 · ${category.entries.length} 笔'
-                                    : '${category.entries.length} 笔',
+                                    ? context.l10n.smallUncategorizedEntries(
+                                        category.entries.length,
+                                      )
+                                    : context.l10n.entries(
+                                        category.entries.length,
+                                      ),
                                 style: TextStyle(fontSize: 11, color: muted),
                               ),
                             ],
@@ -291,6 +311,8 @@ class CategoryPlotPainter extends CustomPainter {
     required this.textColor,
     required this.textScaler,
     this.labelStyle = const TextStyle(fontSize: 11),
+    this.strings = const AppStrings(Locale('zh', 'CN')),
+    this.displayLabel,
   });
   final List<CategoryExpense> categories;
   final CategoryChartMode mode;
@@ -319,10 +341,12 @@ class CategoryPlotPainter extends CustomPainter {
     );
   }
 
+  final AppStrings strings;
+  final String Function(CategoryExpense)? displayLabel;
   String _axisLabel(int minor) => minor >= 10000000000
-      ? '¥${(minor / 10000000000).toStringAsFixed(1)}亿'
+      ? strings.m((minor / 10000000000).toStringAsFixed(1))
       : minor >= 1000000
-      ? '¥${(minor / 1000000).toStringAsFixed(1)}万'
+      ? strings.k((minor / 1000000).toStringAsFixed(1))
       : '¥${(minor / 100).toStringAsFixed(minor % 100 == 0 ? 0 : 2)}';
   double _axisWidth(Size size) {
     final maximum = categories.fold<int>(
@@ -458,7 +482,7 @@ class CategoryPlotPainter extends CustomPainter {
         final label =
             TextPainter(
               text: TextSpan(
-                text: categories[i].label,
+                text: displayLabel?.call(categories[i]) ?? categories[i].label,
                 style: labelStyle.copyWith(color: textColor),
               ),
               textDirection: TextDirection.ltr,

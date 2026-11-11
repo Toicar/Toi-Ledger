@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/appearance_controller.dart';
@@ -21,7 +22,9 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
     try {
       await action();
     } catch (_) {
-      if (mounted) notify(context, '外观设置保存失败，请重试');
+      if (mounted) {
+        notify(context, context.l10n.couldNotSaveAppearanceSettingsTry);
+      }
     } finally {
       if (mounted) setState(() => saving = false);
     }
@@ -35,7 +38,7 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
     final controller = ref.read(presentationProvider.notifier);
     final dark = theme.brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: const Text('外观')),
+      appBar: AppBar(title: Text(context.l10n.appearance)),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 680),
@@ -44,10 +47,10 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const PageHeading(
+                PageHeading(
                   eyebrow: 'MAKE YOURSELF AT HOME',
-                  title: '舒适，随你选择。',
-                  description: '选一种触感，留一抹喜欢的颜色。',
+                  title: context.l10n.makeYourselfAtHome,
+                  description: context.l10n.chooseATextureAndAColor,
                 ),
                 LedgerSurface(
                   child: Padding(
@@ -67,7 +70,7 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          '一点一滴，皆是生活。',
+                          context.l10n.everyLittleEntryIsPartOf,
                           style: theme.textTheme.headlineSmall,
                         ),
                         const SizedBox(height: 12),
@@ -79,7 +82,7 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '${settings.accent.label} · ${settings.style == LedgerStyle.satin ? '细腻磨砂' : '通透玻璃'}',
+                          '${context.l10n.message(settings.accent.label)} · ${settings.style == LedgerStyle.satin ? context.l10n.softMatte : context.l10n.clearGlass}',
                           style: theme.textTheme.bodySmall,
                         ),
                       ],
@@ -87,9 +90,15 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                   ),
                 ),
                 const SizedBox(height: 28),
-                Text('界面材质', style: theme.textTheme.titleMedium),
+                Text(
+                  context.l10n.surfaceMaterial,
+                  style: theme.textTheme.titleMedium,
+                ),
                 const SizedBox(height: 6),
-                Text('纸面的安静，或光线的流动。', style: theme.textTheme.bodySmall),
+                Text(
+                  context.l10n.theQuietOfPaperOrThe,
+                  style: theme.textTheme.bodySmall,
+                ),
                 const SizedBox(height: 12),
                 LayoutBuilder(
                   builder: (context, constraints) => Wrap(
@@ -137,8 +146,8 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                                         Expanded(
                                           child: Text(
                                             style == LedgerStyle.satin
-                                                ? '细腻磨砂'
-                                                : '通透玻璃',
+                                                ? context.l10n.softMatte
+                                                : context.l10n.clearGlass,
                                             style: theme.textTheme.titleSmall,
                                           ),
                                         ),
@@ -153,8 +162,12 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                                     const SizedBox(height: 6),
                                     Text(
                                       style == LedgerStyle.satin
-                                          ? '温润纸纹 · 不透明表面 · 柔和阴影'
-                                          : '流动底色 · 半透明叠层 · 细亮边缘',
+                                          ? context
+                                                .l10n
+                                                .paperTextureOpaqueSurfacesSoftShadows
+                                          : context
+                                                .l10n
+                                                .ambientColorsTranslucentLayersBrightEdges,
                                       style: theme.textTheme.bodySmall,
                                     ),
                                   ],
@@ -167,9 +180,15 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                   ),
                 ),
                 const SizedBox(height: 28),
-                Text('主题色', style: theme.textTheme.titleMedium),
+                Text(
+                  context.l10n.accentColor,
+                  style: theme.textTheme.titleMedium,
+                ),
                 const SizedBox(height: 6),
-                Text('取意中国色，随明暗模式呈现不同色阶。', style: theme.textTheme.bodySmall),
+                Text(
+                  context.l10n.inspiredByChineseColorsAdaptedTo,
+                  style: theme.textTheme.bodySmall,
+                ),
                 const SizedBox(height: 14),
                 LayoutBuilder(
                   builder: (context, constraints) => Wrap(
@@ -235,7 +254,7 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      accent.label,
+                                      context.l10n.message(accent.label),
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
@@ -248,7 +267,10 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                   ),
                 ),
                 const SizedBox(height: 28),
-                Text('明暗模式', style: theme.textTheme.titleMedium),
+                Text(
+                  context.l10n.colorMode,
+                  style: theme.textTheme.titleMedium,
+                ),
                 const SizedBox(height: 12),
                 Card(
                   child: Column(
@@ -265,12 +287,16 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                             ThemeMode.dark => Icons.dark_mode_outlined,
                           }),
                           title: Text(switch (mode) {
-                            ThemeMode.system => '跟随系统',
-                            ThemeMode.light => '浅色',
-                            ThemeMode.dark => '深色',
+                            ThemeMode.system => context.l10n.followSystem,
+                            ThemeMode.light => context.l10n.light,
+                            ThemeMode.dark => context.l10n.dark,
                           }),
                           subtitle: mode == ThemeMode.system
-                              ? const Text('随设备的外观自动切换')
+                              ? Text(
+                                  context
+                                      .l10n
+                                      .matchYourDeviceAppearanceAutomatically,
+                                )
                               : null,
                           trailing: selected == mode
                               ? Icon(Icons.check_circle, color: colors.primary)
@@ -288,7 +314,10 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text('仅应用于这台设备，下次打开时保留。', style: theme.textTheme.bodySmall),
+                Text(
+                  context.l10n.savedOnThisDeviceForYour,
+                  style: theme.textTheme.bodySmall,
+                ),
               ],
             ),
           ),

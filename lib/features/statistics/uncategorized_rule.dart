@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/presentation_controller.dart';
@@ -14,8 +15,10 @@ class UncategorizedRuleButton extends ConsumerWidget {
       icon: const Icon(Icons.tune_rounded, size: 17),
       label: Text(
         settings.hideAmounts
-            ? '未分类展示规则'
-            : '大额未分类 ≥ ¥${formatAmount(settings.uncategorizedThresholdMinor)}',
+            ? context.l10n.uncategorizedDisplayRule
+            : context.l10n.largeUncategorized(
+                formatAmount(settings.uncategorizedThresholdMinor),
+              ),
       ),
       onPressed: () => showDialog<void>(
         context: context,
@@ -56,14 +59,14 @@ class _RuleEditorState extends ConsumerState<_RuleEditor> {
     } catch (error) {
       if (mounted) {
         setState(() => saving = false);
-        notify(context, safeError(error));
+        notify(context, safeError(error, context));
       }
     }
   }
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: const Text('未分类展示规则'),
+    title: Text(context.l10n.uncategorizedDisplayRule),
     content: SizedBox(
       width: 380,
       child: SingleChildScrollView(
@@ -73,7 +76,9 @@ class _RuleEditorState extends ConsumerState<_RuleEditor> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('达到门槛的每笔未分类账单单独展示，其余未分类账单合并为“其他”。收入与支出使用相同规则。'),
+              Text(
+                context.l10n.eachUncategorizedTransactionMeetingTheThreshold,
+              ),
               const SizedBox(height: 20),
               TextFormField(
                 key: const ValueKey('uncategorized-threshold-input'),
@@ -82,13 +87,15 @@ class _RuleEditorState extends ConsumerState<_RuleEditor> {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(labelText: '大额门槛（元）'),
+                decoration: InputDecoration(
+                  labelText: context.l10n.largeEntryThresholdCny,
+                ),
                 validator: (value) {
                   try {
                     parseAmount(value ?? '');
                     return null;
                   } catch (error) {
-                    return safeError(error);
+                    return safeError(error, context);
                   }
                 },
               ),
@@ -100,11 +107,11 @@ class _RuleEditorState extends ConsumerState<_RuleEditor> {
     actions: [
       TextButton(
         onPressed: saving ? null : () => Navigator.pop(context),
-        child: const Text('取消'),
+        child: Text(context.l10n.cancel),
       ),
       FilledButton(
         onPressed: saving ? null : save,
-        child: Text(saving ? '保存中…' : '保存规则'),
+        child: Text(saving ? context.l10n.saving : context.l10n.saveRule),
       ),
     ],
   );

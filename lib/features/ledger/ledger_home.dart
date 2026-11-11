@@ -1,3 +1,5 @@
+import '../../l10n/statistics_labels.dart';
+import '../../l10n/app_strings.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,7 +67,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
     try {
       final config = await ref.read(credentialProvider).read();
       if (config == null) {
-        if (!silent && mounted) notify(context, '请先在同步设置中配置 WebDAV');
+        if (!silent && mounted) {
+          notify(context, context.l10n.configureWebdavInSyncSettingsFirst);
+        }
         return;
       }
       final repo = ref.read(repositoryProvider);
@@ -73,13 +77,18 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
       final result = await SyncEngine(repo, remote).synchronize();
       if (mounted) {
         setState(
-          () => status =
-              '同步完成 · 下载 ${result.downloaded} / 上传 ${result.uploaded} · 冲突 ${result.conflicts}',
+          () => status = context.l10n.syncedDownloadedUploadedConflicts(
+            result.downloaded,
+            result.uploaded,
+            result.conflicts,
+          ),
         );
       }
     } catch (error) {
       if (mounted) {
-        setState(() => status = '同步未完成 · ${safeError(error)}');
+        setState(
+          () => status = context.l10n.syncIncomplete(safeError(error, context)),
+        );
         if (!silent) notify(context, status);
       }
     } finally {
@@ -125,7 +134,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
       await ref.read(repositoryProvider).remove(view);
       if (mounted) unawaited(sync(silent: true));
     } catch (e) {
-      if (mounted) notify(context, safeError(e));
+      if (mounted) notify(context, safeError(e, context));
     }
   }
 
@@ -149,7 +158,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
           appBar: AppBar(
             title: desktop
                 ? Text(
-                    '个人空间  /  我的账本',
+                    context.l10n.mySpaceMyLedger,
                     style: TextStyle(
                       fontSize: 12,
                       color: scheme.onSurfaceVariant,
@@ -179,23 +188,23 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
             actions: [
               if (!desktop) ...[
                 IconButton(
-                  tooltip: '外观',
+                  tooltip: context.l10n.appearance,
                   icon: const Icon(Icons.palette_outlined),
                   onPressed: () => page('/appearance'),
                 ),
                 IconButton(
-                  tooltip: '分类管理',
+                  tooltip: context.l10n.categories,
                   icon: const Icon(Icons.grid_view_rounded),
                   onPressed: () => page('/categories'),
                 ),
                 IconButton(
-                  tooltip: '同步设置',
+                  tooltip: context.l10n.syncSettings,
                   icon: const Icon(Icons.cloud_outlined),
                   onPressed: () => page('/settings'),
                 ),
               ],
               IconButton(
-                tooltip: '立即同步',
+                tooltip: context.l10n.syncNow,
                 onPressed: syncing ? null : () => sync(),
                 icon: syncing
                     ? const SizedBox(
@@ -214,11 +223,11 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(safeError(error)),
+                  Text(safeError(error, context)),
                   const SizedBox(height: 16),
                   OutlinedButton(
                     onPressed: () => ref.invalidate(entitiesProvider),
-                    child: const Text('重新加载'),
+                    child: Text(context.l10n.reload),
                   ),
                 ],
               ),
@@ -241,11 +250,13 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                   v.current.entityId: v,
               };
               String label(Operation op) {
-                if (op.data['categoryId'] == null) return '未分类';
+                if (op.data['categoryId'] == null) {
+                  return context.l10n.uncategorized2;
+                }
                 final category = categories[op.data['categoryId']];
-                if (category == null) return '分类待同步';
-                if (category.hasConflict) return '分类有冲突';
-                return '${category.current.data['name']}${category.current.deleted ? '（已归档）' : ''}';
+                if (category == null) return context.l10n.categoryAwaitingSync;
+                if (category.hasConflict) return context.l10n.categoryConflict;
+                return '${category.current.data['name']}${category.current.deleted ? context.l10n.archivedSuffix : ''}';
               }
 
               final entries =
@@ -307,8 +318,12 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                       Expanded(
                                         child: PageHeading(
                                           eyebrow: 'A LITTLE EVERY DAY',
-                                          title: '每一笔，都是生活。',
-                                          description: '把收支理清，让日子从容。',
+                                          title: context
+                                              .l10n
+                                              .everyEntryTellsAStory,
+                                          description: context
+                                              .l10n
+                                              .aClearerViewOfYourEveryday,
                                         ),
                                       ),
                                       if (wide)
@@ -329,7 +344,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           IconButton(
-                                            tooltip: '上个月',
+                                            tooltip: context.l10n.previousMonth,
                                             onPressed:
                                                 month.year == 1900 &&
                                                     month.month == 1
@@ -365,7 +380,10 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                                 }
                                               },
                                               child: Text(
-                                                '${month.year} 年 ${month.month} 月',
+                                                context.l10n.label2(
+                                                  month.year,
+                                                  month.month,
+                                                ),
                                                 style: TextStyle(
                                                   color: scheme.onSurface,
                                                   fontSize: 15,
@@ -374,7 +392,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                             ),
                                           ),
                                           IconButton(
-                                            tooltip: '下个月',
+                                            tooltip: context.l10n.nextMonth,
                                             onPressed:
                                                 month.year == 2200 &&
                                                     month.month == 12
@@ -397,7 +415,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                               Icons.bar_chart_rounded,
                                               size: 17,
                                             ),
-                                            label: const Text('统计分析'),
+                                            label: Text(
+                                              context.l10n.statistics,
+                                            ),
                                           ),
                                           if (!desktop)
                                             OutlinedButton.icon(
@@ -407,7 +427,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                                 Icons.bolt_outlined,
                                                 size: 17,
                                               ),
-                                              label: const Text('快捷模板'),
+                                              label: Text(
+                                                context.l10n.quickTemplates,
+                                              ),
                                             ),
                                         ],
                                       ),
@@ -431,7 +453,13 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Icon(
-                                            status.startsWith('同步未完成')
+                                            context.l10n
+                                                    .message(status)
+                                                    .startsWith(
+                                                      context
+                                                          .l10n
+                                                          .syncIncomplete2,
+                                                    )
                                                 ? Icons.cloud_off_outlined
                                                 : Icons
                                                       .check_circle_outline_rounded,
@@ -441,7 +469,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                           const SizedBox(width: 6),
                                           Flexible(
                                             child: Text(
-                                              status,
+                                              context.l10n.message(status),
                                               style: TextStyle(
                                                 fontSize: 10,
                                                 color: scheme.onSurfaceVariant,
@@ -455,7 +483,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                             .read(repositoryProvider)
                                             .allOperations(pendingOnly: true),
                                         builder: (_, snapshot) => Text(
-                                          '本地待上传：${snapshot.data?.length ?? '…'} 条',
+                                          context.l10n.pendingUploads(
+                                            snapshot.data?.length ?? '…',
+                                          ),
                                           style: TextStyle(
                                             fontSize: 10,
                                             color: scheme.onSurfaceVariant,
@@ -470,7 +500,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                         Icons.warning_amber_rounded,
                                       ),
                                       label: Text(
-                                        '处理全部冲突（${conflicts.length}）',
+                                        context.l10n.resolveAllConflicts(
+                                          conflicts.length,
+                                        ),
                                       ),
                                       onPressed: () async {
                                         for (final conflict in conflicts) {
@@ -502,17 +534,22 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.stretch,
                                       children: [
-                                        Row(
+                                        Wrap(
+                                          spacing: 10,
+                                          runSpacing: 4,
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
                                           children: [
                                             Text(
-                                              '收支明细',
+                                              context.l10n.transactions,
                                               style: Theme.of(
                                                 context,
                                               ).textTheme.titleLarge,
                                             ),
-                                            const SizedBox(width: 10),
                                             Text(
-                                              '${entries.length} 笔',
+                                              context.l10n.entries(
+                                                entries.length,
+                                              ),
                                               style: TextStyle(
                                                 fontSize: 11,
                                                 color: scheme.onSurfaceVariant,
@@ -527,7 +564,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                               child: TextField(
                                                 controller: search,
                                                 decoration: InputDecoration(
-                                                  labelText: '搜索备注或分类',
+                                                  labelText: context
+                                                      .l10n
+                                                      .searchNotesOrCategories,
                                                   prefixIcon: const Icon(
                                                     Icons.search_rounded,
                                                     size: 20,
@@ -535,7 +574,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                                   suffixIcon: query.isEmpty
                                                       ? null
                                                       : IconButton(
-                                                          tooltip: '清除搜索',
+                                                          tooltip: context
+                                                              .l10n
+                                                              .clearSearch,
                                                           onPressed: () {
                                                             search.clear();
                                                             setState(
@@ -572,18 +613,30 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                                     child:
                                                         DropdownButton<String>(
                                                           value: kind,
-                                                          items: const [
+                                                          items: [
                                                             DropdownMenuItem(
                                                               value: 'all',
-                                                              child: Text('全部'),
+                                                              child: Text(
+                                                                context
+                                                                    .l10n
+                                                                    .all,
+                                                              ),
                                                             ),
                                                             DropdownMenuItem(
                                                               value: 'expense',
-                                                              child: Text('支出'),
+                                                              child: Text(
+                                                                context
+                                                                    .l10n
+                                                                    .expense,
+                                                              ),
                                                             ),
                                                             DropdownMenuItem(
                                                               value: 'income',
-                                                              child: Text('收入'),
+                                                              child: Text(
+                                                                context
+                                                                    .l10n
+                                                                    .income,
+                                                              ),
                                                             ),
                                                           ],
                                                           onChanged: (value) {
@@ -630,7 +683,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                                                     12,
                                                   ),
                                               child: Text(
-                                                _dateLabel(date),
+                                                _dateLabel(context, date),
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                   color:
@@ -705,7 +758,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
                   onPressed: state.asData == null
                       ? null
                       : () => entry(state.requireValue),
-                  label: const Text('记一笔'),
+                  label: Text(context.l10n.newEntry),
                   icon: const Icon(Icons.add, size: 20),
                 ),
         ),
@@ -714,16 +767,29 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
   }
 }
 
-String _dateLabel(String date) {
+String _dateLabel(BuildContext context, String date) {
   final parsed = DateTime.parse(date), now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final prefix = parsed == today
-      ? '今天 · '
+      ? context.l10n.today
       : parsed == DateTime(now.year, now.month, now.day - 1)
-      ? '昨天 · '
+      ? context.l10n.yesterday
       : '';
-  const weekdays = ['一', '二', '三', '四', '五', '六', '日'];
-  return '$prefix${parsed.month} 月 ${parsed.day} 日  星期${weekdays[parsed.weekday - 1]}';
+  final weekdays = [
+    context.l10n.mon,
+    context.l10n.tue,
+    context.l10n.wed,
+    context.l10n.thu,
+    context.l10n.fri,
+    context.l10n.sat,
+    context.l10n.sun,
+  ];
+  return context.l10n.label3(
+    prefix,
+    parsed.month,
+    parsed.day,
+    weekdays[parsed.weekday - 1],
+  );
 }
 
 class _EntryRow extends StatelessWidget {
@@ -766,7 +832,7 @@ class _EntryRow extends StatelessWidget {
               maxLines: compact ? null : 1,
             );
             final title = view.hasConflict
-                ? '待处理冲突 · ${view.versions.length} 个版本'
+                ? context.l10n.conflictPendingVersions(view.versions.length)
                 : category;
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -826,7 +892,7 @@ class _EntryRow extends StatelessWidget {
                 ],
                 if (!view.hasConflict)
                   IconButton(
-                    tooltip: '删除',
+                    tooltip: context.l10n.delete,
                     onPressed: onDelete,
                     icon: Icon(
                       Icons.delete_outline_rounded,
@@ -859,30 +925,39 @@ class _MonthNotes extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('账本手记', style: theme.textTheme.titleLarge),
+        Text(context.l10n.ledgerNotes, style: theme.textTheme.titleLarge),
         const SizedBox(height: 18),
         PaperPanel(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('支出去向', style: theme.textTheme.titleMedium),
+              Text(
+                context.l10n.whereItWent,
+                style: theme.textTheme.titleMedium,
+              ),
               const SizedBox(height: 6),
-              Text('看见每一笔的分量', style: theme.textTheme.bodySmall),
+              Text(
+                context.l10n.seeTheMeaningInEveryEntry,
+                style: theme.textTheme.bodySmall,
+              ),
               const SizedBox(height: 24),
               if (hidden)
-                const Text('金额已隐藏')
+                Text(context.l10n.amountsHidden)
               else if (statistics.categoryExpenses.isEmpty) ...[
                 const LedgerStillLife(size: 100),
                 const SizedBox(height: 10),
-                Text('第一笔支出之后，\n这里会慢慢有了故事。', style: theme.textTheme.bodySmall),
+                Text(
+                  context.l10n.yourSpendingStoryBeginsWithThe,
+                  style: theme.textTheme.bodySmall,
+                ),
               ] else
                 for (final category in statistics.categoryExpenses.take(4)) ...[
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          category.label,
+                          groupLabel(context, category),
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 12),
                         ),
@@ -916,7 +991,10 @@ class _MonthNotes extends StatelessWidget {
                 onPressed: onStatistics,
                 iconAlignment: IconAlignment.end,
                 icon: const Icon(Icons.arrow_forward_rounded, size: 15),
-                label: const Text('查看完整报告', style: TextStyle(fontSize: 12)),
+                label: Text(
+                  context.l10n.viewFullReport,
+                  style: TextStyle(fontSize: 12),
+                ),
               ),
             ],
           ),
@@ -929,16 +1007,22 @@ class _MonthNotes extends StatelessWidget {
             children: [
               Icon(Icons.bolt_outlined, color: scheme.primary, size: 22),
               const SizedBox(height: 14),
-              Text('让日常，再简单一点。', style: theme.textTheme.titleMedium),
+              Text(
+                context.l10n.makeTheEverydayALittleEasier,
+                style: theme.textTheme.titleMedium,
+              ),
               const SizedBox(height: 8),
               Text(
-                '早餐、通勤、每月房租。\n常用收支，存成快捷模板。',
+                context.l10n.breakfastCommutingMonthlyRentSaveFrequent,
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 14),
               OutlinedButton(
                 onPressed: onTemplates,
-                child: const Text('管理快捷模板', style: TextStyle(fontSize: 12)),
+                child: Text(
+                  context.l10n.manageTemplates,
+                  style: TextStyle(fontSize: 12),
+                ),
               ),
             ],
           ),

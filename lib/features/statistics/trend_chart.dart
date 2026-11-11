@@ -1,3 +1,5 @@
+import '../../l10n/statistics_labels.dart';
+import '../../l10n/app_strings.dart';
 import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -78,14 +80,17 @@ class _StatisticsTrendChartState extends State<StatisticsTrendChart> {
       range.start,
       (viewport.end.ceil() - 1).clamp(0, range.dayCount - 1),
     );
-    final rangeText = '${statisticsDate(first)} 至 ${statisticsDate(last)}';
+    final rangeText = context.l10n.to(
+      statisticsDate(first),
+      statisticsDate(last),
+    );
     final textStyle = Theme.of(
       context,
     ).textTheme.bodySmall!.copyWith(fontSize: 11);
     final incomeColor = Theme.of(context).colorScheme.secondary;
     final expenseColor = Theme.of(context).colorScheme.primary;
     final scaler = MediaQuery.textScalerOf(context);
-    String tick(int i) => _axisLabel(top * i ~/ 4);
+    String tick(int i) => _axisLabel(top * i ~/ 4, context.l10n);
     final periodTop = _axisMaximum(
       math.max(
         widget.statistics.totals.income,
@@ -96,10 +101,11 @@ class _StatisticsTrendChartState extends State<StatisticsTrendChart> {
     // visible values change the Y scale or its compact unit.
     final axisWidth =
         [
-              for (var i = 0; i <= 4; i++) _axisLabel(periodTop * i ~/ 4),
+              for (var i = 0; i <= 4; i++)
+                _axisLabel(periodTop * i ~/ 4, context.l10n),
               '9999.99',
-              '9999.9万',
-              '9999.9亿',
+              context.l10n.k2,
+              context.l10n.m2,
             ]
             .map((label) {
               final painter = TextPainter(
@@ -129,8 +135,8 @@ class _StatisticsTrendChartState extends State<StatisticsTrendChart> {
           spacing: 12,
           runSpacing: 8,
           children: [
-            const Text(
-              '收支趋势',
+            Text(
+              context.l10n.incomeAndExpenseTrend,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
             ),
             if (widget.controls case final controls?) controls,
@@ -138,11 +144,11 @@ class _StatisticsTrendChartState extends State<StatisticsTrendChart> {
         ),
         const SizedBox(height: 8),
         Text(
-          '人民币（元） · ${switch (unit) {
-            StatisticsBucketUnit.month => '按自然月汇总',
-            StatisticsBucketUnit.week => '按自然周汇总',
-            StatisticsBucketUnit.day => '按日汇总',
-          }}',
+          context.l10n.chineseYuanCny(switch (unit) {
+            StatisticsBucketUnit.month => context.l10n.byCalendarMonth,
+            StatisticsBucketUnit.week => context.l10n.byCalendarWeek,
+            StatisticsBucketUnit.day => context.l10n.byDay,
+          }),
           style: TextStyle(
             fontSize: 12,
             color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -205,8 +211,8 @@ class _StatisticsTrendChartState extends State<StatisticsTrendChart> {
                         return KeyEventResult.handled;
                       },
                       child: Semantics(
-                        label: '收支趋势图，$rangeText',
-                        hint: '左右拖动平移，双指捏合或滚轮缩放。方向键平移，加减键缩放，回车查看中央日期金额。',
+                        label: context.l10n.incomeAndExpenseChart(rangeText),
+                        hint: context.l10n.dragToPanPinchOrScroll,
                         onIncrease: () => change(viewport.zoom(1.5, .5)),
                         onDecrease: () => change(viewport.zoom(1 / 1.5, .5)),
                         onTap: () => select(.5),
@@ -338,8 +344,8 @@ class _StatisticsTrendChartState extends State<StatisticsTrendChart> {
           spacing: 14,
           runSpacing: 4,
           children: [
-            if (expense) _TrendLegend('支出', expenseColor),
-            if (income) _TrendLegend('收入', incomeColor),
+            if (expense) _TrendLegend(context.l10n.expense, expenseColor),
+            if (income) _TrendLegend(context.l10n.income, incomeColor),
           ],
         ),
         const SizedBox(height: 4),
@@ -349,7 +355,7 @@ class _StatisticsTrendChartState extends State<StatisticsTrendChart> {
           Semantics(
             liveRegion: true,
             child: Text(
-              '${bucket.label}${income ? '\n收入 ¥${formatAmount(bucket.incomeMinor)}' : ''}${expense ? '\n支出 ¥${formatAmount(bucket.expenseMinor)}' : ''}',
+              '${bucketLabel(context, bucket)}${income ? context.l10n.incomeAmountLine(formatAmount(bucket.incomeMinor)) : ''}${expense ? context.l10n.expenseAmountLine(formatAmount(bucket.expenseMinor)) : ''}',
               key: const ValueKey('trend-detail'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -388,11 +394,14 @@ int _axisMaximum(int amount) {
   return amount;
 }
 
-String _axisLabel(int minor) {
+String _axisLabel(
+  int minor, [
+  AppStrings strings = const AppStrings(Locale('zh', 'CN')),
+]) {
   if (minor >= 10000000000) {
-    return '${(minor / 10000000000).toStringAsFixed(1)}亿';
+    return strings.m3((minor / 10000000000).toStringAsFixed(1));
   }
-  if (minor >= 1000000) return '${(minor / 1000000).toStringAsFixed(1)}万';
+  if (minor >= 1000000) return strings.k3((minor / 1000000).toStringAsFixed(1));
   return formatAmount(minor);
 }
 

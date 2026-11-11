@@ -69,12 +69,18 @@ class CategoryExpense {
     required this.share,
     required List<Operation> entries,
     this.groupKind = StatisticsGroupKind.category,
+    this.categoryName,
+    this.categoryArchived = false,
+    this.categoryMissing = false,
+    this.categoryConflict = false,
   }) : entries = List.unmodifiable(entries);
   final String categoryId, label;
   final int amountMinor;
   final double share;
   final List<Operation> entries;
   final StatisticsGroupKind groupKind;
+  final String? categoryName;
+  final bool categoryArchived, categoryMissing, categoryConflict;
 }
 
 class DailyExpense {
@@ -202,6 +208,11 @@ class LedgerStatistics {
           share: total == 0 ? 0 : amount / total,
           entries: entries,
           groupKind: groupKind,
+          categoryName: category?.current.data['name'] as String?,
+          categoryArchived: category?.current.deleted ?? false,
+          categoryMissing:
+              groupKind == StatisticsGroupKind.category && category == null,
+          categoryConflict: category?.hasConflict ?? false,
         );
       }).toList()..sort((a, b) {
         final order = b.amountMinor.compareTo(a.amountMinor);

@@ -1,3 +1,4 @@
+import 'package:my_ledger/app/language_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,6 +32,7 @@ void main() {
           ProviderScope(
             overrides: [
               repositoryProvider.overrideWithValue(repo),
+              initialLanguageProvider.overrideWithValue(LedgerLanguage.zh),
               credentialProvider.overrideWithValue(EmptyCredentials()),
               initialThemeModeProvider.overrideWithValue(mode),
               initialPresentationProvider.overrideWithValue(
@@ -72,6 +74,7 @@ void main() {
       ProviderScope(
         overrides: [
           repositoryProvider.overrideWithValue(repo),
+          initialLanguageProvider.overrideWithValue(LedgerLanguage.zh),
           credentialProvider.overrideWithValue(EmptyCredentials()),
         ],
         child: const LedgerApp(),

@@ -1,3 +1,4 @@
+import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
@@ -12,25 +13,32 @@ Future<void> resolveConflict(
   final choice = await showDialog<Operation>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('选择要保留的版本'),
+      title: Text(context.l10n.chooseTheVersionToKeep),
       content: SizedBox(
         width: 480,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('全部原始版本仍保留在历史中。处理结果会作为新版本同步；并发处理可能再次产生冲突。'),
+              Text(context.l10n.allOriginalVersionsRemainInHistory),
               for (final op in view.versions)
                 Card(
                   child: ListTile(
                     isThreeLine: true,
                     title: Text(
                       op.entityType == EntityType.category
-                          ? '${op.data['name']}${op.deleted ? '（归档）' : ''}'
-                          : '${op.data['date']} · ¥${formatAmount(op.data['amountMinor'] as int)}${op.deleted ? '（删除）' : ''}',
+                          ? '${op.data['name']}${op.deleted ? context.l10n.archivedShort : ''}'
+                          : '${op.data['date']} · ¥${formatAmount(op.data['amountMinor'] as int)}${op.deleted ? context.l10n.deletedShort : ''}',
                     ),
                     subtitle: Text(
-                      '${op.data['note'] ?? op.data['kind']}\n${op.entityType == EntityType.entry ? '分类 ID：${op.data['categoryId']}\n' : ''}设备 ${op.deviceId.substring(0, 8)} · ${op.createdAt}',
+                      context.l10n.device(
+                        op.data['note'] ?? op.data['kind'],
+                        op.entityType == EntityType.entry
+                            ? context.l10n.categoryIdLine(op.data['categoryId'])
+                            : '',
+                        op.deviceId.substring(0, 8),
+                        op.createdAt,
+                      ),
                     ),
                     onTap: () => Navigator.pop(context, op),
                   ),
@@ -42,7 +50,7 @@ Future<void> resolveConflict(
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('稍后处理'),
+          child: Text(context.l10n.later),
         ),
       ],
     ),
@@ -60,6 +68,6 @@ Future<void> resolveConflict(
           resolve: true,
         );
   } catch (e) {
-    if (context.mounted) notify(context, safeError(e));
+    if (context.mounted) notify(context, safeError(e, context));
   }
 }

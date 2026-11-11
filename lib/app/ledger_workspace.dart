@@ -1,3 +1,4 @@
+import '../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'design_components.dart';
 import 'ledger_typography.dart';
@@ -88,7 +89,7 @@ class LedgerWorkspace extends StatelessWidget {
                         child: FilledButton.icon(
                           onPressed: modalOpen ? null : onCreate,
                           icon: const Icon(Icons.add, size: 18),
-                          label: const Text('记一笔'),
+                          label: Text(context.l10n.newEntry),
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -99,7 +100,7 @@ class LedgerWorkspace extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(14, 0, 0, 12),
                               child: Text(
-                                '我的空间',
+                                context.l10n.mySpace,
                                 style: TextStyle(
                                   fontSize: 10,
                                   letterSpacing: 2,
@@ -109,17 +110,17 @@ class LedgerWorkspace extends StatelessWidget {
                             ),
                             destination(
                               '/',
-                              '我的账本',
+                              context.l10n.myLedger,
                               Icons.space_dashboard_outlined,
                             ),
                             destination(
                               '/statistics',
-                              '统计分析',
+                              context.l10n.statistics,
                               Icons.bar_chart_rounded,
                             ),
                             destination(
                               '/templates',
-                              '快捷模板',
+                              context.l10n.quickTemplates,
                               Icons.bookmark_border_rounded,
                             ),
                             const Padding(
@@ -131,17 +132,17 @@ class LedgerWorkspace extends StatelessWidget {
                             ),
                             destination(
                               '/categories',
-                              '分类管理',
+                              context.l10n.categories,
                               Icons.grid_view_rounded,
                             ),
                             destination(
                               '/settings',
-                              '同步设置',
+                              context.l10n.syncSettings,
                               Icons.cloud_sync_outlined,
                             ),
                             destination(
                               '/appearance',
-                              '外观',
+                              context.l10n.appearance,
                               Icons.palette_outlined,
                             ),
                           ],
@@ -160,18 +161,20 @@ class LedgerWorkspace extends StatelessWidget {
                                   color: scheme.secondary,
                                 ),
                                 const SizedBox(width: 7),
-                                Text(
-                                  '本地优先，安心记录',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    color: scheme.onSurfaceVariant,
+                                Expanded(
+                                  child: Text(
+                                    context.l10n.localFirstSafelyRecorded,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: scheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              '一点一滴，皆是生活。',
+                              context.l10n.everyLittleEntryIsPartOf,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: scheme.onSurfaceVariant,
@@ -179,7 +182,7 @@ class LedgerWorkspace extends StatelessWidget {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              'MYLEDGER  /  0.4',
+                              'MYLEDGER  /  0.5',
                               style: TextStyle(
                                 fontSize: 9,
                                 letterSpacing: 1.5,

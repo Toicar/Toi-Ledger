@@ -8,7 +8,7 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 
 [简体中文](README.md) · [Downloads](https://github.com/Toicar/Toi-Ledger/releases) · [Report an issue](https://github.com/Toicar/Toi-Ledger/issues)
 
-> Current version: **0.4.2+10 · Prerelease**. The repository is named Toi-Ledger; the application, release filenames, and parts of the source still use **MyLedger**. Documentation is bilingual, but the application interface is currently primarily Chinese.
+> Current version: **0.5.0+11 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
 
 ## Contents
 
@@ -42,6 +42,7 @@ Screenshots and demonstrations will be added later.
 | Quick templates | Save recurring entry details with optional amounts and categories. Selecting a category sets the matching income/expense type; applying a template still requires confirmation. |
 | Statistics | Calendar week/month/year trends, previous-period comparisons, category shares, and detailed breakdowns with search, sorting, and access to transaction editing. |
 | Uncategorized entries | Individual uncategorized transactions **≥ ¥500** appear separately by default; smaller entries are grouped as Other. The threshold is adjustable. |
+| Interface language | Simplified Chinese / English / Follow system (default), instant switching, persisted preferences, and localized date pickers and messages. |
 | Appearance | System/light/dark modes, paper-textured matte and translucent glass surfaces, six accent palettes, and an option to hide amounts. |
 | Multi-device sync | Incremental HTTPS WebDAV operation logs, offline recording, conflict handling, connection tests, and setup guidance. |
 
@@ -49,13 +50,13 @@ Accent palettes include Clay (陶土), Bamboo (竹绿), Azure (群青), Vermilio
 
 ## Download and installation
 
-Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v0.4.2 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.4.2) includes:
+Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v0.5.0 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.5.0) includes:
 
 | Platform / purpose | File | Instructions |
 | --- | --- | --- |
-| Android ARM64 | `MyLedger-0.4.2-android-arm64-lan.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
-| Windows x64 | `MyLedger-0.4.2-windows-x64-lan.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
-| LAN WebDAV tools | `Toi-Ledger-0.4.2-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
+| Android ARM64 | `Toi-Ledger-0.5.0-android-arm64.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
+| Windows x64 | `Toi-Ledger-0.5.0-windows-x64.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
+| LAN WebDAV tools | `Toi-Ledger-0.5.0-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
 
 Close the Windows application before replacing its runtime files. In-place Android updates require the same package identity and signing certificate. If signatures differ, do not uninstall your only copy of the data just to bypass the installation error.
 
@@ -69,6 +70,10 @@ Close the Windows application before replacing its runtime files. In-place Andro
 4. Save frequently used details under Quick templates (快捷模板). Category management and statistics have their own pages.
 
 Select any category, Other, or a separately displayed large uncategorized transaction in statistics to open its detailed breakdown: total, count, average, largest transaction, trend, and individual entries.
+
+### Change the language
+
+Open Sync settings → Language and choose Follow system language, 简体中文, or English. The default follows the system; your choice is stored only on this device and does not change ledger data or other devices. Chinese regional variants use Simplified Chinese, English variants use English, and unmatched system languages fall back to English.
 
 On Windows, `Ctrl+N` opens a new entry from the home screen, and `Ctrl+Enter` saves an entry dialog.
 
@@ -105,7 +110,7 @@ See the [WebDAV tool guide](tool/local_webdav/README.md) for complete setup, res
 
 ### Sync behavior
 
-- Transactions and categories sync. Templates, themes, hidden-amount preferences, and the statistics threshold remain local to each device.
+- Transactions and categories sync. Language preferences, templates, themes, hidden amounts, and the statistics threshold remain local to each device.
 - The application attempts sync at startup, on returning to the foreground, and approximately every 60 seconds while running. Manual sync is available from home. There is no persistent Android background sync service.
 - Concurrent edits may create a conflict that requires choosing which version to retain. Conflicted transactions are temporarily excluded from totals; historical operations remain available.
 - Two independently populated ledgers cannot be automatically merged. Preserve their data rather than clearing a ledger or uninstalling its only copy to force a connection.
@@ -176,6 +181,17 @@ python -m unittest discover -s tool/local_webdav -p "test_*.py" -v
 
 Do not commit `.env` files, signing keys, DPAPI files, private service state, or actual ledger data. Local reports and handoff records are also excluded from published source.
 
+### Localization resources
+
+Edit the Chinese and English entries in `lib/l10n/messages.json`, keep matching placeholders, and regenerate the typed strings:
+
+```sh
+python tool/generate_localizations.py
+dart format lib/l10n/app_strings.dart
+```
+
+Do not translate user content or change domain logs. Language behavior and English layout tests are in `test/language_test.dart`.
+
 ## Project structure
 
 ```text
@@ -183,6 +199,7 @@ lib/
   app/                    Themes, workspace, and shared state
   data/                   SQLite, repositories, credentials, and templates
   domain/                 Operations and statistics models
+  l10n/                   Chinese/English resources, typed strings, and display labels
   features/               Entries, categories, templates, statistics, and settings
   sync/                   WebDAV and synchronization logic
 assets/branding/          Icons and editable design assets
@@ -194,9 +211,9 @@ docs/                     Development and protocol documentation
 
 ## Current status and limitations
 
-- **0.4.2 is a prerelease.** Windows and Android packages have been built; regression checks were intentionally not run for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
+- **0.5.0 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
 - One CNY ledger is supported. Multiple accounts, transfers, budgets, multiple currencies, statement import, and notification parsing are not implemented.
-- The UI is primarily Chinese. This English README does not imply an English application interface.
+- The UI supports Simplified Chinese and English. Other system languages fall back to English; user category names and notes are never automatically translated.
 - Large, long-running operation histories still need performance and storage improvements. There is no log snapshot compaction or automatic ledger merging.
 
 ## Feedback and contributions
