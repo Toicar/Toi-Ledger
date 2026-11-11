@@ -1,4 +1,5 @@
 import '../../l10n/app_strings.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/appearance_controller.dart';
@@ -10,13 +11,61 @@ import '../../app/design_components.dart';
 import '../../app/ledger_typography.dart';
 
 class AppearancePage extends ConsumerStatefulWidget {
-  const AppearancePage({super.key});
+  const AppearancePage({super.key, this.clock});
+  final DateTime Function()? clock;
   @override
   ConsumerState<AppearancePage> createState() => _AppearancePageState();
 }
 
-class _AppearancePageState extends ConsumerState<AppearancePage> {
+/// Month and two-digit day form the whole part; the hour forms the decimals.
+String appearancePreviewAmount(DateTime now) =>
+    ledgerMoney((now.month * 100 + now.day) * 100 + now.hour);
+
+class _AppearancePageState extends ConsumerState<AppearancePage>
+    with WidgetsBindingObserver {
   bool saving = false;
+  late DateTime previewTime;
+  Timer? previewTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    previewTime = (widget.clock ?? DateTime.now)();
+    schedulePreviewUpdate();
+  }
+
+  void schedulePreviewUpdate() {
+    previewTimer?.cancel();
+    final now = (widget.clock ?? DateTime.now)();
+    final nextHour = DateTime(now.year, now.month, now.day, now.hour + 1);
+    final untilHour = nextHour.difference(now);
+    final delay =
+        untilHour <= Duration.zero || untilHour > const Duration(minutes: 1)
+        ? const Duration(minutes: 1)
+        : untilHour;
+    previewTimer = Timer(delay, () {
+      if (!mounted) return;
+      setState(() => previewTime = (widget.clock ?? DateTime.now)());
+      schedulePreviewUpdate();
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setState(() => previewTime = (widget.clock ?? DateTime.now)());
+      schedulePreviewUpdate();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    previewTimer?.cancel();
+    super.dispose();
+  }
+
   Future<void> save(Future<void> Function() action) async {
     setState(() => saving = true);
     try {
@@ -75,7 +124,7 @@ class _AppearancePageState extends ConsumerState<AppearancePage> {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          '¥1,280.50',
+                          appearancePreviewAmount(previewTime),
                           style: LedgerTypography.of(
                             context,
                           ).number(size: 28, color: colors.primary),

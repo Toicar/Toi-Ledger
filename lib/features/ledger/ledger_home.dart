@@ -13,6 +13,7 @@ import '../../domain/ledger_statistics.dart';
 import '../../domain/operation.dart';
 import '../../data/ledger_repository.dart';
 import '../../sync/sync_engine.dart';
+import '../../sync/local_webdav_start.dart';
 import '../../sync/webdav.dart';
 import '../conflicts/conflict_dialog.dart';
 import '../statistics/statistics_page.dart';
@@ -72,6 +73,7 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
         }
         return;
       }
+      await startLocalWebDavIfConfigured(config);
       final repo = ref.read(repositoryProvider);
       remote = WebDavStore(config, await repo.ledgerId);
       final result = await SyncEngine(repo, remote).synchronize();

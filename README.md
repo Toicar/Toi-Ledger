@@ -8,7 +8,7 @@
 
 [English](README.en.md) · [下载安装](https://github.com/Toicar/Toi-Ledger/releases) · [反馈问题](https://github.com/Toicar/Toi-Ledger/issues)
 
-> 当前版本：**0.5.0+11 · 预发布**。仓库名为 Toi-Ledger，应用显示名称、可执行文件和部分源码仍沿用 **MyLedger**。应用支持简体中文与 English，默认跟随系统语言，可在同步设置中即时切换。
+> 当前版本：**0.5.2+13 · 预发布**。仓库名为 Toi-Ledger，应用显示名称、可执行文件和部分源码仍沿用 **MyLedger**。应用支持简体中文与 English，默认跟随系统语言，可在同步设置中即时切换。
 
 ## 目录
 
@@ -50,13 +50,17 @@
 
 ## 下载安装
 
-从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。当前 [v0.5.0](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.5.0) 提供：
+从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。当前 [v0.5.2](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.5.2) 提供：
 
 | 平台／用途 | 文件 | 使用方式 |
 | --- | --- | --- |
-| Android ARM64 | `Toi-Ledger-0.5.0-android-arm64.apk` | 传到手机安装；按系统提示允许相应来源安装应用。 |
-| Windows x64 | `Toi-Ledger-0.5.0-windows-x64.zip` | 完整解压，运行 `my_ledger.exe`。保留同目录 DLL、`data` 和其他运行文件。 |
-| 局域网 WebDAV 工具 | `Toi-Ledger-0.5.0-webdav-setup.zip` | 需要自己搭建服务时使用；Windows 完整包也包含 `webdav-setup` 文件夹。 |
+| Android ARM64 | `Toi-Ledger-0.5.2-android-arm64.apk` | 传到手机安装；按系统提示允许相应来源安装应用。 |
+| Windows x64 | `Toi-Ledger-0.5.2-windows-x64.zip` | 完整解压，运行 `my_ledger.exe`。保留同目录 DLL、`data` 和其他运行文件。 |
+| 局域网 WebDAV 工具 | `Toi-Ledger-0.5.2-webdav-setup.zip` | 需要自己搭建服务时使用；Windows 完整包也包含 `webdav-setup` 文件夹。 |
+
+通用发布包不内置个人局域网证书；从旧版专用构建升级后，如使用自签名 WebDAV，请在两端导入自己服务的公共配置并核对指纹。
+
+Android 发布包目前使用调试签名，仅供预发布测试；请勿卸载唯一数据副本来解决签名不一致。
 
 更新 Windows 版前先关闭应用，再完整覆盖运行文件。Android 覆盖安装需保留相同包名与签名；遇到签名不一致时，不要通过卸载唯一数据副本来解决。
 
@@ -104,7 +108,7 @@ Windows 首页支持 `Ctrl+N` 新建记录，记账弹窗支持 `Ctrl+Enter` 保
 
 公共配置不包含密码、私钥或账本 ID。证书信任仅用于指定 HTTPS origin，不安装系统根证书；仍会校验证书地址与有效期。
 
-服务主机需要开机、保持服务运行且不能休眠。重启后可用 `Start-WebDAV.cmd` 启动，停止用 `Stop-WebDAV.cmd`；没有自动配置开机启动。同一 Wi-Fi 方案离开该局域网后不能直接同步，跨网络使用需要另外准备可达的 HTTPS WebDAV 服务。
+服务主机需要开机且不能休眠。Windows 应用在已保存地址与本机服务匹配时会在同步前自动启动服务；也可用 `Start-WebDAV.cmd` 和 `Stop-WebDAV.cmd` 手动控制。服务不会随系统开机启动。建议在路由器为电脑和手机保留 DHCP 地址。同一 Wi-Fi 方案离开该局域网后不能直接同步，跨网络使用需要另外准备可达的 HTTPS WebDAV 服务。
 
 首次设置、有限防火墙规则、IP 变化、证书与备份的完整说明见 [WebDAV 设置工具](tool/local_webdav/README.md)。
 
@@ -209,9 +213,11 @@ android/ · windows/       平台工程
 docs/                     开发与协议说明
 ```
 
+[查看包含各模块和文件作用的详细工作树](docs/PROJECT_STRUCTURE.md)。
+
 ## 当前状态与限制
 
-- 当前为 **0.5.0 预发布版**。应用完整测试与严格静态分析已通过；手机安装与真实双向同步仍待验收，不承诺所有 WebDAV 提供方兼容。
+- 当前为 **0.5.2 预发布版**。应用完整测试与严格静态分析已通过；手机安装与真实双向同步仍待验收，不承诺所有 WebDAV 提供方兼容。
 - 当前支持单个人民币账本；多账户、转账、预算、多币种、账单导入与通知识别尚未实现。
 - 界面支持简体中文与 English；未匹配的系统语言回退英文，用户分类名和备注不自动翻译。
 - 大量长期日志仍有性能与存储优化空间；没有日志快照压缩或自动账本合并。

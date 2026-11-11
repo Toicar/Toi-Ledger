@@ -8,7 +8,7 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 
 [简体中文](README.md) · [Downloads](https://github.com/Toicar/Toi-Ledger/releases) · [Report an issue](https://github.com/Toicar/Toi-Ledger/issues)
 
-> Current version: **0.5.0+11 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
+> Current version: **0.5.2+13 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
 
 ## Contents
 
@@ -50,15 +50,17 @@ Accent palettes include Clay (陶土), Bamboo (竹绿), Azure (群青), Vermilio
 
 ## Download and installation
 
-Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v0.5.0 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.5.0) includes:
+Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v0.5.2 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.5.2) includes:
 
 | Platform / purpose | File | Instructions |
 | --- | --- | --- |
-| Android ARM64 | `Toi-Ledger-0.5.0-android-arm64.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
-| Windows x64 | `Toi-Ledger-0.5.0-windows-x64.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
-| LAN WebDAV tools | `Toi-Ledger-0.5.0-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
+| Android ARM64 | `Toi-Ledger-0.5.2-android-arm64.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
+| Windows x64 | `Toi-Ledger-0.5.2-windows-x64.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
+| LAN WebDAV tools | `Toi-Ledger-0.5.2-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
 
-Close the Windows application before replacing its runtime files. In-place Android updates require the same package identity and signing certificate. If signatures differ, do not uninstall your only copy of the data just to bypass the installation error.
+Generic release packages do not bundle a personal LAN certificate. When upgrading from an older dedicated build with self-signed WebDAV, import your service's public configuration on both devices and verify its fingerprint.
+
+The Android prerelease uses a debug signing key. Close the Windows application before replacing its runtime files. In-place Android updates require the same package identity and signing certificate. If signatures differ, do not uninstall your only copy of the data just to bypass the installation error.
 
 **Update every syncing device to 0.4.2 before changing a category between income and expense.** Older clients cannot read the new category-type-change logs.
 
@@ -104,7 +106,7 @@ The included wizard targets **one Windows computer and one phone**:
 
 The public configuration contains no password, private key, or ledger ID. Additional certificate trust is restricted to the specified HTTPS origin; it does not install a system root certificate. Hostname/IP and validity checks remain enabled.
 
-The host must be powered on, running the service, and awake. After a restart, use `Start-WebDAV.cmd`; stop the service with `Stop-WebDAV.cmd`. Automatic startup is not configured. A LAN-only service is not directly available after leaving that network; cross-network use requires a separately reachable HTTPS WebDAV endpoint.
+The host must be powered on and awake. Windows starts the configured local service before synchronization when its address matches; `Start-WebDAV.cmd` and `Stop-WebDAV.cmd` also provide manual control. The service does not start at system boot. Reserve DHCP addresses for both devices on the router when possible. A LAN-only service is not directly available after leaving that network; cross-network use requires a separately reachable HTTPS WebDAV endpoint.
 
 See the [WebDAV tool guide](tool/local_webdav/README.md) for complete setup, restricted firewall rules, address changes, certificates, and backups. That detailed tool guide is currently in Chinese.
 
@@ -209,9 +211,11 @@ android/ · windows/       Platform projects
 docs/                     Development and protocol documentation
 ```
 
+[See the detailed project tree and module descriptions](docs/PROJECT_STRUCTURE.md).
+
 ## Current status and limitations
 
-- **0.5.0 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
+- **0.5.2 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
 - One CNY ledger is supported. Multiple accounts, transfers, budgets, multiple currencies, statement import, and notification parsing are not implemented.
 - The UI supports Simplified Chinese and English. Other system languages fall back to English; user category names and notes are never automatically translated.
 - Large, long-running operation histories still need performance and storage improvements. There is no log snapshot compaction or automatic ledger merging.
