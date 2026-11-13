@@ -22,19 +22,11 @@ Future<void> checkForUpdates(
   _checking = true;
   final service = UpdateService();
   try {
-    final source = await UpdatePreferences(
+    final enabled = await UpdatePreferences(
       ref.read(repositoryProvider).db,
-    ).read();
-    if (source.isEmpty) {
-      if (manual && context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.l10n.updatesNone)));
-      }
-      return;
-    }
+    ).readEnabled();
+    if (!manual && !enabled) return;
     final release = await service.check(
-      source,
       Platform.isWindows ? 'windows' : 'android',
     );
     if (!context.mounted) return;
@@ -56,7 +48,7 @@ Future<void> checkForUpdates(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(release.notes[strings.isEnglish ? 'en' : 'zh'] ?? ''),
+              Text(strings.updatesGitHubRelease),
               const SizedBox(height: 16),
               Text(
                 Platform.isWindows
@@ -195,8 +187,8 @@ class UpdateSettingsCard extends ConsumerStatefulWidget {
 }
 
 class _UpdateSettingsCardState extends ConsumerState<UpdateSettingsCard> {
-  final controller = TextEditingController();
   bool busy = true;
+  bool enabled = true;
   @override
   void initState() {
     super.initState();
@@ -207,8 +199,8 @@ class _UpdateSettingsCardState extends ConsumerState<UpdateSettingsCard> {
     try {
       final value = await UpdatePreferences(
         ref.read(repositoryProvider).db,
-      ).read();
-      if (mounted) controller.text = value;
+      ).readEnabled();
+      if (mounted) enabled = value;
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -220,21 +212,14 @@ class _UpdateSettingsCardState extends ConsumerState<UpdateSettingsCard> {
     }
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  Future<void> _save() async {
+  Future<void> _save(bool value) async {
+    setState(() => busy = true);
     try {
       await UpdatePreferences(
         ref.read(repositoryProvider).db,
-      ).write(controller.text.trim());
+      ).writeEnabled(value);
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.l10n.updatesSaved)));
+        setState(() => enabled = value);
       }
     } catch (_) {
       if (mounted) {
@@ -242,6 +227,8 @@ class _UpdateSettingsCardState extends ConsumerState<UpdateSettingsCard> {
           context,
         ).showSnackBar(SnackBar(content: Text(context.l10n.updatesSaveFailed)));
       }
+    } finally {
+      if (mounted) setState(() => busy = false);
     }
   }
 
@@ -260,27 +247,17 @@ class _UpdateSettingsCardState extends ConsumerState<UpdateSettingsCard> {
           Text(strings.updatesCurrent(currentVersionName)),
           const SizedBox(height: 8),
           Text(strings.updatesDescription),
-          const SizedBox(height: 8),
-          Text(strings.updatesTrust),
-          const SizedBox(height: 12),
-          TextField(
-            controller: controller,
-            enabled: !busy,
-            keyboardType: TextInputType.url,
-            decoration: InputDecoration(
-              labelText: strings.updatesUrl,
-              hintText: 'https://example.com/updates.json',
-            ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(strings.updatesAutoCheck),
+            value: enabled,
+            onChanged: busy ? null : _save,
           ),
           const SizedBox(height: 12),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
-              FilledButton.tonal(
-                onPressed: busy ? null : _save,
-                child: Text(strings.updatesSave),
-              ),
               OutlinedButton(
                 onPressed: busy
                     ? null

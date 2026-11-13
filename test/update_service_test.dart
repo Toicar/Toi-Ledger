@@ -10,134 +10,149 @@ import 'support.dart';
 void main() {
   final bytes = utf8.encode('verified update bytes');
   final digest = sha256.convert(bytes).toString();
-  String manifest({
-    int build = currentBuildNumber + 1,
-    String url = 'https://updates.example/app.zip',
+  const releaseBase = 'https://github.com/Toicar/Toi-Ledger/releases/download/';
+  String release({
+    String version = '1.0.1',
+    String? url,
     String? hash,
-  }) => jsonEncode({
-    'schema': 1,
-    'version': '0.7.0',
-    'build': build,
-    'notes': {'zh': '更新', 'en': 'Update'},
-    'platforms': {
-      'windows': {'url': url, 'sha256': hash ?? digest, 'size': bytes.length},
-    },
-  });
+    bool draft = false,
+    bool prerelease = false,
+  }) {
+    final name = 'Toi-Ledger-$version-windows-x64.zip';
+    return jsonEncode({
+      'tag_name': 'v$version',
+      'draft': draft,
+      'prerelease': prerelease,
+      'assets': [
+        {
+          'name': name,
+          'state': 'uploaded',
+          'browser_download_url': url ?? '${releaseBase}v$version/$name',
+          'digest': 'sha256:${hash ?? digest}',
+          'size': bytes.length,
+        },
+      ],
+    });
+  }
 
   test('application build constant agrees with pubspec', () {
-    final pubspec = File('pubspec.yaml').readAsStringSync();
     expect(
-      pubspec,
+      File('pubspec.yaml').readAsStringSync(),
       contains('version: $currentVersionName+$currentBuildNumber'),
     );
   });
 
+  test('compares stable versions numerically', () {
+    expect(isNewerVersion('1.10.0', '1.9.9'), isTrue);
+    expect(isNewerVersion('2.0.0', '1.99.99'), isTrue);
+    expect(isNewerVersion('1.0.0', '1.0.0'), isFalse);
+    expect(isNewerVersion('0.99.99', '1.0.0'), isFalse);
+    expect(() => isNewerVersion('1.0.1-beta', '1.0.0'), throwsFormatException);
+  });
+
   test(
-    'source must be explicit HTTPS without embedded credentials or query',
+    'checks only the official public GitHub latest release endpoint',
     () async {
-      var requests = 0;
       final service = UpdateService(
         client: MockClient((request) async {
-          requests++;
-          return http.Response.bytes(utf8.encode(manifest()), 200);
+          expect(request.url, githubLatestRelease);
+          expect(request.followRedirects, isFalse);
+          expect(request.headers['User-Agent'], 'Toi-Ledger');
+          return http.Response.bytes(utf8.encode(release()), 200);
         }),
       );
       addTearDown(service.close);
-      expect(await service.check('', 'windows'), isNull);
-      expect(requests, 0);
-      for (final bad in [
-        'http://updates.example/list.json',
-        'https://u:p@updates.example/list.json',
-        'https://updates.example/list.json?token=x',
-      ]) {
-        await expectLater(service.check(bad, 'windows'), throwsFormatException);
-      }
-      expect(requests, 0);
-      expect(
-        (await service.check(
-          'https://updates.example/list.json',
-          'windows',
-        ))?.build,
-        currentBuildNumber + 1,
-      );
-    },
-  );
-
-  test(
-    'rejects malformed, cross-origin, old, and oversized metadata',
-    () async {
-      expect(() => parseUpdateManifest('{}', 'windows'), throwsFormatException);
-      expect(
-        () => parseUpdateManifest(manifest(hash: 'bad'), 'windows'),
-        throwsFormatException,
-      );
-      expect(
-        () => parseUpdateManifest(manifest(), 'android'),
-        throwsFormatException,
-      );
-      final cross = UpdateService(
+      expect((await service.check('windows'))?.version, '1.0.1');
+      final same = UpdateService(
         client: MockClient(
           (_) async => http.Response.bytes(
-            utf8.encode(manifest(url: 'https://elsewhere.example/app.zip')),
+            utf8.encode(release(version: currentVersionName)),
             200,
           ),
         ),
       );
-      addTearDown(cross.close);
-      await expectLater(
-        cross.check('https://updates.example/list.json', 'windows'),
-        throwsFormatException,
-      );
-      final old = UpdateService(
-        client: MockClient(
-          (_) async => http.Response.bytes(
-            utf8.encode(manifest(build: currentBuildNumber)),
-            200,
-          ),
-        ),
-      );
-      addTearDown(old.close);
-      expect(
-        await old.check('https://updates.example/list.json', 'windows'),
-        isNull,
-      );
-      final huge = UpdateService(
-        client: MockClient((_) async => http.Response('x' * 65537, 200)),
-      );
-      addTearDown(huge.close);
-      await expectLater(
-        huge.check('https://updates.example/list.json', 'windows'),
-        throwsFormatException,
-      );
+      addTearDown(same.close);
+      expect(await same.check('windows'), isNull);
     },
   );
 
+  test('rejects drafts, bad checksums, wrong assets and untrusted URLs', () {
+    expect(() => parseGithubRelease('{}', 'windows'), throwsFormatException);
+    expect(
+      () => parseGithubRelease(release(draft: true), 'windows'),
+      throwsFormatException,
+    );
+    expect(
+      () => parseGithubRelease(release(prerelease: true), 'windows'),
+      throwsFormatException,
+    );
+    expect(
+      () => parseGithubRelease(release(hash: 'bad'), 'windows'),
+      throwsFormatException,
+    );
+    expect(
+      () => parseGithubRelease(release(), 'android'),
+      throwsFormatException,
+    );
+    expect(
+      () => parseGithubRelease(
+        release(url: 'https://example.com/app.zip'),
+        'windows',
+      ),
+      throwsFormatException,
+    );
+    expect(
+      () => parseGithubRelease(
+        release(
+          url:
+              '${releaseBase}v1.0.1/Toi-Ledger-1.0.1-windows-x64.zip?token=secret',
+        ),
+        'windows',
+      ),
+      throwsFormatException,
+    );
+  });
+
   test(
-    'download checks exact size and SHA-256 and removes damaged files',
+    'follows only trusted HTTPS asset redirects and verifies downloads',
     () async {
       final temp = await Directory.systemTemp.createTemp('ledger-update-test-');
       addTearDown(() => temp.delete(recursive: true));
       final file = File('${temp.path}/package.zip');
+      final package = parseGithubRelease(release(), 'windows').package;
       final service = UpdateService(
-        client: MockClient((_) async => http.Response.bytes(bytes, 200)),
+        client: MockClient((request) async {
+          if (request.url.host == 'github.com') {
+            return http.Response(
+              '',
+              302,
+              headers: {
+                'location':
+                    'https://release-assets.githubusercontent.com/file?signature=example',
+              },
+            );
+          }
+          expect(request.url.host, 'release-assets.githubusercontent.com');
+          return http.Response.bytes(bytes, 200);
+        }),
       );
       addTearDown(service.close);
-      await service.download(
-        UpdatePackage(
-          Uri.parse('https://updates.example/app.zip'),
-          digest,
-          bytes.length,
-        ),
-        file,
-      );
+      await service.download(package, file);
       expect(await file.readAsBytes(), bytes);
+      final bad = UpdateService(
+        client: MockClient(
+          (_) async => http.Response(
+            '',
+            302,
+            headers: {'location': 'https://attacker.example/file'},
+          ),
+        ),
+      );
+      addTearDown(bad.close);
+      await expectLater(bad.download(package, file), throwsFormatException);
       await expectLater(
         service.download(
-          UpdatePackage(
-            Uri.parse('https://updates.example/app.zip'),
-            '0' * 64,
-            bytes.length,
-          ),
+          UpdatePackage(package.url, '0' * 64, bytes.length),
           file,
         ),
         throwsFormatException,
@@ -146,18 +161,15 @@ void main() {
     },
   );
 
-  test('update URL is optional and saved only to local settings', () async {
+  test('automatic checks default on and can be disabled locally', () async {
     final repo = memoryRepository();
     addTearDown(repo.db.close);
     final prefs = UpdatePreferences(repo.db);
-    expect(await prefs.read(), '');
-    await prefs.write('https://updates.example/list.json');
-    expect(await prefs.read(), 'https://updates.example/list.json');
-    await expectLater(
-      prefs.write('http://insecure.example/'),
-      throwsFormatException,
-    );
-    expect(await prefs.read(), 'https://updates.example/list.json');
+    expect(await prefs.readEnabled(), isTrue);
+    await prefs.writeEnabled(false);
+    expect(await prefs.readEnabled(), isFalse);
+    await prefs.writeEnabled(true);
+    expect(await prefs.readEnabled(), isTrue);
     expect(await repo.allOperations(), isEmpty);
   });
 }

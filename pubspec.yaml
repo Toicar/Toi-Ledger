@@ -1,7 +1,7 @@
 name: my_ledger
 description: Local-first personal ledger with immutable WebDAV operation sync.
 publish_to: none
-version: 1.0.0+16
+version: 1.0.0+17
 environment:
   sdk: '>=3.9.0 <4.0.0'
   flutter: '>=3.35.7'

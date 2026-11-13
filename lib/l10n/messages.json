@@ -2036,28 +2036,13 @@
   },
   {
     "key": "updatesDescription",
-    "zh": "配置可信的 HTTPS 更新清单地址。留空时不会检查更新。",
-    "en": "Set a trusted HTTPS update manifest URL. An empty address disables checks."
-  },
-  {
-    "key": "updatesUrl",
-    "zh": "更新清单地址",
-    "en": "Update manifest URL"
-  },
-  {
-    "key": "updatesSave",
-    "zh": "保存更新地址",
-    "en": "Save update address"
-  },
-  {
-    "key": "updatesSaved",
-    "zh": "更新地址已保存",
-    "en": "Update address saved"
+    "zh": "从 GitHub 获取最新正式版本；你可以随时关闭自动检查。",
+    "en": "Get the latest stable release from GitHub. Automatic checks can be turned off."
   },
   {
     "key": "updatesSaveFailed",
-    "zh": "地址无效或保存失败，请检查 HTTPS 地址。",
-    "en": "Invalid address or could not save. Check the HTTPS URL."
+    "zh": "更新设置保存失败，请重试。",
+    "en": "Could not save update settings. Please try again."
   },
   {
     "key": "updatesCheck",
@@ -2066,13 +2051,13 @@
   },
   {
     "key": "updatesChecking",
-    "zh": "正在检查更新…",
-    "en": "Checking for updates…"
+    "zh": "正在检查 GitHub 更新…",
+    "en": "Checking GitHub for updates…"
   },
   {
     "key": "updatesNone",
-    "zh": "当前已是最新版本，或更新源尚未配置。",
-    "en": "The app is up to date, or no update source is configured."
+    "zh": "当前已是最新版本。",
+    "en": "You are using the latest version."
   },
   {
     "key": "updatesAvailable",
@@ -2096,8 +2081,8 @@
   },
   {
     "key": "updatesFailure",
-    "zh": "更新检查或下载失败，请检查更新源和网络后重试。",
-    "en": "Update check or download failed. Check the source and network, then retry."
+    "zh": "检查或下载更新失败，请检查网络后重试。",
+    "en": "Could not check or download updates. Check your connection and try again."
   },
   {
     "key": "updatesInstallFailure",
@@ -2111,8 +2096,8 @@
   },
   {
     "key": "updatesTrust",
-    "zh": "请只填写你信任的更新源。校验值用于检查下载完整性，不能证明发布者身份。",
-    "en": "Use only an update source you trust. The checksum checks download integrity, not publisher identity."
+    "zh": "更新包来自 GitHub，下载后会校验完整性。",
+    "en": "Updates are downloaded from GitHub and checked for integrity."
   },
   {
     "key": "updatesWindowsRestart",
@@ -2128,5 +2113,15 @@
     "key": "updatesCurrent",
     "zh": "当前版本 {arg0}",
     "en": "Current version {arg0}"
+  },
+  {
+    "key": "updatesAutoCheck",
+    "zh": "启动时自动检查更新",
+    "en": "Automatically check for updates on startup"
+  },
+  {
+    "key": "updatesGitHubRelease",
+    "zh": "GitHub 上有新的正式版本。",
+    "en": "A new stable version is available on GitHub."
   }
 ]

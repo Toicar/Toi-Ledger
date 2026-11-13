@@ -44,8 +44,15 @@ password-reset-*.json
 docs/LOCAL_HANDOFF.md
 docs/LOCAL_WEBDAV.md
 docs/TEST_RESULTS.md
+docs/ACCEPTANCE.md
+docs/ROADMAP.md
+docs/SYNC_PROTOCOL.md
+docs/DEVELOPMENT.md
+docs/PROJECT_STRUCTURE.md
+docs/UPDATES.md
 docs/*_2026-11-10.md
 docs/LANGUAGE_2026-11-11.md
 docs/superpowers/
 reports/
 tool/local_webdav/Set-LocalWebDavPassword.ps1
+tool/updater/make_manifest.py

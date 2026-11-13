@@ -9,7 +9,7 @@ import 'widget_test.dart' show settle;
 import 'redesign_test.dart' show closeLedger;
 
 void main() {
-  testWidgets('update source can be saved and cleared without ledger changes', (
+  testWidgets('automatic update checks can be disabled and re-enabled', (
     tester,
   ) async {
     final repo = memoryRepository();
@@ -25,20 +25,22 @@ void main() {
     );
     await settle(tester);
     expect(find.text('软件更新'), findsOneWidget);
-    await tester.enterText(
-      find.byType(TextField),
-      'https://updates.example/manifest.json',
+    expect(
+      tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,
+      isTrue,
     );
-    await tester.tap(find.text('保存更新地址'));
+    await tester.tap(find.byType(SwitchListTile));
     await settle(tester);
     expect(
-      await tester.runAsync(() => UpdatePreferences(repo.db).read()),
-      'https://updates.example/manifest.json',
+      await tester.runAsync(() => UpdatePreferences(repo.db).readEnabled()),
+      isFalse,
     );
-    await tester.enterText(find.byType(TextField), '');
-    await tester.tap(find.text('保存更新地址'));
+    await tester.tap(find.byType(SwitchListTile));
     await settle(tester);
-    expect(await tester.runAsync(() => UpdatePreferences(repo.db).read()), '');
+    expect(
+      await tester.runAsync(() => UpdatePreferences(repo.db).readEnabled()),
+      isTrue,
+    );
     expect(await tester.runAsync(repo.allOperations), isEmpty);
     await closeLedger(tester, repo);
   });

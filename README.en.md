@@ -21,7 +21,6 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 - [Multi-device sync](#multi-device-sync)
 - [Software updates](#software-updates)
 - [Data and privacy](#data-and-privacy)
-- [About the project](#about-the-project)
 - [Things to know](#things-to-know)
 - [Report a problem](#report-a-problem)
 
@@ -47,7 +46,7 @@ These interfaces are rendered with fictional ledger data. Mobile images show a m
 | Interface language | Simplified Chinese / English / Follow system (default), instant switching, persisted preferences, and localized date pickers and messages. |
 | Appearance | System/light/dark modes, paper-textured matte and translucent glass surfaces, six accent palettes, and an option to hide amounts. |
 | Multi-device sync | Incremental HTTPS WebDAV operation logs, offline recording, conflict handling, connection tests, and setup guidance. |
-| Software updates | Configure a trusted HTTPS update manifest, check on startup or on demand, and confirm download and installation. |
+| Software updates | Check GitHub for stable releases and confirm downloads and installation. |
 
 Accent palettes include Clay (陶土), Bamboo (竹绿), Azure (群青), Vermilion (胭脂红), Gardenia (栀子黄), and Lotus (藕荷). Text uses system fonts and fallbacks; no additional body or heading font files are bundled.
 
@@ -122,9 +121,9 @@ See the [WebDAV tool guide](tool/local_webdav/README.md) for complete setup, res
 
 ## Software updates
 
-Set a trusted HTTPS manifest under Sync settings → Software updates. An empty address disables update checks. With a source configured, the app checks on startup or on request. Windows closes and restarts to update; Android uses the system installer. The manifest and packages must share an HTTPS origin; their size and SHA-256 are checked before installation.
+The app checks GitHub for stable releases on startup. You can also check manually or turn off automatic checks under Sync settings → Software updates. When an update is available, you can choose to install it; Windows restarts and Android shows the system installation confirmation.
 
-**Use only a trusted source.** The checksum checks download integrity, not publisher identity; a compromised source can still serve malicious updates. See the [update guide](docs/UPDATES.md) for the format, limitations, and publishing instructions.
+Downloads are checked for integrity before installation. To start using this feature, first install this 1.0.0 package over your existing app.
 
 ## Data and privacy
 
@@ -133,10 +132,6 @@ Set a trusted HTTPS manifest under Sync settings → Software updates. An empty 
 - SHA-256 checksums detect integrity errors. They are not digital signatures and do not protect against a malicious server with permission to rewrite the data.
 - The new WebDAV wizard protects its password with the current Windows user's DPAPI and keeps private keys in a restricted local state directory. Do not share private keys, password files, or actual ledgers.
 - Sync propagates changes and deletions. **It is not a replacement for an independent backup.** There is no in-app backup/restore wizard yet; preserve your data before uninstalling or migrating.
-
-## About the project
-
-For code and build details, see the [project structure](docs/PROJECT_STRUCTURE.md) and [development guide](docs/DEVELOPMENT.md).
 
 ## Things to know
 
