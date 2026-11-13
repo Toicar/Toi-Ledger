@@ -56,6 +56,10 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get --enforce-lockfile
+      - name: Allocate memory for Android debug build
+        run: |
+          echo 'org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=768m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError' >> android/gradle.properties
+          echo 'org.gradle.workers.max=1' >> android/gradle.properties
       - run: flutter build apk --debug
       - uses: actions/upload-artifact@v4
         with:
@@ -65,7 +69,8 @@ jobs:
           retention-days: 14
   windows:
     needs: validate
-    runs-on: windows-latest
+    # Flutter 3.35 selects the correct CMake generator for Visual Studio 2022.
+    runs-on: windows-2022
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
