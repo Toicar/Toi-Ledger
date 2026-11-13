@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import '../data/database.dart';
-
-// Kept in sync with pubspec.yaml by test/update_service_test.dart.
-const currentBuildNumber = 14;
-const currentVersionName = '0.6.0';
+import '../app/app_version.dart';
+export '../app/app_version.dart';
 
 class UpdatePackage {
   const UpdatePackage(this.url, this.sha256, this.size);

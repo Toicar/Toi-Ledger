@@ -2,6 +2,7 @@ import '../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'design_components.dart';
 import 'ledger_typography.dart';
+import 'app_version.dart';
 
 class LedgerWorkspace extends StatelessWidget {
   const LedgerWorkspace({
@@ -182,7 +183,7 @@ class LedgerWorkspace extends StatelessWidget {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              'MYLEDGER  /  0.5',
+                              'MYLEDGER  /  $currentVersionName',
                               style: TextStyle(
                                 fontSize: 9,
                                 letterSpacing: 1.5,

@@ -10,7 +10,7 @@
 
 [English](README.en.md) · [下载安装](https://github.com/Toicar/Toi-Ledger/releases) · [反馈问题](https://github.com/Toicar/Toi-Ledger/issues)
 
-> 当前版本：**0.6.0+14 · 预发布**。仓库名为 Toi-Ledger，应用显示名称、可执行文件和部分源码仍沿用 **MyLedger**。应用支持简体中文与 English，默认跟随系统语言，可在同步设置中即时切换。
+> 当前版本：**0.6.1+15 · 预发布**。仓库名为 Toi-Ledger，应用显示名称、可执行文件和部分源码仍沿用 **MyLedger**。应用支持简体中文与 English，默认跟随系统语言，可在同步设置中即时切换。
 
 ## 目录
 
@@ -54,7 +54,7 @@
 
 ## 下载安装
 
-从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。当前 [v0.6.0](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.6.0) 提供：
+从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。现有 [v0.6.0 Release](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.6.0) 已更新为 **0.6.1**，提供：
 
 | 平台／用途 | 文件 | 使用方式 |
 | --- | --- | --- |
@@ -227,7 +227,7 @@ docs/                     开发与协议说明
 
 ## 当前状态与限制
 
-- 当前为 **0.6.0 预发布版**。应用完整测试与严格静态分析已通过；手机安装与真实双向同步仍待验收，不承诺所有 WebDAV 提供方兼容。
+- 当前为 **0.6.1 预发布版**。应用完整测试与严格静态分析已通过；手机安装与真实双向同步仍待验收，不承诺所有 WebDAV 提供方兼容。
 - 当前支持单个人民币账本；多账户、转账、预算、多币种、账单导入与通知识别尚未实现。
 - 界面支持简体中文与 English；未匹配的系统语言回退英文，用户分类名和备注不自动翻译。
 - 大量长期日志仍有性能与存储优化空间；没有日志快照压缩或自动账本合并。

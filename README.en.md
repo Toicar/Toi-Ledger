@@ -10,7 +10,7 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 
 [简体中文](README.md) · [Downloads](https://github.com/Toicar/Toi-Ledger/releases) · [Report an issue](https://github.com/Toicar/Toi-Ledger/issues)
 
-> Current version: **0.6.0+14 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
+> Current version: **0.6.1+15 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
 
 ## Contents
 
@@ -54,7 +54,7 @@ Accent palettes include Clay (陶土), Bamboo (竹绿), Azure (群青), Vermilio
 
 ## Download and installation
 
-Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v0.6.0 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.6.0) includes:
+Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The existing [v0.6.0 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.6.0) has been updated to **0.6.1** and includes:
 
 | Platform / purpose | File | Instructions |
 | --- | --- | --- |
@@ -225,7 +225,7 @@ docs/                     Development and protocol documentation
 
 ## Current status and limitations
 
-- **0.6.0 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
+- **0.6.1 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
 - One CNY ledger is supported. Multiple accounts, transfers, budgets, multiple currencies, statement import, and notification parsing are not implemented.
 - The UI supports Simplified Chinese and English. Other system languages fall back to English; user category names and notes are never automatically translated.
 - Large, long-running operation histories still need performance and storage improvements. There is no log snapshot compaction or automatic ledger merging.
