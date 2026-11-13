@@ -10,7 +10,7 @@
 
 [English](README.en.md) · [下载安装](https://github.com/Toicar/Toi-Ledger/releases) · [反馈问题](https://github.com/Toicar/Toi-Ledger/issues)
 
-> 当前版本：**0.6.1+15 · 预发布**。仓库名为 Toi-Ledger，应用显示名称、可执行文件和部分源码仍沿用 **MyLedger**。应用支持简体中文与 English，默认跟随系统语言，可在同步设置中即时切换。
+> 当前版本：**1.0.0**。应用显示名称为 **MyLedger**，支持简体中文与 English，默认跟随系统语言。
 
 ## 目录
 
@@ -21,10 +21,9 @@
 - [多设备同步](#多设备同步)
 - [软件更新](#软件更新)
 - [数据与隐私](#数据与隐私)
-- [开发与构建](#开发与构建)
-- [项目结构](#项目结构)
-- [当前状态与限制](#当前状态与限制)
-- [反馈与贡献](#反馈与贡献)
+- [了解项目](#了解项目)
+- [使用说明](#使用说明)
+- [问题反馈](#问题反馈)
 
 ## 界面预览
 
@@ -54,17 +53,15 @@
 
 ## 下载安装
 
-从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。现有 [v0.6.0 Release](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.6.0) 已更新为 **0.6.1**，提供：
+从 [Releases](https://github.com/Toicar/Toi-Ledger/releases) 获取对应文件。当前 [v1.0.0 版本](https://github.com/Toicar/Toi-Ledger/releases/tag/v1.0.0) 提供：
 
 | 平台／用途 | 文件 | 使用方式 |
 | --- | --- | --- |
-| Android ARM64 | `Toi-Ledger-0.6.0-android-arm64.apk` | 传到手机安装；按系统提示允许相应来源安装应用。 |
-| Windows x64 | `Toi-Ledger-0.6.0-windows-x64.zip` | 完整解压，运行 `my_ledger.exe`。保留同目录 DLL、`data` 和其他运行文件。 |
-| 局域网 WebDAV 工具 | `Toi-Ledger-0.6.0-webdav-setup.zip` | 需要自己搭建服务时使用；Windows 完整包也包含 `webdav-setup` 文件夹。 |
+| Android ARM64 | `Toi-Ledger-1.0.0-android-arm64.apk` | 传到手机安装；按系统提示允许相应来源安装应用。 |
+| Windows x64 | `Toi-Ledger-1.0.0-windows-x64.zip` | 完整解压，运行 `my_ledger.exe`。保留同目录 DLL、`data` 和其他运行文件。 |
+| 局域网 WebDAV 工具 | `Toi-Ledger-1.0.0-webdav-setup.zip` | 需要自己搭建服务时使用；Windows 完整包也包含 `webdav-setup` 文件夹。 |
 
-通用发布包不内置个人局域网证书；从旧版专用构建升级后，如使用自签名 WebDAV，请在两端导入自己服务的公共配置并核对指纹。
-
-Android 发布包目前使用调试签名，仅供预发布测试；请勿卸载唯一数据副本来解决签名不一致。
+使用自签名 WebDAV 服务时，请在两端导入服务公共配置，并核对证书指纹。
 
 更新 Windows 版前先关闭应用，再完整覆盖运行文件。Android 覆盖安装需保留相同包名与签名；遇到签名不一致时，不要通过卸载唯一数据副本来解决。
 
@@ -137,105 +134,17 @@ Windows 首页支持 `Ctrl+N` 新建记录，记账弹窗支持 `Ctrl+Enter` 保
 - 新 WebDAV 向导用当前 Windows 用户的 DPAPI 保存密码，私钥留在受限的本机状态目录。不要共享私钥、密码文件或真实账本。
 - 同步会传播删除与修改，**不能替代独立备份**。当前没有应用内备份恢复向导；卸载或迁移前先妥善保留数据。
 
-## 开发与构建
+## 了解项目
 
-### 环境
+想了解代码和构建方式，可查看[项目结构](docs/PROJECT_STRUCTURE.md)与[开发文档](docs/DEVELOPMENT.md)。
 
-| 项目 | 版本／要求 |
-| --- | --- |
-| Flutter / Dart | 项目开发基线为 Flutter **3.35.7** / Dart **3.9.2**。 |
-| Windows 构建 | Windows x64、Visual Studio C++ 桌面开发工具、Windows SDK 与 ATL。 |
-| Android 构建 | JDK **17**、Android SDK 与 Flutter Android 工具链。 |
-| WebDAV 服务工具 | Python **3.12+**；仅运行服务／服务测试需要，应用本身不依赖 Python。 |
+## 使用说明
 
-```sh
-git clone https://github.com/Toicar/Toi-Ledger.git
-cd Toi-Ledger
-flutter pub get --enforce-lockfile
-flutter run
-```
-
-仓库为私有时，克隆和下载需要相应 GitHub 账号权限。
-
-### 构建安装包
-
-```sh
-# Android ARM64 Release
-flutter build apk --release --target-platform android-arm64 --target lib/main.dart
-
-# Windows Release（在 Windows 上执行）
-flutter build windows --release --target lib/main.dart
-```
-
-默认输出为 `build/app/outputs/flutter-apk/app-release.apk` 与 `build/windows/x64/runner/Release/`。Windows 构建会将 WebDAV 工具复制到输出目录的 `webdav-setup/`；分发时请保留完整目录。
-
-当前 Android Release 配置沿用调试签名。自行正式分发前应配置稳定的发布密钥，妥善保留签名材料；换用其他密钥的构建不能直接覆盖现有签名不同的安装。
-
-### 开发验证
-
-以下为开发者按需执行的命令，并不表示当前版本已经全部通过：
-
-```sh
-dart format --output=none --set-exit-if-changed lib test
-flutter analyze --fatal-infos
-flutter test --coverage --reporter expanded
-```
-
-部分 HTTPS 测试需要 `openssl` 位于 PATH；测试环境也需要 SQLite 运行库。修改 Drift 数据库定义时，更新并提交生成文件：
-
-```sh
-dart run build_runner build --delete-conflicting-outputs
-```
-
-服务测试需先在独立 Python 虚拟环境安装 `tool/local_webdav/setup-requirements.txt`，再执行：
-
-```sh
-python -m unittest discover -s tool/local_webdav -p "test_*.py" -v
-```
-
-不要提交 `.env`、签名密钥、DPAPI 文件、服务私有状态或真实账本；本机报告与交接资料也不属于公开源码内容。
-
-### 本地化资源
-
-修改 `lib/l10n/messages.json` 中的中英文资源，保留相同的占位符，再生成类型化代码：
-
-```sh
-python tool/generate_localizations.py
-dart format lib/l10n/app_strings.dart
-```
-
-不要翻译用户内容或改变领域日志。语言行为和英文布局测试位于 `test/language_test.dart`。
-
-## 项目结构
-
-```text
-lib/
-  app/                    主题、工作区与全局状态
-  data/                   SQLite、仓储、凭据与模板
-  domain/                 账目操作与统计模型
-  l10n/                   中英文资源、类型化文案与显示标签
-  features/               记账、分类、模板、统计和设置页面
-  sync/                   WebDAV 与同步逻辑
-assets/branding/          图标与可编辑设计资源
-test/                     应用与同步测试
-tool/local_webdav/        局域网服务、设置脚本与服务测试
-android/ · windows/       平台工程
-docs/                     开发与协议说明
-```
-
-[查看包含各模块和文件作用的详细工作树](docs/PROJECT_STRUCTURE.md)。
-
-## 当前状态与限制
-
-- 当前为 **0.6.1 预发布版**。应用完整测试与严格静态分析已通过；手机安装与真实双向同步仍待验收，不承诺所有 WebDAV 提供方兼容。
+- 手机端使用测试已通过；不同设备和 WebDAV 服务的使用体验可能有所不同。
 - 当前支持单个人民币账本；多账户、转账、预算、多币种、账单导入与通知识别尚未实现。
 - 界面支持简体中文与 English；未匹配的系统语言回退英文，用户分类名和备注不自动翻译。
 - 大量长期日志仍有性能与存储优化空间；没有日志快照压缩或自动账本合并。
 
-## 反馈与贡献
+## 问题反馈
 
-欢迎通过 [Issues](https://github.com/Toicar/Toi-Ledger/issues) 反馈问题或提出建议。请说明版本、平台、复现步骤与预期行为；截图使用脱敏数据，不附密码、密钥或完整账本。
-
-提交改动前说明范围与验证情况。许可证与更完整的贡献约定待后续补充；当前不声明采用任何特定开源许可证。
-
-更多产品介绍、演示与使用案例将在后续完善。
+欢迎发现 Bug 并通过 [GitHub Issues 提交问题](https://github.com/Toicar/Toi-Ledger/issues/new?template=bug_report.md)，也欢迎分享使用建议。请尽量说明应用版本、设备、操作步骤和错误提示；分享截图前请遮挡个人信息，不要提交密码、密钥或完整账本。

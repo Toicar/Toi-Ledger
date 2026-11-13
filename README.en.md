@@ -10,7 +10,7 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 
 [简体中文](README.md) · [Downloads](https://github.com/Toicar/Toi-Ledger/releases) · [Report an issue](https://github.com/Toicar/Toi-Ledger/issues)
 
-> Current version: **0.6.1+15 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
+> Current version: **1.0.0**. The application appears as **MyLedger** and supports Simplified Chinese and English, following the system language by default.
 
 ## Contents
 
@@ -21,10 +21,9 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 - [Multi-device sync](#multi-device-sync)
 - [Software updates](#software-updates)
 - [Data and privacy](#data-and-privacy)
-- [Development and builds](#development-and-builds)
-- [Project structure](#project-structure)
-- [Current status and limitations](#current-status-and-limitations)
-- [Feedback and contributions](#feedback-and-contributions)
+- [About the project](#about-the-project)
+- [Things to know](#things-to-know)
+- [Report a problem](#report-a-problem)
 
 ## Preview
 
@@ -54,17 +53,17 @@ Accent palettes include Clay (陶土), Bamboo (竹绿), Azure (群青), Vermilio
 
 ## Download and installation
 
-Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The existing [v0.6.0 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.6.0) has been updated to **0.6.1** and includes:
+Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v1.0.0 release](https://github.com/Toicar/Toi-Ledger/releases/tag/v1.0.0) includes:
 
 | Platform / purpose | File | Instructions |
 | --- | --- | --- |
-| Android ARM64 | `Toi-Ledger-0.6.0-android-arm64.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
-| Windows x64 | `Toi-Ledger-0.6.0-windows-x64.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
-| LAN WebDAV tools | `Toi-Ledger-0.6.0-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
+| Android ARM64 | `Toi-Ledger-1.0.0-android-arm64.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
+| Windows x64 | `Toi-Ledger-1.0.0-windows-x64.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
+| LAN WebDAV tools | `Toi-Ledger-1.0.0-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
 
-Generic release packages do not bundle a personal LAN certificate. When upgrading from an older dedicated build with self-signed WebDAV, import your service's public configuration on both devices and verify its fingerprint.
+For a self-signed WebDAV service, import its public configuration on both devices and verify the certificate fingerprint.
 
-The Android prerelease uses a debug signing key. Close the Windows application before replacing its runtime files. In-place Android updates require the same package identity and signing certificate. If signatures differ, do not uninstall your only copy of the data just to bypass the installation error.
+Close the Windows application before replacing its runtime files. In-place Android updates require the same package identity and signing certificate. If signatures differ, do not uninstall your only copy of the data just to bypass the installation error.
 
 **Update every syncing device to 0.4.2 before changing a category between income and expense.** Older clients cannot read the new category-type-change logs.
 
@@ -135,105 +134,17 @@ Set a trusted HTTPS manifest under Sync settings → Software updates. An empty 
 - The new WebDAV wizard protects its password with the current Windows user's DPAPI and keeps private keys in a restricted local state directory. Do not share private keys, password files, or actual ledgers.
 - Sync propagates changes and deletions. **It is not a replacement for an independent backup.** There is no in-app backup/restore wizard yet; preserve your data before uninstalling or migrating.
 
-## Development and builds
+## About the project
 
-### Environment
+For code and build details, see the [project structure](docs/PROJECT_STRUCTURE.md) and [development guide](docs/DEVELOPMENT.md).
 
-| Component | Version / requirement |
-| --- | --- |
-| Flutter / Dart | The development baseline is Flutter **3.35.7** / Dart **3.9.2**. |
-| Windows builds | Windows x64, Visual Studio C++ desktop build tools, Windows SDK, and ATL. |
-| Android builds | JDK **17**, Android SDK, and the Flutter Android toolchain. |
-| WebDAV service tools | Python **3.12+**, needed only for the service and its tests; the application itself does not require Python. |
+## Things to know
 
-```sh
-git clone https://github.com/Toicar/Toi-Ledger.git
-cd Toi-Ledger
-flutter pub get --enforce-lockfile
-flutter run
-```
-
-While the repository is private, cloning and downloading require an authorized GitHub account.
-
-### Build packages
-
-```sh
-# Android ARM64 Release
-flutter build apk --release --target-platform android-arm64 --target lib/main.dart
-
-# Windows Release (run on Windows)
-flutter build windows --release --target lib/main.dart
-```
-
-Default outputs are `build/app/outputs/flutter-apk/app-release.apk` and `build/windows/x64/runner/Release/`. The Windows build copies the WebDAV tools into `webdav-setup/`; keep the entire output directory when distributing it.
-
-The current Android Release configuration uses debug signing. Configure and retain a stable release key before distributing your own production builds. A build signed with another key cannot directly replace an installed version with a different signature.
-
-### Developer checks
-
-These are commands developers can run when needed, not a statement that the current release has passed every check:
-
-```sh
-dart format --output=none --set-exit-if-changed lib test
-flutter analyze --fatal-infos
-flutter test --coverage --reporter expanded
-```
-
-Some HTTPS tests require `openssl` on PATH; the test environment also needs the SQLite runtime. After changing Drift database definitions, regenerate and commit the generated source:
-
-```sh
-dart run build_runner build --delete-conflicting-outputs
-```
-
-For service tests, first install `tool/local_webdav/setup-requirements.txt` into an isolated Python virtual environment, then run:
-
-```sh
-python -m unittest discover -s tool/local_webdav -p "test_*.py" -v
-```
-
-Do not commit `.env` files, signing keys, DPAPI files, private service state, or actual ledger data. Local reports and handoff records are also excluded from published source.
-
-### Localization resources
-
-Edit the Chinese and English entries in `lib/l10n/messages.json`, keep matching placeholders, and regenerate the typed strings:
-
-```sh
-python tool/generate_localizations.py
-dart format lib/l10n/app_strings.dart
-```
-
-Do not translate user content or change domain logs. Language behavior and English layout tests are in `test/language_test.dart`.
-
-## Project structure
-
-```text
-lib/
-  app/                    Themes, workspace, and shared state
-  data/                   SQLite, repositories, credentials, and templates
-  domain/                 Operations and statistics models
-  l10n/                   Chinese/English resources, typed strings, and display labels
-  features/               Entries, categories, templates, statistics, and settings
-  sync/                   WebDAV and synchronization logic
-assets/branding/          Icons and editable design assets
-test/                     Application and sync tests
-tool/local_webdav/        LAN service, setup scripts, and service tests
-android/ · windows/       Platform projects
-docs/                     Development and protocol documentation
-```
-
-[See the detailed project tree and module descriptions](docs/PROJECT_STRUCTURE.md).
-
-## Current status and limitations
-
-- **0.6.1 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
+- Mobile usage testing has passed; behavior may vary by device and WebDAV service.
 - One CNY ledger is supported. Multiple accounts, transfers, budgets, multiple currencies, statement import, and notification parsing are not implemented.
 - The UI supports Simplified Chinese and English. Other system languages fall back to English; user category names and notes are never automatically translated.
 - Large, long-running operation histories still need performance and storage improvements. There is no log snapshot compaction or automatic ledger merging.
 
-## Feedback and contributions
+## Report a problem
 
-Use [Issues](https://github.com/Toicar/Toi-Ledger/issues) to report problems or suggest improvements. Include your version, platform, reproduction steps, and expected behavior. Use redacted screenshots; do not attach passwords, keys, or complete ledgers.
-
-Describe the scope and validation of proposed changes. A license and fuller contribution guidelines will be added later; no particular open-source license is currently declared.
-
-More product details, demonstrations, and usage examples will follow.
+Found a bug or have an idea? Please [open a GitHub issue](https://github.com/Toicar/Toi-Ledger/issues/new?template=bug_report.md). Include your app version, device, steps to reproduce, and any error message. Redact personal information from screenshots and do not include passwords, keys, or complete ledgers.

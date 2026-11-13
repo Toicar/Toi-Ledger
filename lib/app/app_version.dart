@@ -1,3 +1,3 @@
 /// Keep these values in sync with pubspec.yaml; verified by a regression test.
-const currentVersionName = '0.6.1';
-const currentBuildNumber = 15;
+const currentVersionName = '1.0.0';
+const currentBuildNumber = 16;
