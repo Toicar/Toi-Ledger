@@ -1,6 +1,7 @@
 #include "flutter_window.h"
 
 #include <optional>
+#include <flutter/standard_method_codec.h>
 
 #include "flutter/generated_plugin_registrant.h"
 
@@ -25,6 +26,17 @@ bool FlutterWindow::OnCreate() {
     return false;
   }
   RegisterPlugins(flutter_controller_->engine());
+  update_channel_ = std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
+      flutter_controller_->engine()->messenger(), "io.toicar.my_ledger/updates",
+      &flutter::StandardMethodCodec::GetInstance());
+  update_channel_->SetMethodCallHandler([this](const auto& call, auto result) {
+    if (call.method_name() == "closeForUpdate") {
+      result->Success();
+      ::PostMessage(GetHandle(), WM_CLOSE, 0, 0);
+    } else {
+      result->NotImplemented();
+    }
+  });
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
   flutter_controller_->engine()->SetNextFrameCallback([&]() {
@@ -40,6 +52,7 @@ bool FlutterWindow::OnCreate() {
 }
 
 void FlutterWindow::OnDestroy() {
+  update_channel_ = nullptr;
   if (flutter_controller_) {
     flutter_controller_ = nullptr;
   }

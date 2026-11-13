@@ -2028,5 +2028,105 @@
     "key": "expenseAmountLine",
     "zh": "\n支出 ¥{arg0}",
     "en": "\nExpense ¥{arg0}"
+  },
+  {
+    "key": "updatesTitle",
+    "zh": "软件更新",
+    "en": "Software updates"
+  },
+  {
+    "key": "updatesDescription",
+    "zh": "配置可信的 HTTPS 更新清单地址。留空时不会检查更新。",
+    "en": "Set a trusted HTTPS update manifest URL. An empty address disables checks."
+  },
+  {
+    "key": "updatesUrl",
+    "zh": "更新清单地址",
+    "en": "Update manifest URL"
+  },
+  {
+    "key": "updatesSave",
+    "zh": "保存更新地址",
+    "en": "Save update address"
+  },
+  {
+    "key": "updatesSaved",
+    "zh": "更新地址已保存",
+    "en": "Update address saved"
+  },
+  {
+    "key": "updatesSaveFailed",
+    "zh": "地址无效或保存失败，请检查 HTTPS 地址。",
+    "en": "Invalid address or could not save. Check the HTTPS URL."
+  },
+  {
+    "key": "updatesCheck",
+    "zh": "检查更新",
+    "en": "Check for updates"
+  },
+  {
+    "key": "updatesChecking",
+    "zh": "正在检查更新…",
+    "en": "Checking for updates…"
+  },
+  {
+    "key": "updatesNone",
+    "zh": "当前已是最新版本，或更新源尚未配置。",
+    "en": "The app is up to date, or no update source is configured."
+  },
+  {
+    "key": "updatesAvailable",
+    "zh": "发现新版本 {arg0}",
+    "en": "Update {arg0} available"
+  },
+  {
+    "key": "updatesInstall",
+    "zh": "下载并更新",
+    "en": "Download and update"
+  },
+  {
+    "key": "updatesLater",
+    "zh": "以后再说",
+    "en": "Later"
+  },
+  {
+    "key": "updatesDownloading",
+    "zh": "正在下载并验证更新…",
+    "en": "Downloading and verifying the update…"
+  },
+  {
+    "key": "updatesFailure",
+    "zh": "更新检查或下载失败，请检查更新源和网络后重试。",
+    "en": "Update check or download failed. Check the source and network, then retry."
+  },
+  {
+    "key": "updatesInstallFailure",
+    "zh": "无法启动安装，请检查系统权限后重试。",
+    "en": "Could not start installation. Check system permissions and retry."
+  },
+  {
+    "key": "updatesPermission",
+    "zh": "请允许此应用安装更新，然后返回并再次点击更新。",
+    "en": "Allow this app to install updates, then return and try again."
+  },
+  {
+    "key": "updatesTrust",
+    "zh": "请只填写你信任的更新源。校验值用于检查下载完整性，不能证明发布者身份。",
+    "en": "Use only an update source you trust. The checksum checks download integrity, not publisher identity."
+  },
+  {
+    "key": "updatesWindowsRestart",
+    "zh": "更新将关闭并重新启动应用。",
+    "en": "The app will close and restart to install the update."
+  },
+  {
+    "key": "updatesAndroidConfirm",
+    "zh": "Android 会显示系统安装确认。",
+    "en": "Android will show the system installation confirmation."
+  },
+  {
+    "key": "updatesCurrent",
+    "zh": "当前版本 {arg0}",
+    "en": "Current version {arg0}"
   }
 ]

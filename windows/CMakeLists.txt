@@ -81,6 +81,9 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../tool/local_webdav/"
   PATTERN "Set-LocalWebDavPassword.ps1" EXCLUDE
   PATTERN "test_*.py" EXCLUDE)
 
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../tool/updater/Install-Update.ps1"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/updater" COMPONENT Runtime)
+
 install(FILES "${FLUTTER_ICU_DATA_FILE}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
   COMPONENT Runtime)
 

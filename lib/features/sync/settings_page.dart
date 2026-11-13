@@ -12,6 +12,7 @@ import 'sync_guide_page.dart';
 import 'service_import_dialog.dart';
 import '../../sync/service_setup.dart';
 import 'language_card.dart';
+import '../../updates/update_ui.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -333,6 +334,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             ),
             const SizedBox(height: 20),
             Text(context.l10n.credentialsUseSystemSecureStorageWebdav),
+            const SizedBox(height: 24),
+            const UpdateSettingsCard(),
           ],
         ),
       ),

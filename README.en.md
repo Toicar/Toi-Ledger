@@ -10,7 +10,7 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 
 [简体中文](README.md) · [Downloads](https://github.com/Toicar/Toi-Ledger/releases) · [Report an issue](https://github.com/Toicar/Toi-Ledger/issues)
 
-> Current version: **0.5.2+13 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
+> Current version: **0.6.0+14 · Prerelease**. The repository is named Toi-Ledger; the application display name, Windows executable, and parts of the source still use **MyLedger**. The application supports Simplified Chinese and English, follows the system language by default, and can be switched instantly in Sync settings.
 
 ## Contents
 
@@ -19,6 +19,7 @@ A personal ledger for Android and Windows. Keep your records locally, understand
 - [Download and installation](#download-and-installation)
 - [Start recording](#start-recording)
 - [Multi-device sync](#multi-device-sync)
+- [Software updates](#software-updates)
 - [Data and privacy](#data-and-privacy)
 - [Development and builds](#development-and-builds)
 - [Project structure](#project-structure)
@@ -47,18 +48,19 @@ These interfaces are rendered with fictional ledger data. Mobile images show a m
 | Interface language | Simplified Chinese / English / Follow system (default), instant switching, persisted preferences, and localized date pickers and messages. |
 | Appearance | System/light/dark modes, paper-textured matte and translucent glass surfaces, six accent palettes, and an option to hide amounts. |
 | Multi-device sync | Incremental HTTPS WebDAV operation logs, offline recording, conflict handling, connection tests, and setup guidance. |
+| Software updates | Configure a trusted HTTPS update manifest, check on startup or on demand, and confirm download and installation. |
 
 Accent palettes include Clay (陶土), Bamboo (竹绿), Azure (群青), Vermilion (胭脂红), Gardenia (栀子黄), and Lotus (藕荷). Text uses system fonts and fallbacks; no additional body or heading font files are bundled.
 
 ## Download and installation
 
-Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v0.5.2 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.5.2) includes:
+Get the appropriate file from [Releases](https://github.com/Toicar/Toi-Ledger/releases). The current [v0.6.0 prerelease](https://github.com/Toicar/Toi-Ledger/releases/tag/v0.6.0) includes:
 
 | Platform / purpose | File | Instructions |
 | --- | --- | --- |
-| Android ARM64 | `Toi-Ledger-0.5.2-android-arm64.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
-| Windows x64 | `Toi-Ledger-0.5.2-windows-x64.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
-| LAN WebDAV tools | `Toi-Ledger-0.5.2-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
+| Android ARM64 | `Toi-Ledger-0.6.0-android-arm64.apk` | Transfer it to your phone and install it. Allow installation from the relevant source when Android prompts you. |
+| Windows x64 | `Toi-Ledger-0.6.0-windows-x64.zip` | Extract the entire archive and run `my_ledger.exe`. Keep the DLLs, `data`, and other runtime files beside it. |
+| LAN WebDAV tools | `Toi-Ledger-0.6.0-webdav-setup.zip` | Use this if you want to host a service yourself. The complete Windows archive also contains a `webdav-setup` folder. |
 
 Generic release packages do not bundle a personal LAN certificate. When upgrading from an older dedicated build with self-signed WebDAV, import your service's public configuration on both devices and verify its fingerprint.
 
@@ -118,6 +120,12 @@ See the [WebDAV tool guide](tool/local_webdav/README.md) for complete setup, res
 - The application attempts sync at startup, on returning to the foreground, and approximately every 60 seconds while running. Manual sync is available from home. There is no persistent Android background sync service.
 - Concurrent edits may create a conflict that requires choosing which version to retain. Conflicted transactions are temporarily excluded from totals; historical operations remain available.
 - Two independently populated ledgers cannot be automatically merged. Preserve their data rather than clearing a ledger or uninstalling its only copy to force a connection.
+
+## Software updates
+
+Set a trusted HTTPS manifest under Sync settings → Software updates. An empty address disables update checks. With a source configured, the app checks on startup or on request. Windows closes and restarts to update; Android uses the system installer. The manifest and packages must share an HTTPS origin; their size and SHA-256 are checked before installation.
+
+**Use only a trusted source.** The checksum checks download integrity, not publisher identity; a compromised source can still serve malicious updates. See the [update guide](docs/UPDATES.md) for the format, limitations, and publishing instructions.
 
 ## Data and privacy
 
@@ -217,7 +225,7 @@ docs/                     Development and protocol documentation
 
 ## Current status and limitations
 
-- **0.5.2 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
+- **0.6.0 is a prerelease.** The application test suite and strict static analysis have passed for this version. Phone installation and real two-way sync still await acceptance testing. Compatibility with every WebDAV provider is not guaranteed.
 - One CNY ledger is supported. Multiple accounts, transfers, budgets, multiple currencies, statement import, and notification parsing are not implemented.
 - The UI supports Simplified Chinese and English. Other system languages fall back to English; user category names and notes are never automatically translated.
 - Large, long-running operation histories still need performance and storage improvements. There is no log snapshot compaction or automatic ledger merging.

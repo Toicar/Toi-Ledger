@@ -14,6 +14,7 @@ import '../../domain/operation.dart';
 import '../../data/ledger_repository.dart';
 import '../../sync/sync_engine.dart';
 import '../../sync/local_webdav_start.dart';
+import '../../updates/update_ui.dart';
 import '../../sync/webdav.dart';
 import '../conflicts/conflict_dialog.dart';
 import '../statistics/statistics_page.dart';
@@ -44,6 +45,9 @@ class _LedgerHomeState extends ConsumerState<LedgerHome>
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => unawaited(sync(silent: true)),
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) unawaited(checkForUpdates(context, ref));
+    });
   }
 
   @override

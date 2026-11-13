@@ -33,6 +33,7 @@ void main() {
           isWindows: windows,
           stateDirectory: state.path,
           executableDirectory: path.join(root.path, 'app'),
+          systemRootOverride: root.path,
           run: run,
         );
     await attempt('https://192.168.1.2:8443/dav/');

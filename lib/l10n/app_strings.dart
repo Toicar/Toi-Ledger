@@ -915,6 +915,47 @@ class AppStrings {
       _format(isEnglish ? "\nIncome ¥{arg0}" : "\n收入 ¥{arg0}", [arg0]);
   String expenseAmountLine(Object? arg0) =>
       _format(isEnglish ? "\nExpense ¥{arg0}" : "\n支出 ¥{arg0}", [arg0]);
+  String get updatesTitle => isEnglish ? "Software updates" : "软件更新";
+  String get updatesDescription => isEnglish
+      ? "Set a trusted HTTPS update manifest URL. An empty address disables checks."
+      : "配置可信的 HTTPS 更新清单地址。留空时不会检查更新。";
+  String get updatesUrl => isEnglish ? "Update manifest URL" : "更新清单地址";
+  String get updatesSave => isEnglish ? "Save update address" : "保存更新地址";
+  String get updatesSaved => isEnglish ? "Update address saved" : "更新地址已保存";
+  String get updatesSaveFailed => isEnglish
+      ? "Invalid address or could not save. Check the HTTPS URL."
+      : "地址无效或保存失败，请检查 HTTPS 地址。";
+  String get updatesCheck => isEnglish ? "Check for updates" : "检查更新";
+  String get updatesChecking => isEnglish ? "Checking for updates…" : "正在检查更新…";
+  String get updatesNone => isEnglish
+      ? "The app is up to date, or no update source is configured."
+      : "当前已是最新版本，或更新源尚未配置。";
+  String updatesAvailable(Object? arg0) =>
+      _format(isEnglish ? "Update {arg0} available" : "发现新版本 {arg0}", [arg0]);
+  String get updatesInstall => isEnglish ? "Download and update" : "下载并更新";
+  String get updatesLater => isEnglish ? "Later" : "以后再说";
+  String get updatesDownloading =>
+      isEnglish ? "Downloading and verifying the update…" : "正在下载并验证更新…";
+  String get updatesFailure => isEnglish
+      ? "Update check or download failed. Check the source and network, then retry."
+      : "更新检查或下载失败，请检查更新源和网络后重试。";
+  String get updatesInstallFailure => isEnglish
+      ? "Could not start installation. Check system permissions and retry."
+      : "无法启动安装，请检查系统权限后重试。";
+  String get updatesPermission => isEnglish
+      ? "Allow this app to install updates, then return and try again."
+      : "请允许此应用安装更新，然后返回并再次点击更新。";
+  String get updatesTrust => isEnglish
+      ? "Use only an update source you trust. The checksum checks download integrity, not publisher identity."
+      : "请只填写你信任的更新源。校验值用于检查下载完整性，不能证明发布者身份。";
+  String get updatesWindowsRestart => isEnglish
+      ? "The app will close and restart to install the update."
+      : "更新将关闭并重新启动应用。";
+  String get updatesAndroidConfirm => isEnglish
+      ? "Android will show the system installation confirmation."
+      : "Android 会显示系统安装确认。";
+  String updatesCurrent(Object? arg0) =>
+      _format(isEnglish ? "Current version {arg0}" : "当前版本 {arg0}", [arg0]);
 
   String message(String value) {
     for (final item in _lateMessages) {
@@ -1133,6 +1174,10 @@ final _lateMessages = <_LateMessage>[
     "Could not open the local database. Check disk space and permissions. Keep existing data and do not uninstall the app.",
   ),
   _LateMessage(
+    "请只填写你信任的更新源。校验值用于检查下载完整性，不能证明发布者身份。",
+    "Use only an update source you trust. The checksum checks download integrity, not publisher identity.",
+  ),
+  _LateMessage(
     "{arg0}{arg1} 月 {arg2} 日  星期{arg3}",
     "{arg0}{arg1}/{arg2} · {arg3}",
   ),
@@ -1151,6 +1196,10 @@ final _lateMessages = <_LateMessage>[
   _LateMessage(
     "在另一台空设备中填入相同账本 ID 和 WebDAV 配置。",
     "Use the same ledger ID and WebDAV configuration on another empty device.",
+  ),
+  _LateMessage(
+    "配置可信的 HTTPS 更新清单地址。留空时不会检查更新。",
+    "Set a trusted HTTPS update manifest URL. An empty address disables checks.",
   ),
   _LateMessage(
     "从餐饮、交通或工资开始。\n点击右下角添加收入或支出分类。",
@@ -1216,6 +1265,18 @@ final _lateMessages = <_LateMessage>[
   _LateMessage(
     "WebDAV 目录格式或文件名无效，已停止同步",
     "Invalid WebDAV directory or filename. Sync stopped.",
+  ),
+  _LateMessage(
+    "地址无效或保存失败，请检查 HTTPS 地址。",
+    "Invalid address or could not save. Check the HTTPS URL.",
+  ),
+  _LateMessage(
+    "更新检查或下载失败，请检查更新源和网络后重试。",
+    "Update check or download failed. Check the source and network, then retry.",
+  ),
+  _LateMessage(
+    "请允许此应用安装更新，然后返回并再次点击更新。",
+    "Allow this app to install updates, then return and try again.",
   ),
   _LateMessage(
     "只有空账本可以加入其他账本，请勿清空现有数据",
@@ -1320,6 +1381,18 @@ final _lateMessages = <_LateMessage>[
   _LateMessage(
     "WebDAV 身份验证失败或权限不足",
     "WebDAV authentication failed or access denied",
+  ),
+  _LateMessage(
+    "当前已是最新版本，或更新源尚未配置。",
+    "The app is up to date, or no update source is configured.",
+  ),
+  _LateMessage(
+    "无法启动安装，请检查系统权限后重试。",
+    "Could not start installation. Check system permissions and retry.",
+  ),
+  _LateMessage(
+    "Android 会显示系统安装确认。",
+    "Android will show the system installation confirmation.",
   ),
   _LateMessage("日期格式应为 YYYY-MM-DD", "Use the date format YYYY-MM-DD"),
   _LateMessage(
@@ -1506,6 +1579,10 @@ final _lateMessages = <_LateMessage>[
   _LateMessage("WebDAV 网络连接失败", "WebDAV network connection failed"),
   _LateMessage("分类 ID：{arg0}\n", "Category ID: {arg0}\n"),
   _LateMessage(
+    "更新将关闭并重新启动应用。",
+    "The app will close and restart to install the update.",
+  ),
+  _LateMessage(
     "实体类型或收支类型不可变",
     "Entity type or transaction direction cannot be changed",
   ),
@@ -1540,6 +1617,7 @@ final _lateMessages = <_LateMessage>[
     "语言设置保存失败，请重试",
     "Could not save your language preference. Try again.",
   ),
+  _LateMessage("发现新版本 {arg0}", "Update {arg0} available"),
   _LateMessage("文字为空或超出长度限制", "Text is empty or exceeds the length limit"),
   _LateMessage(
     "日志格式或协议版本无效",
@@ -1564,6 +1642,7 @@ final _lateMessages = <_LateMessage>[
   _LateMessage("WebDAV 请求超时", "WebDAV request timed out"),
   _LateMessage("\n收入 ¥{arg0}", "\nIncome ¥{arg0}"),
   _LateMessage("\n支出 ¥{arg0}", "\nExpense ¥{arg0}"),
+  _LateMessage("当前版本 {arg0}", "Current version {arg0}"),
   _LateMessage("一点一滴，皆是生活。", "Every little entry is part of life."),
   _LateMessage("快捷模板 ID 重复", "Duplicate template ID"),
   _LateMessage("操作父版本无效或过多", "Invalid or too many parent versions"),
@@ -1574,6 +1653,7 @@ final _lateMessages = <_LateMessage>[
   _LateMessage("让账本，随设备同行。", "Your ledger, wherever you are."),
   _LateMessage("凭据删除失败，请重试", "Could not remove credentials. Try again."),
   _LateMessage("用户名：{arg0}", "Username: {arg0}"),
+  _LateMessage("正在下载并验证更新…", "Downloading and verifying the update…"),
   _LateMessage("本地优先，安心记录", "Local first, safely recorded"),
   _LateMessage("未分类大额门槛无效", "Invalid uncategorized transaction threshold"),
   _LateMessage("操作字段不符合协议", "Operation fields do not match the protocol"),
@@ -1629,6 +1709,8 @@ final _lateMessages = <_LateMessage>[
   _LateMessage("记账时填写金额", "Enter an amount when recording"),
   _LateMessage("English", "English"),
   _LateMessage("语言设置已保存", "Language preference saved"),
+  _LateMessage("更新地址已保存", "Update address saved"),
+  _LateMessage("正在检查更新…", "Checking for updates…"),
   _LateMessage("收支类型无效", "Invalid income/expense type"),
   _LateMessage("请先处理冲突", "Resolve the conflict first"),
   _LateMessage("日志校验失败", "Operation checksum failed"),
@@ -1648,6 +1730,8 @@ final _lateMessages = <_LateMessage>[
   _LateMessage("跟随系统语言", "Follow system language"),
   _LateMessage("按自然月汇总", "Grouped by calendar month"),
   _LateMessage("按自然周汇总", "Grouped by calendar week"),
+  _LateMessage("更新清单地址", "Update manifest URL"),
+  _LateMessage("保存更新地址", "Save update address"),
   _LateMessage("确认删除？", "Delete this item?"),
   _LateMessage("分类待同步", "Category awaiting sync"),
   _LateMessage("分类有冲突", "Category conflict"),
@@ -1665,6 +1749,7 @@ final _lateMessages = <_LateMessage>[
   _LateMessage("（已删除）", " (deleted)"),
   _LateMessage("分类柱状图", "Category column chart"),
   _LateMessage("分类比例条", "Category share chart"),
+  _LateMessage("下载并更新", "Download and update"),
   _LateMessage("我的空间", "My space"),
   _LateMessage("我的账本", "My ledger"),
   _LateMessage("统计分析", "Statistics"),
@@ -1724,6 +1809,9 @@ final _lateMessages = <_LateMessage>[
   _LateMessage("（删除）", " (deleted)"),
   _LateMessage("分类饼图", "Category pie chart"),
   _LateMessage("按日汇总", "Grouped by day"),
+  _LateMessage("软件更新", "Software updates"),
+  _LateMessage("检查更新", "Check for updates"),
+  _LateMessage("以后再说", "Later"),
   _LateMessage("记一笔", "New entry"),
   _LateMessage("胭脂红", "Vermilion"),
   _LateMessage("栀子黄", "Gardenia"),

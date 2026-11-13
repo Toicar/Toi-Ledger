@@ -11,6 +11,7 @@ Future<void> startLocalWebDavIfConfigured(
   bool? isWindows,
   String? stateDirectory,
   String? executableDirectory,
+  String? systemRootOverride,
   Future<ProcessResult> Function(String, List<String>)? run,
 }) async {
   if (!(isWindows ?? Platform.isWindows)) return;
@@ -49,7 +50,7 @@ Future<void> startLocalWebDavIfConfigured(
         config.endpoint.path != '/dav/') {
       return;
     }
-    final systemRoot = Platform.environment['SystemRoot'];
+    final systemRoot = systemRootOverride ?? Platform.environment['SystemRoot'];
     if (systemRoot == null) return;
     final powershell = path.join(
       systemRoot,
